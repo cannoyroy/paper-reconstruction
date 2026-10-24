@@ -27,6 +27,48 @@ Paper: https://arxiv.org/abs/1512.03385v1
 
 The Skill uses the current Codex session's model and available tools. No additional model API key is needed. Its bundled deterministic CLI requires Node.js 22. Source-checkout users must build the Skill package first.
 
+### Ways to provide a paper
+
+When invoking the Skill in Codex, you can provide a paper in the following forms:
+
+| Input | What to provide | How it is handled |
+| --- | --- | --- |
+| PDF attachment or local path | A readable paper PDF, or a file path Codex is allowed to access | Uses the host's available PDF, text, and figure-reading tools, and records the material actually read |
+| Paper link | An arXiv paper page, a direct PDF URL, or another accessible full-text paper link | Confirms the paper's identity and version before retrieving its content; opening a link does not establish that full text was obtained |
+| Paper text | Pasted text, or a readable local text file such as TXT or Markdown | Uses the conversation content or Codex's file-reading tools, and records missing figures, appendices, or sections |
+| Paper title | A title, optionally with authors or year to disambiguate it | Searches for and identifies the paper, version, and full text first; asks when the identity or version remains ambiguous |
+
+Reading and search capabilities come from the current Codex environment. The Skill does not bundle a general-purpose file parser or download service. Automatic OCR for scanned PDFs is not integrated. Missing full text, pages, or readable figures are recorded as specific gaps; an abstract is never presented as a fully read paper. These are input rules; not every form has been individually tested.
+
+**Local PDF example** (replace the path with a file Codex can access, or attach the PDF):
+
+```text
+Use $paper-reconstruction to analyze D:/papers/paper.pdf.
+Produce a complete reconstruction, analysis.json, and report.md in English.
+```
+
+**Link example**:
+
+```text
+Use $paper-reconstruction to analyze this paper:
+https://arxiv.org/abs/1512.03385v1
+Produce a complete reconstruction, analysis.json, and report.md in English.
+```
+
+**Title example**:
+
+```text
+Use $paper-reconstruction to analyze "Deep Residual Learning for Image Recognition".
+First confirm the paper's identity and version and obtain its full text.
+Then produce a complete reconstruction, analysis.json, and report.md in English.
+```
+
+### Bring the result to the reader
+
+The workflow is: **provide the paper to the Codex Skill → generate analysis.json → import the result into the web reader**.
+
+The reader's import action accepts analysis JSON for reading the report, inspecting evidence, and selecting research nodes. Provide PDFs, paper links, text, and titles in the Codex conversation. The current web reader has no paper-submission or model-generation endpoint.
+
 ## Develop locally
 
 Requirements: Node.js **22.13+**, pnpm **10.13.1**.

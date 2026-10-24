@@ -30,6 +30,47 @@ analysis.json 和 report.md。默认允许针对关键疑点补充公开资料�
 
 克隆本仓库后也可执行 `pnpm skill:install`，将打包 Skill 安装到本项目的 `.agents/skills/`；已有目录不会被覆盖。
 
+### 可以怎样提供论文
+
+在 Codex 中调用 Skill 时，可以通过以下方式提供论文：
+
+| 输入方式 | 提供什么 | 如何处理 |
+| --- | --- | --- |
+| PDF 附件或本地路径 | 可读取的论文 PDF，或 Codex 有权限访问的文件路径 | 通过宿主可用的 PDF、正文和图表读取工具获取内容，记录实际可读范围 |
+| 论文链接 | arXiv 论文页、PDF 直链或其他可访问的论文全文链接 | 确认论文身份与版本，再获取实际内容；链接可打开不代表已经取得全文 |
+| 论文正文 | 直接粘贴正文，或提供可读取的 TXT／Markdown 等本地正文文件 | 通过 Codex 的文件读取工具或对话内容取得材料，记录是否缺少图表、附录或其他章节 |
+| 论文标题 | 论文名称，可附作者、年份等线索 | 先检索并确认论文身份、版本与全文；重名或版本无法确定时再询问 |
+
+读取和检索能力由当前 Codex 环境提供，Skill 本身不附带通用文件解析或下载服务。扫描 PDF 暂未集成自动 OCR；全文无法获取、缺页或图表不可读时，会标明具体缺口并按已有材料分析，不会把摘要当成已读全文。以上是输入规则，不同形式尚未全部逐项实测。
+
+**PDF 路径示例**（请将路径替换为实际可访问的文件；也可附上 PDF）：
+
+```text
+请使用 $paper-reconstruction 分析 D:/papers/paper.pdf，
+生成完整研究复盘、analysis.json 和 report.md。
+```
+
+**链接示例**：
+
+```text
+请使用 $paper-reconstruction 分析这篇论文：
+https://arxiv.org/abs/1512.03385v1
+生成完整研究复盘、analysis.json 和 report.md。
+```
+
+**标题示例**：
+
+```text
+请使用 $paper-reconstruction 分析《Deep Residual Learning for Image Recognition》。
+请先确认论文身份与版本并取得全文，再生成完整研究复盘、analysis.json 和 report.md。
+```
+
+### 怎样把结果带到网页
+
+使用流程是：**把论文交给 Codex Skill → 生成 analysis.json → 在网页阅读器中导入结果**。
+
+网页的“导入结果”接收分析 JSON，用于阅读正文、检查证据和选择研究节点。PDF、论文链接、正文与标题应在 Codex 对话中提供；当前网页没有提交论文或调用模型生成复盘的入口。
+
 ## 本地开发
 
 要求 Node.js **22.13+**、pnpm **10.13.1**。
