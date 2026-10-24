@@ -1,0 +1,754 @@
+{
+  "schema_version": "0.1.0",
+  "workflow_version": "0.1.0",
+  "analysis_version": 1,
+  "example_kind": "real_paper",
+  "status": "complete",
+  "provenance": {
+    "model": "gpt-6.1-sol",
+    "generated_at": "2026-10-24T13:11:14.415Z",
+    "host": "Codex desktop",
+    "material_policy": "targeted_public",
+    "tools": [
+      "web search and source retrieval",
+      "Node.js deterministic validation"
+    ],
+    "usage": {
+      "elapsed_seconds": null,
+      "model_calls": null,
+      "tokens": null,
+      "note": "由 Codex 会话制作并自查的编辑案例；会话未提供可分离的逐篇调用数、耗时与 token 统计。不是独立评测。"
+    }
+  },
+  "validation": {
+    "semantic_review": "self_reviewed",
+    "notes": [
+      "逐项核对关键来源文本、图注与支持范围；未复现实验；无人类评审记录。"
+    ]
+  },
+  "revision": null,
+  "manifest": {
+    "included": [
+      "原创报告、节点、主张、来源定位和证据释义"
+    ],
+    "external": [
+      "原始论文全文、补充材料与原宿主聊天记录"
+    ]
+  },
+  "analysis_id": "crispr-2012",
+  "paper": {
+    "title": "A programmable dual-RNA-guided DNA endonuclease in adaptive bacterial immunity",
+    "authors": [
+      "Martin Jinek",
+      "Krzysztof Chylinski",
+      "Ines Fonfara",
+      "Michael Hauer",
+      "Jennifer A. Doudna",
+      "Emmanuelle Charpentier"
+    ],
+    "identifier": "doi:10.1126/science.1225829",
+    "version": "2012 article · PMC author manuscript",
+    "domain": "分子生物学",
+    "research_type": "experimental",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6286148/"
+  },
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "Jinek et al. 2012 — PMC author manuscript",
+      "kind": "paper",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6286148/",
+      "version": "PMC author manuscript of 2012 article",
+      "published_at": "2012-06-28",
+      "read_status": "read",
+      "fingerprint": null,
+      "availability_note": "读取 PMC 正文和图注；PMC 收录时间是 2018，不是研究发生时间；未读取补充 PDF 或复现实验。"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV01",
+      "source_id": "S01",
+      "locator": {
+        "section": "Cas9 is a DNA endonuclease guided by two RNAs",
+        "figure_or_table": "Figure 1A–B",
+        "pdf_page_index": null,
+        "printed_page": null,
+        "text_anchor": null
+      },
+      "paraphrase": "正文报告单独成熟 crRNA 不能引导所测切割；加入 tracrRNA 后出现切割，并报告互补序列等对照。",
+      "quote": null,
+      "scope": "支持所测体外体系的组分依赖；未证明作者完整探索顺序。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "EV02",
+      "source_id": "S01",
+      "locator": {
+        "section": "Dual-RNA requirements for target DNA binding and cleavage",
+        "figure_or_table": null,
+        "pdf_page_index": null,
+        "printed_page": null,
+        "text_anchor": null
+      },
+      "paraphrase": "作者用催化失活 Cas9 的结合实验区分靶 DNA 识别与下游切割，并报告 tracrRNA 增强结合。",
+      "quote": null,
+      "scope": "读取的是正文对补充实验的报告，未单独核查 Figure S9 原始图。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "EV03",
+      "source_id": "S01",
+      "locator": {
+        "section": "Cas9 can be programmed with a single chimeric RNA",
+        "figure_or_table": "Figure 5B–D",
+        "pdf_page_index": null,
+        "printed_page": null,
+        "text_anchor": null
+      },
+      "paraphrase": "正文报告较长嵌合 RNA 能引导切割，较短版本效率不足，并检验不同靶序列。",
+      "quote": null,
+      "scope": "支持文中体外引导设计，不等于已证实普遍的细胞内编辑。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "EV04",
+      "source_id": "S01",
+      "locator": {
+        "section": "Cas9 can be programmed with a single chimeric RNA",
+        "figure_or_table": null,
+        "pdf_page_index": null,
+        "printed_page": null,
+        "text_anchor": null
+      },
+      "paraphrase": "正文明确将保留双 RNA 配对结构的想法与嵌合设计联系起来。",
+      "quote": null,
+      "scope": "作者公开设计理由；不是独立核实的完整研究史。",
+      "evidence_type": "author_interpretation",
+      "verification_status": "source_checked"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "C01",
+      "text": "论文报告所测 Cas9 体外切割依赖双 RNA 结构。",
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "EV01",
+          "relation": "supports",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "C02",
+      "text": "论文通过结合读出区分识别与切割环节。",
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "EV02",
+          "relation": "supports",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "C03",
+      "text": "论文比较嵌合 RNA 设计并在体外检验不同靶点。",
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "EV03",
+          "relation": "supports",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "C04",
+      "text": "正文将嵌合设计与保留双 RNA 配对结构联系起来。",
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "EV04",
+          "relation": "supports",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "I01",
+      "text": "一种候选路径是先分解天然机制，再寻求可保留功能的简化。",
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "EV01",
+          "relation": "compatible",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ],
+      "assumptions": [
+        "机制问题可能驱动组分与功能的分离"
+      ],
+      "alternatives": [
+        "也可能从可编程工具目标出发，反向寻找最小功能结构"
+      ]
+    },
+    {
+      "claim_id": "I02",
+      "text": "另一条候选路径以工具化为牵引，把机制检查作为设计约束。",
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "EV04",
+          "relation": "compatible",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ],
+      "assumptions": [
+        "可编程用途可能影响研究问题的优先级"
+      ],
+      "alternatives": [
+        "也可能先有机制发现，之后才形成工具用途"
+      ]
+    },
+    {
+      "claim_id": "H01",
+      "text": "以下比较、条件和行动分支是方法学习用推演，并非未公开实验记录。",
+      "epistemic_status": "hypothetical",
+      "evidence_links": [],
+      "assumptions": [
+        "用于学习的条件化方案，未核实为作者实际尝试"
+      ],
+      "alternatives": []
+    }
+  ],
+  "paths": [
+    {
+      "path_id": "P01",
+      "title": "从机制分解出发",
+      "premise": "假设先关心天然系统如何识别并切割 DNA。",
+      "assumptions": [
+        "逻辑重建，不主张这是作者实际研发日程"
+      ],
+      "node_refs": [
+        "N01",
+        "N02",
+        "N03"
+      ],
+      "edge_refs": [
+        "E01",
+        "E02",
+        "E03"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "EV01",
+          "relation": "compatible",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ]
+    },
+    {
+      "path_id": "P02",
+      "title": "从工具化目标出发",
+      "premise": "假设先有可编程引导的目标，再逐项检查必须保留的结构。",
+      "assumptions": [
+        "与 P01 并列的竞争解释，材料不能唯一确定起点"
+      ],
+      "node_refs": [
+        "N01",
+        "N02",
+        "N03"
+      ],
+      "edge_refs": [
+        "E01",
+        "E02"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "EV02",
+          "relation": "compatible",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "E01",
+      "source_node_id": "N01",
+      "target_node_id": "N02",
+      "path_ids": [
+        "P01",
+        "P02"
+      ],
+      "relation_type": "logical_dependency",
+      "label": "先分清问题环节",
+      "epistemic_status": "hypothetical",
+      "evidence_refs": []
+    },
+    {
+      "edge_id": "E02",
+      "source_node_id": "N02",
+      "target_node_id": "N03",
+      "path_ids": [
+        "P01",
+        "P02"
+      ],
+      "relation_type": "candidate_transition",
+      "label": "再检查简化是否保留作用",
+      "epistemic_status": "hypothetical",
+      "evidence_refs": []
+    },
+    {
+      "edge_id": "E03",
+      "source_node_id": "N03",
+      "target_node_id": "N01",
+      "path_ids": [
+        "P01"
+      ],
+      "relation_type": "return",
+      "label": "对照不支持时回查起点",
+      "epistemic_status": "hypothetical",
+      "evidence_refs": []
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": "N01",
+      "title": "先定位缺失的功能条件",
+      "question": "无切割信号时，缺的是引导组分还是体系本身失效？",
+      "path_contexts": [
+        {
+          "path_id": "P01",
+          "known_information": [
+            {
+              "text": "假设重构体系没有出现切割，尚不能归因于某个组分。",
+              "claim_refs": []
+            }
+          ],
+          "assumptions": [
+            "这是候选路径的信息条件，不是已核实作者经历"
+          ]
+        },
+        {
+          "path_id": "P02",
+          "known_information": [
+            {
+              "text": "假设正在简化引导体系，需要知道移除什么会丢失功能。",
+              "claim_refs": []
+            }
+          ],
+          "assumptions": [
+            "本路径独立设定信息条件，不与 P01 自动合并"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "真实开发次序与未公开尝试未知"
+      ],
+      "options": [
+        {
+          "option_id": "N01-O1",
+          "label": "比较组分增减",
+          "description": "把引导组分与体系活性对照分开，检查缺失组分是否解释结果。",
+          "claim_refs": [
+            "H01"
+          ]
+        },
+        {
+          "option_id": "N01-O2",
+          "label": "直接修改蛋白",
+          "description": "可能改变多个环节，若没有活性与特异性读出会难以归因。",
+          "claim_refs": [
+            "H01"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "N01-T1",
+          "question": "阴性结果能否归因？",
+          "method": "使用与问题匹配的阳性、阴性和特异性对照；保证测量能够检测正常体系，再改变候选因素。",
+          "claim_refs": [
+            "H01"
+          ],
+          "outcomes": [
+            {
+              "observation": "恢复候选组分后功能出现",
+              "next_action": "继续检验其作用环节，避免只凭恢复现象定义全部机制。",
+              "claim_refs": [
+                "H01"
+              ]
+            },
+            {
+              "observation": "正常对照也无读出",
+              "next_action": "先检查体系和测量，不把失败写成生物学结论。",
+              "claim_refs": [
+                "H01"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "C01",
+        "I01",
+        "H01"
+      ],
+      "paper_connection": "Figure 1 提供组分与特异性证据；这里的故障诊断顺序是教学建议。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "N01-L1",
+          "context": "体系重构得到阴性结果",
+          "distinguish": "缺失因素与测量或体系失效",
+          "action": "先让阴性结果具备可解释的对照",
+          "boundary": "对照恢复不等于唯一机制已被确定",
+          "claim_refs": [
+            "C01",
+            "I01",
+            "H01"
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "N02",
+      "title": "把识别与执行分开测",
+      "question": "组分影响切割，是因为不能结合，还是结合后不能执行？",
+      "path_contexts": [
+        {
+          "path_id": "P01",
+          "known_information": [
+            {
+              "text": "假设组分依赖已建立，但作用位置未知。",
+              "claim_refs": []
+            }
+          ],
+          "assumptions": [
+            "这是候选路径的信息条件，不是已核实作者经历"
+          ]
+        },
+        {
+          "path_id": "P02",
+          "known_information": [
+            {
+              "text": "假设简化设计失去功能，需要确定破坏了识别还是执行。",
+              "claim_refs": []
+            }
+          ],
+          "assumptions": [
+            "本路径独立设定信息条件，不与 P01 自动合并"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "真实开发次序与未公开尝试未知"
+      ],
+      "options": [
+        {
+          "option_id": "N02-O1",
+          "label": "增加独立结合读出",
+          "description": "让结合与切割两个环节不再被最终产物混在一起。",
+          "claim_refs": [
+            "H01"
+          ]
+        },
+        {
+          "option_id": "N02-O2",
+          "label": "继续只测最终切割",
+          "description": "可筛出有效方案，但不容易解释失效机制。",
+          "claim_refs": [
+            "H01"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "N02-T1",
+          "question": "两种机制能否给出不同观察？",
+          "method": "选取不会把结合与执行混为一体的测量，先验证测量条件本身，再比较改变前后的两个环节。",
+          "claim_refs": [
+            "H01"
+          ],
+          "outcomes": [
+            {
+              "observation": "结合也改变",
+              "next_action": "优先检查识别或复合体形成，同时保留间接影响。",
+              "claim_refs": [
+                "H01"
+              ]
+            },
+            {
+              "observation": "结合保持而执行改变",
+              "next_action": "转向执行步骤，并检查测量灵敏度足以支持区分。",
+              "claim_refs": [
+                "H01"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "C02",
+        "H01"
+      ],
+      "paper_connection": "正文报告催化失活蛋白的结合测量；补充图未独立复核，不假称已看原始图。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "N02-L1",
+          "context": "最终读出混合多个过程",
+          "distinguish": "识别失败与执行失败",
+          "action": "增加能单独观察中间环节的读出",
+          "boundary": "分离测量可能扰动原体系，需要验证其可比性",
+          "claim_refs": [
+            "C02",
+            "H01"
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "N03",
+      "title": "简化时保留功能结构",
+      "question": "把双 RNA 合并，应该保留什么，怎样判断简化成功？",
+      "path_contexts": [
+        {
+          "path_id": "P01",
+          "known_information": [
+            {
+              "text": "假设已知道部分配对结构与功能有关，准备测试简化。",
+              "claim_refs": []
+            }
+          ],
+          "assumptions": [
+            "这是候选路径的信息条件，不是已核实作者经历"
+          ]
+        },
+        {
+          "path_id": "P02",
+          "known_information": [
+            {
+              "text": "假设单一引导的用途已明确，但结构最小性未知。",
+              "claim_refs": []
+            }
+          ],
+          "assumptions": [
+            "本路径独立设定信息条件，不与 P01 自动合并"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "真实开发次序与未公开尝试未知"
+      ],
+      "options": [
+        {
+          "option_id": "N03-O1",
+          "label": "保留功能相互作用再合并",
+          "description": "先把候选结构约束写清，再比较设计。",
+          "claim_refs": [
+            "H01"
+          ]
+        },
+        {
+          "option_id": "N03-O2",
+          "label": "以最短结构为优先",
+          "description": "实现简洁，但可能同时破坏多个必要条件。",
+          "claim_refs": [
+            "H01"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "N03-T1",
+          "question": "成功来自结构保留还是偶然的一个靶点？",
+          "method": "在保留双组分参考的条件下比较不同简化设计和不同靶序列；把体外可用与细胞内编辑分开评价。",
+          "claim_refs": [
+            "H01"
+          ],
+          "outcomes": [
+            {
+              "observation": "某些简化稳定保留功能",
+              "next_action": "扩展验证范围，并明确结论目前属于哪种体系。",
+              "claim_refs": [
+                "H01"
+              ]
+            },
+            {
+              "observation": "简化失效或强依赖靶点",
+              "next_action": "回到结构与识别条件，不宣称通用工具已成立。",
+              "claim_refs": [
+                "H01"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "C03",
+        "C04",
+        "I02",
+        "H01"
+      ],
+      "paper_connection": "Figure 5 的设计比较与多靶点测试支持局部可编程性；不证明后续细胞内能力。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "N03-L1",
+          "context": "把天然体系改造成工具",
+          "distinguish": "最小长度与最小功能结构",
+          "action": "先写出必须保留的相互作用再简化",
+          "boundary": "体外活性不能直接外推到细胞内有效性",
+          "claim_refs": [
+            "C03",
+            "C04",
+            "I02",
+            "H01"
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "没有取得完整同期研发记录，不将逻辑顺序写成真实历史。",
+    "正文与图注已核对；补充材料和原始数据未独立审查，未做实验复现。",
+    "这是已发表基础机制工作的高层方法分析，不提供实验实施参数。"
+  ],
+  "sections": [
+    {
+      "section_id": "S1",
+      "title": "核心问题与最终工作",
+      "blocks": [
+        {
+          "block_id": "B1-1",
+          "markdown": "这项工作的关键研究判断，是把天然免疫过程拆成可以分辨作用环节的证据问题，再问哪些结构在简化后仍保留功能。仅看到“能切割”的最终结果，不足以知道引导、识别和执行分别由什么条件承担。",
+          "node_refs": [],
+          "claim_refs": [
+            "C01"
+          ],
+          "evidence_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "S2",
+      "title": "可能的研究起点",
+      "blocks": [
+        {
+          "block_id": "B2-1",
+          "markdown": "P01 从机制分解进入：先重构组分关系，再分离识别与切割，最后探索简化。P02 从工具目标进入：希望降低引导设计负担，因而需要反查哪些相互作用不能丢。作者明说了嵌合设计的结构理由；完整项目起点与全部试错仍未知。",
+          "node_refs": [],
+          "claim_refs": [
+            "I01",
+            "I02",
+            "C04"
+          ],
+          "evidence_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "S3",
+      "title": "关键决策节点",
+      "blocks": [
+        {
+          "block_id": "B3-1",
+          "markdown": "N01 的问题是让阴性结果有解释力。若正常体系本身没有读出，缺组分与测量失败无法区分；若恢复候选组分后功能出现，还要继续检查它改变了哪个环节。",
+          "node_refs": [
+            "N01"
+          ],
+          "claim_refs": [
+            "H01"
+          ],
+          "evidence_refs": []
+        },
+        {
+          "block_id": "B3-2",
+          "markdown": "N02 用独立读出拆开识别与切割。结合改变与结合不变但切割改变，会指向不同下一步。论文正文描述了这种区分，但本案例没有独立读取对应补充原始图。",
+          "node_refs": [
+            "N02"
+          ],
+          "claim_refs": [
+            "H01"
+          ],
+          "evidence_refs": []
+        },
+        {
+          "block_id": "B3-3",
+          "markdown": "N03 把简化变成可证伪的设计问题：先明确保留哪些结构，再比较不同简化版本和不同目标。某个设计失效不必意味着方向无用，也可能说明删去了必要相互作用。",
+          "node_refs": [
+            "N03"
+          ],
+          "claim_refs": [
+            "H01"
+          ],
+          "evidence_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "S4",
+      "title": "失败与替代方向",
+      "blocks": [
+        {
+          "block_id": "B4-1",
+          "markdown": "较短嵌合设计效率不足是正文报告的结果；作者曾经试过多少版本、是否先为应用而做机制，都不能从中推出。继续维持双组分、改变结构或延后工具化在不同证据条件下都可能合理。失败的价值在于区分功能条件，不能仅以成败排列故事。",
+          "node_refs": [],
+          "claim_refs": [
+            "C03",
+            "H01"
+          ],
+          "evidence_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "S5",
+      "title": "从探索收束为论文",
+      "blocks": [
+        {
+          "block_id": "B5-1",
+          "markdown": "核心证据链把组分依赖、中间环节与功能保留连起来。多靶点体外测试为可编程性增加支持；细胞内编辑、其他物种和更广条件需要各自的证据。收束时应把已实现能力与未来用途分开，不让后来的成功倒灌进早期论证。",
+          "node_refs": [],
+          "claim_refs": [
+            "C02",
+            "C03"
+          ],
+          "evidence_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "S6",
+      "title": "可以带走的研究判断",
+      "blocks": [
+        {
+          "block_id": "B6-1",
+          "markdown": "可以迁移的是“让阴性结果可解释”“用中间读出定位作用环节”“按功能约束简化”。这些判断在其他体系也有启发，但前提是对照可靠、测量能区分过程，且简化没有同时改变无法追踪的因素。",
+          "node_refs": [
+            "N01",
+            "N02",
+            "N03"
+          ],
+          "claim_refs": [
+            "H01"
+          ],
+          "evidence_refs": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+release/
+test-results/
+playwright-report/
+.cache/
+work/
+.env*
+.DS_Store
+*.log
+.agents/skills/

@@ -1,0 +1,752 @@
+{
+  "schema_version": "0.1.0",
+  "workflow_version": "0.1.0",
+  "analysis_version": 1,
+  "example_kind": "real_paper",
+  "status": "complete",
+  "provenance": {
+    "model": "gpt-6.1-sol",
+    "generated_at": "2026-10-24T13:11:14.415Z",
+    "host": "Codex desktop",
+    "material_policy": "targeted_public",
+    "tools": [
+      "web search and source retrieval",
+      "Node.js deterministic validation"
+    ],
+    "usage": {
+      "elapsed_seconds": null,
+      "model_calls": null,
+      "tokens": null,
+      "note": "由 Codex 会话制作并自查的编辑案例；会话未提供可分离的逐篇调用数、耗时与 token 统计。不是独立评测。"
+    }
+  },
+  "validation": {
+    "semantic_review": "self_reviewed",
+    "notes": [
+      "逐项核对关键来源文本、图注与支持范围；未复现实验；无人类评审记录。"
+    ]
+  },
+  "revision": null,
+  "manifest": {
+    "included": [
+      "原创报告、节点、主张、来源定位和证据释义"
+    ],
+    "external": [
+      "原始论文全文、补充材料与原宿主聊天记录"
+    ]
+  },
+  "analysis_id": "resnet-2015",
+  "paper": {
+    "title": "Deep Residual Learning for Image Recognition",
+    "authors": [
+      "Kaiming He",
+      "Xiangyu Zhang",
+      "Shaoqing Ren",
+      "Jian Sun"
+    ],
+    "identifier": "arxiv:1512.03385",
+    "version": "arXiv v1 · 2015-12-10",
+    "domain": "计算机视觉",
+    "research_type": "computational",
+    "url": "https://arxiv.org/abs/1512.03385v1"
+  },
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "Deep Residual Learning for Image Recognition",
+      "kind": "paper",
+      "url": "https://arxiv.org/pdf/1512.03385v1",
+      "version": "arXiv v1",
+      "published_at": "2015-12-10",
+      "read_status": "partial",
+      "fingerprint": null,
+      "availability_note": "核对引言、§3、§4.1 与相关图注和表格；未覆盖所有附录、代码或作者历史讲解。未读取的部分不作证据。"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV01",
+      "source_id": "S01",
+      "locator": {
+        "section": "§1 Introduction",
+        "figure_or_table": "Figure 1",
+        "pdf_page_index": 0,
+        "printed_page": "1",
+        "text_anchor": null
+      },
+      "paraphrase": "论文报告更深的普通网络出现更高训练误差，并据此区分退化与过拟合。",
+      "quote": null,
+      "scope": "作者报告的训练现象与解释；不证明作者先做了哪些失败实验。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "EV02",
+      "source_id": "S01",
+      "locator": {
+        "section": "§3.1–3.2",
+        "figure_or_table": "Figure 2 / Equation 1",
+        "pdf_page_index": 2,
+        "printed_page": "3",
+        "text_anchor": null
+      },
+      "paraphrase": "论文将目标映射改写为残差与恒等旁路之和，并提出这种表示可能更易优化。",
+      "quote": null,
+      "scope": "方法定义是明示；优化更容易的解释不能升级为一般数学定理。",
+      "evidence_type": "author_interpretation",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "EV03",
+      "source_id": "S01",
+      "locator": {
+        "section": "§4.1 ImageNet Classification",
+        "figure_or_table": "Figure 4 / Table 2",
+        "pdf_page_index": 4,
+        "printed_page": "5",
+        "text_anchor": null
+      },
+      "paraphrase": "普通与残差网络在所述比较中匹配深度等条件；34 层残差网络训练与验证表现更好。",
+      "quote": null,
+      "scope": "支持这些设置中的残差设计效果；不单独识别全部机制，也不记录开发顺序。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "EV04",
+      "source_id": "S01",
+      "locator": {
+        "section": "§4.1 Identity vs. Projection Shortcuts",
+        "figure_or_table": "Table 3",
+        "pdf_page_index": 5,
+        "printed_page": "6",
+        "text_anchor": null
+      },
+      "paraphrase": "A、B、C 三种旁路方案均优于普通对照；文中认为全投影方案的有限收益不足以抵消额外复杂度。",
+      "quote": null,
+      "scope": "结果与作者取舍分别保留；不能声称投影在所有任务都无用。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "C01",
+      "text": "普通网络深度增加时，训练误差也可能升高。",
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "EV01",
+          "relation": "supports",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "C02",
+      "text": "论文把映射写为 F(x)+x，并以恒等映射提供优化动机。",
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "EV02",
+          "relation": "supports",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "C03",
+      "text": "匹配条件下的残差对照在论文设置中改善了训练与验证表现。",
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "EV03",
+          "relation": "supports",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "C04",
+      "text": "论文比较了恒等与投影旁路，并讨论收益与复杂度取舍。",
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "EV04",
+          "relation": "supports",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "I01",
+      "text": "一种可能起点是先追踪深度退化，再寻找能保留已有解的表示。",
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "EV01",
+          "relation": "compatible",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ],
+      "assumptions": [
+        "研究者可能将训练误差异常视为优先问题"
+      ],
+      "alternatives": [
+        "也可能先受到残差或捷径表示启发，再系统构造退化对照"
+      ]
+    },
+    {
+      "claim_id": "I02",
+      "text": "另一种起点是先研究表示重写，再用深度比较说明价值。",
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "EV02",
+          "relation": "compatible",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ],
+      "assumptions": [
+        "表示上的直觉可能早于系统性深度实验"
+      ],
+      "alternatives": [
+        "也可能是优化异常直接推动了表示重写"
+      ]
+    },
+    {
+      "claim_id": "H01",
+      "text": "下面的选项、判别检验与回退行动是学习用方案，不是作者实际尝试记录。",
+      "epistemic_status": "hypothetical",
+      "evidence_links": [],
+      "assumptions": [
+        "用于学习的条件化方案，未核实为作者实际尝试"
+      ],
+      "alternatives": []
+    }
+  ],
+  "paths": [
+    {
+      "path_id": "P01",
+      "title": "从优化异常出发",
+      "premise": "假设先观察到深层普通网络训练误差升高。",
+      "assumptions": [
+        "逻辑重建，不主张这是作者实际研发日程"
+      ],
+      "node_refs": [
+        "N01",
+        "N02",
+        "N03"
+      ],
+      "edge_refs": [
+        "E01",
+        "E02",
+        "E03"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "EV01",
+          "relation": "compatible",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ]
+    },
+    {
+      "path_id": "P02",
+      "title": "从表示重写出发",
+      "premise": "假设先有 F(x)+x 的表示直觉，再设计诊断实验。",
+      "assumptions": [
+        "与 P01 并列的竞争解释，材料不能唯一确定起点"
+      ],
+      "node_refs": [
+        "N01",
+        "N02",
+        "N03"
+      ],
+      "edge_refs": [
+        "E01",
+        "E02"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "EV02",
+          "relation": "compatible",
+          "scope_note": "只支持此处表述，不证明研究开发顺序"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "E01",
+      "source_node_id": "N01",
+      "target_node_id": "N02",
+      "path_ids": [
+        "P01",
+        "P02"
+      ],
+      "relation_type": "logical_dependency",
+      "label": "先分清问题环节",
+      "epistemic_status": "hypothetical",
+      "evidence_refs": []
+    },
+    {
+      "edge_id": "E02",
+      "source_node_id": "N02",
+      "target_node_id": "N03",
+      "path_ids": [
+        "P01",
+        "P02"
+      ],
+      "relation_type": "candidate_transition",
+      "label": "再检查简化是否保留作用",
+      "epistemic_status": "hypothetical",
+      "evidence_refs": []
+    },
+    {
+      "edge_id": "E03",
+      "source_node_id": "N03",
+      "target_node_id": "N01",
+      "path_ids": [
+        "P01"
+      ],
+      "relation_type": "return",
+      "label": "对照不支持时回查起点",
+      "epistemic_status": "hypothetical",
+      "evidence_refs": []
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": "N01",
+      "title": "先分清训练失败与泛化失败",
+      "question": "深度增加后效果变差，下一步该检查训练过程还是加正则？",
+      "path_contexts": [
+        {
+          "path_id": "P01",
+          "known_information": [
+            {
+              "text": "假设已看到深层模型验证误差更高，训练误差尚待核对。",
+              "claim_refs": []
+            }
+          ],
+          "assumptions": [
+            "这是候选路径的信息条件，不是已核实作者经历"
+          ]
+        },
+        {
+          "path_id": "P02",
+          "known_information": [
+            {
+              "text": "假设已有表示重写直觉，准备寻找能区分机制的深度对照。",
+              "claim_refs": []
+            }
+          ],
+          "assumptions": [
+            "本路径独立设定信息条件，不与 P01 自动合并"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "真实开发次序与未公开尝试未知"
+      ],
+      "options": [
+        {
+          "option_id": "N01-O1",
+          "label": "先查训练曲线",
+          "description": "比较训练与验证误差，检查预算、初始化和实现是否一致。",
+          "claim_refs": [
+            "H01"
+          ]
+        },
+        {
+          "option_id": "N01-O2",
+          "label": "先增强正则化",
+          "description": "只有训练拟合更好但验证变差时，这条路线才有针对性。",
+          "claim_refs": [
+            "H01"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "N01-T1",
+          "question": "主要瓶颈在拟合还是泛化？",
+          "method": "在相同数据与可比预算下并列训练和验证曲线；检查收敛速度与最终误差，而不是只看榜单分数。",
+          "claim_refs": [
+            "H01"
+          ],
+          "outcomes": [
+            {
+              "observation": "训练误差也升高",
+              "next_action": "优先追查优化、表示与实现，暂不把问题归为过拟合。",
+              "claim_refs": [
+                "H01"
+              ]
+            },
+            {
+              "observation": "训练误差降低而验证变差",
+              "next_action": "转向数据、正则和模型选择；重新评估优化假说。",
+              "claim_refs": [
+                "H01"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "C01",
+        "I01",
+        "H01"
+      ],
+      "paper_connection": "Figure 1 与 Figure 4 支持区分训练和验证现象；此处检查顺序为教学构造。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "N01-L1",
+          "context": "更大模型反而更差",
+          "distinguish": "拟合、泛化与实现错误",
+          "action": "先比较错误发生在哪个环节",
+          "boundary": "训练曲线本身不能唯一证明优化机制",
+          "claim_refs": [
+            "C01",
+            "I01",
+            "H01"
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "N02",
+      "title": "让新结构保留一个已有解",
+      "question": "值得改变表示，还是只需更长训练与调参？",
+      "path_contexts": [
+        {
+          "path_id": "P01",
+          "known_information": [
+            {
+              "text": "假设已排除明显实现差异，训练退化仍存在。",
+              "claim_refs": []
+            }
+          ],
+          "assumptions": [
+            "这是候选路径的信息条件，不是已核实作者经历"
+          ]
+        },
+        {
+          "path_id": "P02",
+          "known_information": [
+            {
+              "text": "假设已有恒等旁路直觉，但尚不知道是否改善训练。",
+              "claim_refs": []
+            }
+          ],
+          "assumptions": [
+            "本路径独立设定信息条件，不与 P01 自动合并"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "真实开发次序与未公开尝试未知"
+      ],
+      "options": [
+        {
+          "option_id": "N02-O1",
+          "label": "加入无参数恒等旁路",
+          "description": "让层学习相对输入的改变，以较小结构变化检验表示作用。",
+          "claim_refs": [
+            "H01"
+          ]
+        },
+        {
+          "option_id": "N02-O2",
+          "label": "延长普通网络训练",
+          "description": "检验有限训练预算的解释，并记录额外时间成本。",
+          "claim_refs": [
+            "H01"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "N02-T1",
+          "question": "改善来自表示还是额外资源？",
+          "method": "比较匹配深度和宽度的普通与残差网络，并给普通网络可报告的预算扩展；检查多次运行差异。",
+          "claim_refs": [
+            "H01"
+          ],
+          "outcomes": [
+            {
+              "observation": "匹配预算下仍稳定改善",
+              "next_action": "支持继续研究残差表示，同时保留梯度传播等机制竞争解释。",
+              "claim_refs": [
+                "H01"
+              ]
+            },
+            {
+              "observation": "延长普通训练后差距消失",
+              "next_action": "将主张收窄为效率收益，重新检查必要性。",
+              "claim_refs": [
+                "H01"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "C02",
+        "C03",
+        "I02",
+        "H01"
+      ],
+      "paper_connection": "§3 给出表示动机，Table 2 提供具体对照；不据此断言作者实际先后。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "N02-L1",
+          "context": "增加模块前已有简单可行解",
+          "distinguish": "表示难学与解不存在",
+          "action": "找能保留旧解的小改动并做匹配比较",
+          "boundary": "已有解可表示，不保证优化器一定能找到它",
+          "claim_refs": [
+            "C02",
+            "C03",
+            "I02",
+            "H01"
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "N03",
+      "title": "为复杂度增量寻找必要证据",
+      "question": "既然旁路有效，是否应该让每条旁路都可学习？",
+      "path_contexts": [
+        {
+          "path_id": "P01",
+          "known_information": [
+            {
+              "text": "假设残差效果已经在局部对照中成立，正在分配计算预算。",
+              "claim_refs": []
+            }
+          ],
+          "assumptions": [
+            "这是候选路径的信息条件，不是已核实作者经历"
+          ]
+        },
+        {
+          "path_id": "P02",
+          "known_information": [
+            {
+              "text": "假设工程实现已含投影，需要判断哪些部分是必要的。",
+              "claim_refs": []
+            }
+          ],
+          "assumptions": [
+            "本路径独立设定信息条件，不与 P01 自动合并"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "真实开发次序与未公开尝试未知"
+      ],
+      "options": [
+        {
+          "option_id": "N03-O1",
+          "label": "只在维度变化时投影",
+          "description": "用较简单结构保留功能，再检验容量变化的收益。",
+          "claim_refs": [
+            "H01"
+          ]
+        },
+        {
+          "option_id": "N03-O2",
+          "label": "所有旁路使用投影",
+          "description": "付出参数和资源增量，要求独立的收益证据。",
+          "claim_refs": [
+            "H01"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "N03-T1",
+          "question": "额外投影是否值得资源增量？",
+          "method": "对 A/B/C 方案使用一致协议，报告精度、资源和不确定性；把机制对照与最佳系统成绩分开。",
+          "claim_refs": [
+            "H01"
+          ],
+          "outcomes": [
+            {
+              "observation": "小收益且资源明显增加",
+              "next_action": "优先简化，把复杂度留给更有收益的地方。",
+              "claim_refs": [
+                "H01"
+              ]
+            },
+            {
+              "observation": "收益稳健且符合应用约束",
+              "next_action": "保留投影，但把结论限制在已检验设置。",
+              "claim_refs": [
+                "H01"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "C04",
+        "H01"
+      ],
+      "paper_connection": "Table 3 与对应段落记录作者取舍；教学方案增加了明确的反向结果。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "N03-L1",
+          "context": "有效方案包含多个可选模块",
+          "distinguish": "核心作用与可选容量收益",
+          "action": "用局部对照决定哪些复杂度值得保留",
+          "boundary": "不同任务或预算可能改变取舍",
+          "claim_refs": [
+            "C04",
+            "H01"
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "没有作者实验日志或同期开发记录；两条路径均不是已核实历史。",
+    "依据论文已读取正文、表格与图注，未运行代码或复现实验；未逐图视觉量测。",
+    "本案例用于计算研究流程示范，不证明其他学科的有效性。"
+  ],
+  "sections": [
+    {
+      "section_id": "S1",
+      "title": "核心问题与最终工作",
+      "blocks": [
+        {
+          "block_id": "B1-1",
+          "markdown": "一个深层模型能表示浅层模型的解，并不表示训练程序容易找到它。论文最值得复盘的矛盾，是增加深度后连训练误差也会变差。残差表示把“直接学一个新映射”改成“在已有输入上学习改变”，使这个矛盾有了可检验的结构方案。",
+          "node_refs": [],
+          "claim_refs": [
+            "C01",
+            "C02"
+          ],
+          "evidence_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "S2",
+      "title": "可能的研究起点",
+      "blocks": [
+        {
+          "block_id": "B2-1",
+          "markdown": "路径 P01 从训练异常出发：先问错误出现在哪个环节，再寻找保留已有解的结构。路径 P02 从表示直觉出发：先尝试残差形式，再用深度对照寻找它解决的问题。论文给出了论证与结果，但不足以唯一确定实际想法的发生顺序。",
+          "node_refs": [],
+          "claim_refs": [
+            "I01",
+            "I02"
+          ],
+          "evidence_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "S3",
+      "title": "关键决策节点",
+      "blocks": [
+        {
+          "block_id": "B3-1",
+          "markdown": "N01 先把训练与验证误差分开。若二者都变差，先检查优化和实现；若只有验证变差，正则和数据才更有针对性。这个分叉避免看到更深模型变差就直接增加正则。",
+          "node_refs": [
+            "N01"
+          ],
+          "claim_refs": [
+            "H01"
+          ],
+          "evidence_refs": []
+        },
+        {
+          "block_id": "B3-2",
+          "markdown": "N02 用尽量小的结构变化检验表示作用。比较匹配条件的普通与残差网络，同时问延长普通网络训练能否消除差距。若差距消失，仍可能有效率价值，但不能继续讲成不可替代的能力。",
+          "node_refs": [
+            "N02"
+          ],
+          "claim_refs": [
+            "H01"
+          ],
+          "evidence_refs": []
+        },
+        {
+          "block_id": "B3-3",
+          "markdown": "N03 在有效结构内再次做减法。恒等与投影旁路的比较应承担“额外容量值不值得”的判断，不能让最佳分数自动替所有复杂模块辩护。",
+          "node_refs": [
+            "N03"
+          ],
+          "claim_refs": [
+            "H01"
+          ],
+          "evidence_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "S4",
+      "title": "失败与替代方向",
+      "blocks": [
+        {
+          "block_id": "B4-1",
+          "markdown": "训练退化是明确报告的现象；“作者反复失败后突然想到捷径”没有来源。更长训练、初始化、其他结构和正则方案在不同条件下都可能合理。它们的价值取决于能否区分假说，而不只是最终有没有赢过 ResNet。",
+          "node_refs": [],
+          "claim_refs": [
+            "C01",
+            "H01"
+          ],
+          "evidence_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "S5",
+      "title": "从探索收束为论文",
+      "blocks": [
+        {
+          "block_id": "B5-1",
+          "markdown": "研究收束需要两类证据：匹配条件下的比较解释结构选择，更深系统的结果显示扩展价值。二者不能互相替代。恒等映射动机提供可理解的设计理由，实验提供局部支持；两者合起来也不是普遍优化定理。",
+          "node_refs": [],
+          "claim_refs": [
+            "C03",
+            "C04"
+          ],
+          "evidence_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "S6",
+      "title": "可以带走的研究判断",
+      "blocks": [
+        {
+          "block_id": "B6-1",
+          "markdown": "可以带走的判断是：先找失败发生的环节，再选择能区分解释的小改动；当核心作用已经成立，再衡量每一份复杂度的增量价值。N01、N02、N03 分别给出适用条件和不能推出的结论。",
+          "node_refs": [
+            "N01",
+            "N02",
+            "N03"
+          ],
+          "claim_refs": [
+            "H01"
+          ],
+          "evidence_refs": []
+        }
+      ]
+    }
+  ]
+}

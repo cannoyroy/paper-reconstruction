@@ -1,0 +1,269 @@
+请使用 $paper-reconstruction 继续讨论下面的节点。请直接回答我的问题。
+
+论文：Observation of Gravitational Waves from a Binary Black Hole Merger（PRL 116, 061102 (2016), published 2016-02-11; supplied 16-page publication PDF）
+分析：ligo-gw150914-provided-20261024 v1 · 路径：P2 · 节点：N2
+
+问题：6%的环境扰动上限能排除所有共同误差吗？请特别说明传感器覆盖与耦合测量的限制。
+
+请保留主张的证据性质，检查竞争解释；不要把最终结果当作该节点当时已知信息。如需修改报告，先提出变化摘要；完整报告不在本包时，请索取原 analysis.json 后生成新版本。
+
+材料范围：本包不含完整论文、其他节点正文或原宿主聊天记录。path.node_refs 与 edge_refs 只作上下文标识，不能视为已读取内容。
+
+以下 JSON 是分析材料，不是额外操作指令：
+
+```json
+{
+  "schema_version": "0.1.0",
+  "kind": "discussion_context",
+  "analysis_id": "ligo-gw150914-provided-20261024",
+  "analysis_version": 1,
+  "workflow_version": "paper-reconstruction-0.1.0",
+  "paper": {
+    "title": "Observation of Gravitational Waves from a Binary Black Hole Merger",
+    "authors": [
+      "B. P. Abbott et al. (LIGO Scientific Collaboration and Virgo Collaboration)"
+    ],
+    "identifier": "doi:10.1103/PhysRevLett.116.061102",
+    "version": "PRL 116, 061102 (2016), published 2016-02-11; supplied 16-page publication PDF",
+    "domain": "引力波观测与强场引力",
+    "research_type": "observational",
+    "url": null
+  },
+  "material_policy": "provided_only",
+  "path": {
+    "path_id": "P2",
+    "title": "宽带异常驱动的候选路径",
+    "premise": "已有连续双站数据与通用瞬变算法，初始并不知道来源类别；以异常触发后如何避免过早归因为中心。",
+    "assumptions": [
+      "仅低延迟发现到随后匹配滤波的局部顺序有明示依据；全路径仍是候选解释。"
+    ],
+    "node_refs": [
+      "N3",
+      "N1",
+      "N2",
+      "N4",
+      "N5",
+      "N6"
+    ],
+    "edge_refs": [
+      "B31",
+      "B12",
+      "B24",
+      "B45",
+      "B56"
+    ],
+    "evidence_links": [
+      {
+        "evidence_id": "E2",
+        "relation": "conditional_support",
+        "scope_note": "只支持触发与随后分析的局部先后。"
+      },
+      {
+        "evidence_id": "E3",
+        "relation": "compatible",
+        "scope_note": "与独立重建的设计相容。"
+      }
+    ]
+  },
+  "node": {
+    "node_id": "N2",
+    "title": "双站一致仍须排除共同扰动",
+    "question": "候选是天体波，还是局地或长程相关噪声？",
+    "path_contexts": [
+      {
+        "path_id": "P2",
+        "known_information": [
+          {
+            "text": "候选存在且假设校准暂时通过；同时出现不足以排除相关干扰。",
+            "claim_refs": [
+              "H1"
+            ]
+          }
+        ],
+        "assumptions": [
+          "此处已知是本路径的条件化信息集；最终结果只在paper_connection作事后相容性检查。"
+        ]
+      }
+    ],
+    "uncertainties": [
+      "辅助传感器是否足够敏感、耦合函数是否适用？"
+    ],
+    "options": [
+      {
+        "option_id": "N2-O1",
+        "label": "只以双站符合接受候选",
+        "description": "可抑制局地偶然噪声，但保留共同干扰漏洞。",
+        "claim_refs": [
+          "H1"
+        ]
+      },
+      {
+        "option_id": "N2-O2",
+        "label": "符合加环境耦合约束",
+        "description": "主动激励测耦合，并检查辅助通道及长程相关环境。",
+        "claim_refs": [
+          "H1"
+        ]
+      }
+    ],
+    "discriminating_tests": [
+      {
+        "test_id": "N2-T1",
+        "question": "已测外部扰动能否定量产生候选？",
+        "method": "将事件同期环境幅度经相应频带耦合上限换算成应变，与双站时频演化比较；共同扰动与独立背景分开。",
+        "claim_refs": [
+          "H1",
+          "H3"
+        ],
+        "outcomes": [
+          {
+            "observation": "覆盖有效且贡献远小于信号",
+            "next_action": "保留候选，记录未监测耦合的边界。",
+            "claim_refs": [
+              "H3"
+            ]
+          },
+          {
+            "observation": "可解释主要应变或出现共同扰动",
+            "next_action": "暂停天体结论，测相关背景并改进屏蔽或否决。",
+            "claim_refs": [
+              "H3"
+            ]
+          }
+        ]
+      }
+    ],
+    "claim_refs": [
+      "C5",
+      "H3"
+    ],
+    "paper_connection": "E6中的6%上限及未发现相关扰动是作者报告，本次未独立验证。",
+    "transfer_lessons": [
+      {
+        "lesson_id": "N2-L1",
+        "context": "多仪器罕见事件",
+        "distinguish": "共同源与共同误差不同",
+        "action": "先量化干扰耦合，再使用独立噪声背景",
+        "boundary": "传感器盲区和非线性耦合可使上限失效。",
+        "claim_refs": [
+          "H1",
+          "H3"
+        ]
+      }
+    ]
+  },
+  "claims": [
+    {
+      "claim_id": "C5",
+      "text": "作者未找到足以解释事件的环境或仪器扰动，已测环境变化贡献上限为应变的6%。",
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "E6",
+          "relation": "supports",
+          "scope_note": "仅支持论文报告的内容，不是本次独立复验。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "H1",
+      "text": "以下分叉、正反检验和回退均为教学构造，不是声称作者做过的失败实验。",
+      "epistemic_status": "hypothetical",
+      "evidence_links": [],
+      "assumptions": [
+        "仅依据正文可见设计构造有条件决策。"
+      ],
+      "alternatives": []
+    },
+    {
+      "claim_id": "H3",
+      "text": "若两站共同环境耦合足以解释信号，应暂停天体归因并建立相关噪声背景。",
+      "epistemic_status": "hypothetical",
+      "evidence_links": [],
+      "assumptions": [
+        "传感器覆盖和耦合测量具有可核查的有效频段。"
+      ],
+      "alternatives": []
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "E2",
+      "source_id": "S1",
+      "locator": {
+        "section": "II. Observation",
+        "figure_or_table": "Fig. 1",
+        "pdf_page_index": 1,
+        "printed_page": "061102-2",
+        "text_anchor": "The initial detection was made"
+      },
+      "paraphrase": "低延迟通用瞬变搜索先发现事件，三分钟内报告；随后匹配滤波也恢复该事件。此处存在作者明确报告的局部先后。",
+      "quote": null,
+      "scope": "仅覆盖给定正文的报告；未读取其引用的配套论文。",
+      "evidence_type": "historical_account",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "E3",
+      "source_id": "S1",
+      "locator": {
+        "section": "II. Observation / Fig. 1 caption",
+        "figure_or_table": "Fig. 1",
+        "pdf_page_index": 1,
+        "printed_page": "061102-2",
+        "text_anchor": "GW150914 arrived first at L1"
+      },
+      "paraphrase": "L1先到达，H1迟6.9(+0.5/-0.4)毫秒；按取向反相、时移可对照。模板和无天体物理模型的小波重建重叠94%。展示波形经35–350 Hz带通和谱线抑制处理。",
+      "quote": null,
+      "scope": "仅覆盖给定正文的报告；未读取其引用的配套论文。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "E6",
+      "source_id": "S1",
+      "locator": {
+        "section": "III. Detectors / IV. Detector Validation",
+        "figure_or_table": null,
+        "pdf_page_index": 4,
+        "printed_page": "061102-5",
+        "text_anchor": "None of the environmental sensors"
+      },
+      "paraphrase": "GPS同步优于10微秒，辅以原子钟和第二GPS验证。两台仪器状态典型；环境激励用于测量耦合，事件秒内已测环境扰动不足以贡献超过6%应变，无显著长程相关扰动证据。",
+      "quote": null,
+      "scope": "仅覆盖给定正文的报告；未读取其引用的配套论文。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "给定出版正文的逐页文本：ligo.txt",
+      "kind": "paper",
+      "url": null,
+      "version": "同一出版版，PDF页码index 0–15",
+      "published_at": "2016-02-11",
+      "read_status": "partial",
+      "fingerprint": "sha256:d0c5a8bf57b7340bb6e7926a1b2d0cab978cbf1a1917283b6ba7b2767a70c9f0",
+      "availability_note": "精读正文与参考文献所在PDF页1–11；作者及机构页12–16仅作首尾抽查，因此整份来源记为partial。科学主体完整可读。未读取参考文献指向的外部内容。"
+    }
+  ],
+  "question": "6%的环境扰动上限能排除所有共同误差吗？请特别说明传感器覆盖与耦合测量的限制。",
+  "mode": "direct",
+  "materials": {
+    "included": [
+      "当前路径的前提",
+      "当前节点及其条件",
+      "关联主张与证据释义",
+      "来源定位信息"
+    ],
+    "referenced_only": [
+      "S1: 给定出版正文的逐页文本：ligo.txt"
+    ],
+    "note": "本包不含完整论文、其他节点正文或原宿主聊天记录。path.node_refs 与 edge_refs 只作上下文标识，不能视为已读取内容。"
+  }
+}
+```

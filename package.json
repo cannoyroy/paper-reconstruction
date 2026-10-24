@@ -1,0 +1,50 @@
+{
+  "name": "paper-reconstruction",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "packageManager": "pnpm@10.13.1",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsx scripts/generate-notices.ts && tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "cli": "tsx cli/index.ts",
+    "validate": "tsx cli/index.ts validate",
+    "examples:check": "tsx scripts/check-examples.ts",
+    "schemas:export": "tsx scripts/export-schemas.ts",
+    "package:skill": "tsx scripts/package-skill.ts",
+    "skill:install": "pnpm package:skill && tsx scripts/install-skill.ts",
+    "check": "pnpm test && pnpm examples:check && pnpm build && pnpm package:skill"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.41",
+    "@xyflow/react": "^12.8.6",
+    "ajv": "^8.17.1",
+    "idb": "^8.0.3",
+    "lucide-react": "^0.468.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^22.18.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.4",
+    "esbuild": "^0.25.10",
+    "fflate": "^0.8.2",
+    "prettier": "^3.9.10",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.9",
+    "vitest": "^3.2.4"
+  }
+}
