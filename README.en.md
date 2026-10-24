@@ -96,4 +96,21 @@ Version 0.1 supports a six-part single-paper reconstruction, candidate-path comp
 
 Three examples exercise computational, laboratory, and observational evidence. This is not validation across all disciplines or a measured historical-reconstruction accuracy. Evaluation records distinguish structural checks, semantic self-review, independent model trials, and human feedback.
 
+## Future direction: reconstructing research programmes and research maps
+
+**Conceptual outlook — not implemented.** This direction goes beyond the current single-paper reconstruction capability. No release version or delivery date is committed.
+
+**From reconstructing decisions within a single paper to reconstructing the research programme of an individual researcher or a research group.**
+
+Bring multiple works into one analytical framework. Through cross-comparison, linking, and synthesis, trace how core questions persist, key assumptions change, methods and evidence accumulate across papers, and research directions branch, converge, or shift. The object of analysis expands from an individual result to the internal structure of a body of work: which problems it advances collectively, and how its approaches to research judgment and methodology take shape.
+
+Research maps, diagrams of evolving questions, evidence networks, and pathways of method transfer could emerge naturally from this joint analysis. They would help readers understand how a research direction develops and advances, and which questions remain open. A research map is a visual expression of the analysis.
+
+Two representative scenarios:
+
+- **Reviewing your own body of work**: identify recurring questions, repeated approaches to judgment, and methods reusable across projects; discover connections between results and unresolved questions.
+- **Understanding a researcher or research group**: identify sustained lines of inquiry, methodological evolution, and research turning points across papers to build a coherent view of their research trajectory.
+
+Joint analysis must still distinguish explicitly documented relationships, evidence-grounded inferences, and exploratory connections. Publication order, shared authorship, or similar topics alone cannot establish the actual sequence of decisions or causal relationships.
+
 Original project code, Skill, and documentation are [MIT-licensed](LICENSE). Third-party papers retain their own rights. We distribute original analyses and source links rather than paper files. See [third-party materials](docs/third-party.md) and [contributing](CONTRIBUTING.md).
