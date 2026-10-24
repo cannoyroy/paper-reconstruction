@@ -12,6 +12,75 @@
   --gold: #ae8958;
   --paper: #fffefa;
 }
+.usage-section {
+  padding: 36px 0 48px;
+  border-top: 1px solid var(--line);
+}
+.usage-summary {
+  margin: 18px 0 22px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--green);
+}
+.usage-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 22px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.usage-steps > li {
+  min-width: 0;
+  padding: 24px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.step-number {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+.usage-steps h3 {
+  margin: 10px 0 12px;
+  font-size: 17px;
+}
+.usage-steps p,
+.usage-boundaries {
+  font-size: 13px;
+  line-height: 1.9;
+  color: #5b6b60;
+}
+.usage-steps p {
+  margin-bottom: 12px;
+}
+.usage-guide code {
+  overflow-wrap: anywhere;
+}
+.usage-prompt {
+  margin: 12px 0 8px;
+  padding: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  user-select: text;
+  background: #f0f2eb;
+  border-radius: 5px;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.usage-steps .copy-status {
+  font-size: 12px;
+  margin: 0;
+}
+.usage-boundaries {
+  margin-bottom: 12px;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
 * {
   box-sizing: border-box;
 }
@@ -2363,5 +2432,80 @@ textarea {
   }
   .sample-type {
     font-size: 10px;
+  }
+}
+.app-header {
+  gap: 24px;
+}
+.app-header nav {
+  gap: 20px;
+}
+.header-actions {
+  gap: 8px;
+}
+.github-link {
+  padding: 10px;
+}
+.hero-actions a:hover {
+  text-decoration: none;
+}
+@media (max-width: 1100px) {
+  .app-header {
+    height: auto;
+    min-height: 82px;
+    flex-wrap: wrap;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    gap: 12px 20px;
+  }
+  .app-header nav {
+    order: 3;
+    width: 100%;
+    height: auto;
+  }
+  .app-header nav button {
+    padding: 8px 0;
+  }
+}
+@media (max-width: 760px) {
+  .app-header {
+    height: auto;
+    padding: 14px 16px;
+    gap: 12px;
+  }
+  .app-header nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+  }
+  .header-actions {
+    gap: 2px;
+  }
+  .github-link span {
+    display: none;
+  }
+  .github-link {
+    padding: 8px;
+  }
+  .header-actions .primary {
+    font-size: 11px;
+    padding: 9px;
+  }
+  .usage-steps {
+    grid-template-columns: 1fr;
+  }
+  .usage-steps > li {
+    padding: 20px;
+  }
+  .usage-summary {
+    font-size: 14px;
+  }
+  .home-footer {
+    flex-wrap: wrap;
+    gap: 18px;
+    padding: 24px 0;
+  }
+  .footer-links {
+    width: 100%;
   }
 }

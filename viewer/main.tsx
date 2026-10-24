@@ -28,13 +28,13 @@ import {
   FileJson,
   FileText,
   GitBranch,
+  Github,
   Layers,
   Library,
   Link as LinkIcon,
   List,
   MessageSquare,
   PanelRightClose,
-  Plus,
   Search,
   ShieldCheck,
   Trash2,
@@ -75,6 +75,7 @@ import {
 } from "./storage";
 import "@xyflow/react/dist/style.css";
 import "./style.css";
+import { UsageGuide, projectLinks } from "./UsageGuide";
 
 const sampleFiles = import.meta.glob("../examples/*.json", {
   import: "default",
@@ -164,6 +165,7 @@ function App() {
     [busy, setBusy] = useState(false),
     [storageError, setStorageError] = useState(false);
   const [library, setLibrary] = useState(false),
+    [guide, setGuide] = useState(false),
     [help, setHelp] = useState(false),
     [exportOpen, setExportOpen] = useState(false),
     [toc, setToc] = useState(false);
@@ -292,6 +294,7 @@ function App() {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setHelp(false);
+        setGuide(false);
         setLibrary(false);
         setPanel(null);
         setToc(false);
@@ -490,18 +493,42 @@ function App() {
         </button>
         <nav>
           <button
-            className={!help ? "nav-active" : ""}
+            className={!help && !guide ? "nav-active" : ""}
             onClick={() => {
               setHelp(false);
+              setGuide(false);
             }}
           >
             工作台
           </button>
-          <button onClick={() => setHelp(true)}>
+          <button
+            onClick={() => {
+              setGuide(true);
+              setHelp(false);
+            }}
+          >
+            使用指南
+          </button>
+          <button
+            onClick={() => {
+              setHelp(true);
+              setGuide(false);
+            }}
+          >
             方法与边界 <CircleHelp size={14} />
           </button>
         </nav>
         <div className="header-actions">
+          <a
+            className="button subtle github-link"
+            href={projectLinks.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub 仓库"
+          >
+            <Github size={18} />
+            <span>GitHub</span>
+          </a>
           <button
             className="button subtle library-button"
             onClick={() => {
@@ -518,7 +545,7 @@ function App() {
             disabled={busy}
           >
             <Upload size={15} />
-            导入结果
+            导入分析 JSON
           </button>
         </div>
       </header>
@@ -579,13 +606,15 @@ function App() {
                 读懂每个选择的依据，也看见它仍然不确定的地方。
               </p>
               <div className="hero-actions">
-                <button
+                <a
                   className="button primary"
-                  onClick={() => input.current?.click()}
+                  href={projectLinks.release}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <Plus size={17} />
-                  打开你的复盘
-                </button>
+                  <ArrowDownToLine size={17} />
+                  下载 Skill
+                </a>
                 <button
                   className="text-button"
                   onClick={() =>
@@ -629,6 +658,15 @@ function App() {
               <div className="diagram-caption">候选路径 ≠ 已核实的研发历史</div>
             </div>
           </section>
+          <section className="usage-section" aria-labelledby="usage-title">
+            <div className="section-head">
+              <div>
+                <span className="eyebrow">GET STARTED</span>
+                <h2 id="usage-title">如何使用</h2>
+              </div>
+            </div>
+            <UsageGuide />
+          </section>
           <section className="examples-section" id="examples">
             <div className="section-head">
               <div>
@@ -666,28 +704,32 @@ function App() {
               ))}
             </div>
           </section>
-          <section className="how-strip">
-            <div>
-              <span>01</span>
-              <h3>在 Codex 中分析</h3>
-              <p>Skill 读取论文，生成完整复盘与 JSON。</p>
-            </div>
-            <ArrowRight size={18} />
-            <div>
-              <span>02</span>
-              <h3>在这里核查与比较</h3>
-              <p>联动正文、路径、节点和来源证据。</p>
-            </div>
-            <ArrowRight size={18} />
-            <div>
-              <span>03</span>
-              <h3>带着问题继续讨论</h3>
-              <p>复制节点上下文，回到 Codex 深入追问。</p>
-            </div>
-          </section>
           <footer className="home-footer">
             <span>论文研究复盘工作台</span>
             <span>证据有出处，推断有前提，判断有边界。</span>
+            <div className="footer-links">
+              <a
+                href={projectLinks.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
+              <a
+                href={projectLinks.release}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Skill 发布页
+              </a>
+              <a
+                href={projectLinks.readme}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                完整 README
+              </a>
+            </div>
             <button onClick={() => setHelp(true)}>
               阅读方法说明 <ArrowRight size={13} />
             </button>
@@ -1345,6 +1387,11 @@ function App() {
             )}
           </div>
         </>
+      )}
+      {guide && (
+        <Modal title="使用指南" onClose={() => setGuide(false)} wide>
+          <UsageGuide />
+        </Modal>
       )}
       {help && (
         <Modal title="这份复盘，怎样阅读？" onClose={() => setHelp(false)}>
