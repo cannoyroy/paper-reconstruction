@@ -1,0 +1,20 @@
+{
+  "intakeValidation": {
+    "command": "node release/paper-reconstruction/scripts/paper-reconstruction.mjs validate work/v02-weak-trial/intake.json",
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"kind\": \"collection_intake\"\n}\n",
+    "stderr": ""
+  },
+  "validation": {
+    "command": "node release/paper-reconstruction/scripts/paper-reconstruction.mjs validate work/v02-weak-trial/analysis.json",
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"analysis_id\": \"resnet-ligo-weak-holdout\",\n  \"analysis_version\": 1,\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  "markdown": {
+    "command": "node release/paper-reconstruction/scripts/paper-reconstruction.mjs markdown work/v02-weak-trial/analysis.json work/v02-weak-trial/report.md",
+    "exit_code": 0,
+    "stdout": "已导出 work/v02-weak-trial/report.md\n",
+    "stderr": ""
+  }
+}

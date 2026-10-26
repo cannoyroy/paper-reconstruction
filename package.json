@@ -1,6 +1,6 @@
 {
   "name": "paper-reconstruction",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -20,7 +20,9 @@
     "schemas:export": "tsx scripts/export-schemas.ts",
     "package:skill": "tsx scripts/package-skill.ts",
     "skill:install": "pnpm package:skill && tsx scripts/install-skill.ts",
-    "check": "pnpm test && pnpm examples:check && pnpm build && pnpm package:skill"
+    "check": "pnpm test && pnpm examples:check && pnpm evals:check && pnpm build && pnpm package:skill && pnpm test:package",
+    "evals:check": "tsx scripts/check-collection-evals.ts",
+    "test:package": "tsx scripts/smoke-skill-package.ts"
   },
   "dependencies": {
     "@sinclair/typebox": "^0.34.41",

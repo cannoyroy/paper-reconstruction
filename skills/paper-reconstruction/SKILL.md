@@ -1,11 +1,19 @@
 ---
 name: paper-reconstruction
-description: Reconstruct evidence-grounded candidate research decisions from a paper and export a workbench result. Use for 研究复盘、这篇论文怎么想到、研究决策推演 or a version-bound node discussion. Ordinary paper summaries and literature genealogy do not require this skill.
+description: Reconstruct evidence-grounded research decisions from one paper or jointly analyze multiple works, with evidence cards, comparisons and research maps. Use for 研究复盘、多篇联合分析、课题组研究脉络、研究决策推演 or version-bound node/relation discussion. Ordinary summaries do not require this skill.
 ---
 
 # 论文研究复盘
 
 从最终论文反推可能的研究形成路径，帮助读者学习有条件的科研判断。默认中文，一次提供完整复盘；用户指定语言时遵从。讨论一个节点时直接回答，只有用户主动选择才进入参与式判断。
+
+## 选择工作流
+
+- 一篇工作：使用下方完整复盘流程与 0.1.0 单篇契约。
+- 两篇及以上不同工作：先读 [多篇联合分析](references/collection-method.md) 与 [多篇结果契约](references/collection-output.md)，交付 0.2.0 联合结果。接受同作者、同组或仅用户觉得相似的线索，不预设共同主线。
+- discussion_context 或 collection_discussion_context：按 [讨论与修订](references/discussion.md) 处理当前目标，不能因收到局部讨论包重新检索并扩张论文清单。
+
+多篇默认输出联合报告、每篇证据卡、可比条件、关系和决策地图；不自动生成每篇的完整六部分报告。初读后先进行一次定向检索，最多推荐 3 篇，必须取得明确选择才纳入。只有用户提供的论文或明确接受的候选可成为联合分析对象；“仅提供材料”跳过检索。详见多篇方法中的暂停与恢复规则。
 
 ## 输入与材料
 
@@ -42,6 +50,7 @@ description: Reconstruct evidence-grounded candidate research decisions from a p
 node scripts/paper-reconstruction.mjs validate <analysis.json>
 node scripts/paper-reconstruction.mjs markdown <analysis.json> <report.md>
 node scripts/paper-reconstruction.mjs discussion <analysis.json> <path_id> <node_id> "问题" <output-prefix>
+node scripts/paper-reconstruction.mjs relation-discussion <analysis.json> <relation_id> "问题" <output-prefix>
 node scripts/paper-reconstruction.mjs revision <previous.json> <next.json>
 ```
 

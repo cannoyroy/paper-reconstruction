@@ -1,0 +1,208 @@
+{
+  "trial": "biology_heldout",
+  "evaluation_kind": "model_trial_with_self_review",
+  "started_at": "2026-10-26T14:13:43Z",
+  "finished_at": "2026-10-26T14:49:27.494Z",
+  "elapsed_seconds": 2144.494,
+  "model": null,
+  "model_configuration": null,
+  "model_calls": null,
+  "tokens": null,
+  "cost": null,
+  "requested_material_policy": "provided_only",
+  "actual_external_search_calls": 1,
+  "protocol_fully_followed": false,
+  "protocol_deviations": [
+    {
+      "kind": "external_search_under_provided_only",
+      "query": "\"A Programmable Dual-RNA-Guided DNA Endonuclease in Adaptive Bacterial Immunity\" pdf Jinek 2012",
+      "purpose": "Locate supplied Jinek paper full text after initial PMC challenge pages.",
+      "domains": [
+        "berkeley.edu",
+        "science.org",
+        "pmc.ncbi.nlm.nih.gov"
+      ],
+      "consequence": "No other papers opened, cited, recommended or admitted. Search snippets from other papers were not used as evidence. Still a protocol violation; provided_only is the requested policy, not a compliance assertion."
+    }
+  ],
+  "inputs": [
+    {
+      "path": "jinek-2012.html",
+      "bytes": 164439,
+      "sha256": "d72e12cc80da9df9cea60cc39eb85ae4d543bebaa6246f15f698d9dcb4572f10"
+    },
+    {
+      "path": "jinek-2012.txt",
+      "bytes": 26513,
+      "sha256": "6d853fc79a8d11f71948f6efcda490e64d28979d704b4ed4ad89b1e14b72cc55"
+    },
+    {
+      "path": "jinek-figure4.jpg",
+      "bytes": 116811,
+      "sha256": "9bf25f862b820052a472c4bb1aab36da9557bae42cfc9709167e04bd8486062e"
+    },
+    {
+      "path": "sternberg-2014.pdf",
+      "bytes": 1250619,
+      "sha256": "9d7907a4f857092103261fb626d8ad16ee1dc3208fb2b557b08481e2679713d6"
+    },
+    {
+      "path": "sternberg-2014.txt",
+      "bytes": 71451,
+      "sha256": "b9dba4910a34640d3185830a6e0475e1db8bb3ab2c6d58a1069c703056ed8ed2"
+    },
+    {
+      "path": "sternberg-figure-16.png",
+      "bytes": 418302,
+      "sha256": "8f626f787c605292fd8797fa75d57a9cfad0b5964a33eeed71fe6ab701d121d0"
+    },
+    {
+      "path": "sternberg-figure-17.png",
+      "bytes": 416288,
+      "sha256": "e4c701c00a762ad77fec5bb8cff8163abaf4289dbba6eafd024cd769c9a8ac30"
+    }
+  ],
+  "sources_read": [
+    {
+      "paper": "Jinek2012",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6286148/",
+      "version": "PMC author manuscript available 2018-12-07",
+      "read": "Main HTML text P1-P13, captions, metadata; visual Figure 4",
+      "not_read": "PDF download returned HTML; supplements including S6B not read"
+    },
+    {
+      "paper": "Sternberg2014",
+      "url": "https://escholarship.org/content/qt9r55k6pk/qt9r55k6pk.pdf",
+      "version": "Author manuscript available in PMC 2014-09-06, 17 PDF pages including repository cover",
+      "read": "Main text, Methods, main figure captions and metadata; visual Figures 3 and 4",
+      "not_read": "Extended Data, supplementary videos and raw trajectories"
+    }
+  ],
+  "retrieval_failures": [
+    "Initial PMC web opens: browser check",
+    "EuropePMC fullTextXML: HTTP 500",
+    "Jinek PDF URL: HTML challenge saved separately; no valid PDF claimed"
+  ],
+  "package_integrity": [
+    {
+      "path": "release/paper-reconstruction/agents/openai.yaml",
+      "sha256_at_start": "50ff6611351898d9a27b2233677480181c53d03231517ea9c3b19b024fb89752",
+      "sha256_at_end": "50ff6611351898d9a27b2233677480181c53d03231517ea9c3b19b024fb89752",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/LICENSE",
+      "sha256_at_start": "000a396839e5438a61765e0f8711dc8a9068aa7c430602ad290de222d70aab15",
+      "sha256_at_end": "000a396839e5438a61765e0f8711dc8a9068aa7c430602ad290de222d70aab15",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/collection-method.md",
+      "sha256_at_start": "71aeb52b64c53079514433d15b213a5064066db4345d8880a69c0a9ff666e54d",
+      "sha256_at_end": "71aeb52b64c53079514433d15b213a5064066db4345d8880a69c0a9ff666e54d",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/collection-output.md",
+      "sha256_at_start": "3ffc6f046407f7b29f8675c82fcc56600e7a60e2606093a401afda590fda9506",
+      "sha256_at_end": "3ffc6f046407f7b29f8675c82fcc56600e7a60e2606093a401afda590fda9506",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/discussion.md",
+      "sha256_at_start": "849ef0706e971df7028aa6d40a47cd50865fe6c52901a5ceb4f83a194bc96a4b",
+      "sha256_at_end": "849ef0706e971df7028aa6d40a47cd50865fe6c52901a5ceb4f83a194bc96a4b",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/method.md",
+      "sha256_at_start": "90d6007b1e3e6b36632641b25acde06db027d95a7d3a4de82f0012d30af13621",
+      "sha256_at_end": "90d6007b1e3e6b36632641b25acde06db027d95a7d3a4de82f0012d30af13621",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/output.md",
+      "sha256_at_start": "71efdc19693bf813f7093ecb41486f57ef388fcf51e267eab8e04a9db1bcbc0e",
+      "sha256_at_end": "71efdc19693bf813f7093ecb41486f57ef388fcf51e267eab8e04a9db1bcbc0e",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/analysis.schema.json",
+      "sha256_at_start": "560e5036ef5b6d1dca445072018469e9211d4d587a395194a011450e529e7537",
+      "sha256_at_end": "560e5036ef5b6d1dca445072018469e9211d4d587a395194a011450e529e7537",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/collection-discussion.schema.json",
+      "sha256_at_start": "58c0a1d5634c896b6f1c25dc4d0edde56bbf66afb785a621a7d787882af69ef2",
+      "sha256_at_end": "58c0a1d5634c896b6f1c25dc4d0edde56bbf66afb785a621a7d787882af69ef2",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/collection-intake.schema.json",
+      "sha256_at_start": "c60f2bc17771d1f30703c0a73a93202c64489d654ed5e5899ab32dad6e9551b9",
+      "sha256_at_end": "c60f2bc17771d1f30703c0a73a93202c64489d654ed5e5899ab32dad6e9551b9",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/collection.schema.json",
+      "sha256_at_start": "26863919c366632af2edcd46bcc81e659e80c6597b47793fb7519a6e7a69ad85",
+      "sha256_at_end": "26863919c366632af2edcd46bcc81e659e80c6597b47793fb7519a6e7a69ad85",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/discussion.schema.json",
+      "sha256_at_start": "95f14b543d2e03570ae602c23ad6acae48189cb6d9484804d17f148baf2b77c1",
+      "sha256_at_end": "95f14b543d2e03570ae602c23ad6acae48189cb6d9484804d17f148baf2b77c1",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/scripts/paper-reconstruction.mjs",
+      "sha256_at_start": "587c305503202de223d042763eccf8fa935c139da835dd0372c0abd17f719019",
+      "sha256_at_end": "587c305503202de223d042763eccf8fa935c139da835dd0372c0abd17f719019",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/SKILL.md",
+      "sha256_at_start": "447007dc0e8d36d581aa2f051897568a13e1b4a74c21e442302fdf569f2cd61b",
+      "sha256_at_end": "447007dc0e8d36d581aa2f051897568a13e1b4a74c21e442302fdf569f2cd61b",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/THIRD_PARTY_NOTICES.md",
+      "sha256_at_start": "633e2738f1ac4ed08d021221ab8969c2d9f5f27253365c6ea4c7b673d6d309af",
+      "sha256_at_end": "633e2738f1ac4ed08d021221ab8969c2d9f5f27253365c6ea4c7b673d6d309af",
+      "unchanged": true
+    }
+  ],
+  "all_package_hashes_unchanged": true,
+  "validation_log": "cli-validation.json",
+  "validation_passed": true,
+  "artifact_hashes": [
+    {
+      "path": "analysis.json",
+      "sha256": "49a137da1934cd5c345197c166cf0081324da9dc8a4cb5f7fe1337fd3e4e4e3c"
+    },
+    {
+      "path": "intake.json",
+      "sha256": "1f54b2cadcf97c03687098342f72f522ddcf222db4040b2e042ff101d9cbd44d"
+    },
+    {
+      "path": "report.md",
+      "sha256": "f800b1d63e9b44ae922489ebe95a66ba8c56613313aabb0fa87070927b401dc5"
+    },
+    {
+      "path": "stages.md",
+      "sha256": "80f840c86e1f04a39c57495cd98024bf7d9415415b009891a0082d02dac0f6a1"
+    },
+    {
+      "path": "cli-validation.json",
+      "sha256": "e07e9c1cb71723b2f8b1ff10065a581905eef6c4f45cb6bd44a073aeadff6fad"
+    }
+  ],
+  "limitations": [
+    "Model self-review only, not independent/human review.",
+    "Partial supplements and image coverage constrain mechanism and turnover claims.",
+    "Exact model, tokens, call count and price unavailable; recorded null."
+  ]
+}

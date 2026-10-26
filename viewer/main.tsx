@@ -47,11 +47,7 @@ import type {
   Evidence,
   ResearchNode,
 } from "../core/schema";
-import {
-  AnalysisConflictError,
-  assertNoVersionConflict,
-  parseBundle,
-} from "../core/validate";
+import { AnalysisConflictError } from "../core/validate";
 import {
   createDiscussion,
   discussionMarkdown,
@@ -75,12 +71,30 @@ import {
 } from "./storage";
 import "@xyflow/react/dist/style.css";
 import "./style.css";
+import { CollectionReader } from "./CollectionReader";
+import {
+  isCollection,
+  analysisTitle,
+  parseAnyBundle as parseBundle,
+  assertAnyConflict as assertNoVersionConflict,
+  type AnyAnalysis,
+} from "../core/workbench";
+import type { CollectionAnalysisBundle } from "../core/collection-schema";
 import { UsageGuide, projectLinks } from "./UsageGuide";
 
 const sampleFiles = import.meta.glob("../examples/*.json", {
   import: "default",
 });
 const samples = [
+  {
+    id: "residual-programme",
+    domain: "多篇联合分析",
+    year: "2015–2016",
+    title: "ResNet 研究主线",
+    subtitle: "从残差表示到直接传播，哪些判断发生了变化？",
+    type: "联合复盘 · 2 篇",
+    icon: GitBranch,
+  },
   {
     id: "resnet-2015",
     domain: "计算机视觉",
@@ -152,6 +166,9 @@ function StatusBadge({ claim }: { claim: Claim }) {
 }
 
 function App() {
+  const [collection, setCollection] = useState<CollectionAnalysisBundle | null>(
+    null,
+  );
   const [bundle, setBundle] = useState<AnalysisBundle | null>(null),
     [saved, setSaved] = useState<SavedAnalysis[]>([]);
   const [pathId, setPathId] = useState(""),
@@ -177,8 +194,8 @@ function App() {
     restoration = useRef(false),
     stateRef = useRef({ pathId, nodeId, blockId });
   stateRef.current = { pathId, nodeId, blockId };
-  const currentRef = useRef<AnalysisBundle | null>(null);
-  currentRef.current = bundle;
+  const currentRef = useRef<AnyAnalysis | null>(null);
+  currentRef.current = collection ?? bundle;
   const path = bundle?.paths.find((p) => p.path_id === pathId),
     node = bundle?.nodes.find((n) => n.node_id === nodeId);
   const block = bundle?.sections
@@ -201,11 +218,7 @@ function App() {
   };
 
   const openBundle = useCallback(
-    async (
-      b: AnalysisBundle,
-      origin: SavedAnalysis["origin"],
-      persist = true,
-    ) => {
+    async (b: AnyAnalysis, origin: SavedAnalysis["origin"], persist = true) => {
       // Reject a same-session collision even if browser storage is unavailable.
       if (currentRef.current) assertNoVersionConflict(currentRef.current, b);
       if (persist) {
@@ -218,6 +231,17 @@ function App() {
           noteStorage();
         }
       }
+      if (isCollection(b)) {
+        setCollection(b);
+        setBundle(null);
+        setLibrary(false);
+        setPanel(null);
+        setError("");
+        setDiscussion(null);
+        setExportOpen(false);
+        return;
+      }
+      setCollection(null);
       let reading: Awaited<ReturnType<typeof loadReading>>;
       try {
         reading = await loadReading(bundleKey(b));
@@ -480,6 +504,7 @@ function App() {
           className="brand"
           onClick={() => {
             setBundle(null);
+            setCollection(null);
             setPanel(null);
           }}
           aria-label="返回工作台首页"
@@ -584,13 +609,19 @@ function App() {
         </div>
       )}
 
-      {!bundle ? (
+      {collection ? (
+        <CollectionReader
+          key={bundleKey(collection)}
+          bundle={collection}
+          onStorageError={noteStorage}
+        />
+      ) : !bundle ? (
         <main className="home">
           <div className="home-topline">
             <span className="eyebrow">
               <span className="small-dot" /> A WORKSPACE FOR RESEARCH JUDGMENT
             </span>
-            <span className="version">方法预览 · v0.1</span>
+            <span className="version">研究复盘 · v0.2</span>
           </div>
           <section className="home-hero">
             <div>
@@ -671,9 +702,9 @@ function App() {
             <div className="section-head">
               <div>
                 <span className="eyebrow">EXPLORE THE CASES</span>
-                <h2>从三个研究现场开始</h2>
+                <h2>从研究现场开始</h2>
               </div>
-              <p>计算、实验与观测，三种证据方式。</p>
+              <p>单篇读懂选择，多篇比较研究主线。</p>
             </div>
             <div className="sample-grid">
               {samples.map((s, i) => (
@@ -1437,7 +1468,7 @@ function App() {
                     {s.origin === "example" ? "示例" : "导入"} · v
                     {s.bundle.analysis_version}
                   </span>
-                  <strong>{s.bundle.paper.title}</strong>
+                  <strong>{analysisTitle(s.bundle)}</strong>
                   <small>{s.bundle.analysis_id}</small>
                 </button>
                 <button
@@ -1446,8 +1477,12 @@ function App() {
                     try {
                       await deleteSaved(s.key);
                       await refreshSaved();
-                      if (bundle && bundleKey(bundle) === s.key) {
+                      if (
+                        (collection ?? bundle) &&
+                        bundleKey((collection ?? bundle)!) === s.key
+                      ) {
                         setBundle(null);
+                        setCollection(null);
                         setPanel(null);
                       }
                     } catch {

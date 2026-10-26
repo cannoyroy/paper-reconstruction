@@ -1,0 +1,37 @@
+[
+  {
+    "path": "jinek-2012.html",
+    "bytes": 164439,
+    "sha256": "d72e12cc80da9df9cea60cc39eb85ae4d543bebaa6246f15f698d9dcb4572f10"
+  },
+  {
+    "path": "jinek-2012.txt",
+    "bytes": 26513,
+    "sha256": "6d853fc79a8d11f71948f6efcda490e64d28979d704b4ed4ad89b1e14b72cc55"
+  },
+  {
+    "path": "jinek-figure4.jpg",
+    "bytes": 116811,
+    "sha256": "9bf25f862b820052a472c4bb1aab36da9557bae42cfc9709167e04bd8486062e"
+  },
+  {
+    "path": "sternberg-2014.pdf",
+    "bytes": 1250619,
+    "sha256": "9d7907a4f857092103261fb626d8ad16ee1dc3208fb2b557b08481e2679713d6"
+  },
+  {
+    "path": "sternberg-2014.txt",
+    "bytes": 71451,
+    "sha256": "b9dba4910a34640d3185830a6e0475e1db8bb3ab2c6d58a1069c703056ed8ed2"
+  },
+  {
+    "path": "sternberg-figure-16.png",
+    "bytes": 418302,
+    "sha256": "8f626f787c605292fd8797fa75d57a9cfad0b5964a33eeed71fe6ab701d121d0"
+  },
+  {
+    "path": "sternberg-figure-17.png",
+    "bytes": 416288,
+    "sha256": "e4c701c00a762ad77fec5bb8cff8163abaf4289dbba6eafd024cd769c9a8ac30"
+  }
+]

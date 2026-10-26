@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-10-26T14:20:07.691Z",
+  "checks": [
+    {
+      "file": "intake.json",
+      "exit_code": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"kind\": \"collection_intake\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "file": "accepted/intake.json",
+      "exit_code": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"kind\": \"collection_intake\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "file": "accepted/analysis.json",
+      "exit_code": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"analysis_id\": \"consent-accepted-rhi-v1\",\n  \"analysis_version\": 1,\n  \"warnings\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "file": "rejected/intake.json",
+      "exit_code": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"kind\": \"collection_intake\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "file": "rejected/analysis.json",
+      "exit_code": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"analysis_id\": \"consent-rejected-rh-v1\",\n  \"analysis_version\": 1,\n  \"warnings\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "rejected_outside_search_contains_candidate": false,
+      "accepted_paper_count": 3,
+      "rejected_paper_count": 2,
+      "pending_preserved": true
+    }
+  ]
+}

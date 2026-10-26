@@ -1,0 +1,36 @@
+[
+  {
+    "command": [
+      "node",
+      "release/paper-reconstruction/scripts/paper-reconstruction.mjs",
+      "validate",
+      "work/v02-trial-skill/intake.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"kind\": \"collection_intake\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "release/paper-reconstruction/scripts/paper-reconstruction.mjs",
+      "validate",
+      "work/v02-trial-skill/analysis.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"analysis_id\": \"trial-skill-resnet-highway-v1\",\n  \"analysis_version\": 1,\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "release/paper-reconstruction/scripts/paper-reconstruction.mjs",
+      "markdown",
+      "work/v02-trial-skill/analysis.json",
+      "work/v02-trial-skill/report.md"
+    ],
+    "exit_code": 0,
+    "stdout": "已导出 work/v02-trial-skill/report.md\n",
+    "stderr": ""
+  }
+]

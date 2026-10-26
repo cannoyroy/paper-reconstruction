@@ -1,0 +1,1971 @@
+{
+  "schema_version": "0.2.0",
+  "workflow_version": "0.2.0",
+  "kind": "collection_analysis",
+  "analysis_id": "trial-skill-resnet-highway-v1",
+  "analysis_version": 1,
+  "example_kind": "user_analysis",
+  "status": "complete",
+  "collection": {
+    "title": "学习门控，还是保留无门残差通路？",
+    "goal": "联合理解ResNet与Highway的结构选择、证据与适用边界。",
+    "user_clue": "用户觉得两者都通过跨层通路帮助训练，希望比较，不预设继承或同团队关系。",
+    "derived_from": null
+  },
+  "papers": [
+    {
+      "paper_id": "resnet",
+      "work_id": "arxiv:1512.03385",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "title": "Deep Residual Learning for Image Recognition",
+      "authors": [
+        "Kaiming He",
+        "Xiangyu Zhang",
+        "Shaoqing Ren",
+        "Jian Sun"
+      ],
+      "identifier": "arXiv:1512.03385",
+      "version": "v1",
+      "domain": "深度学习与视觉识别",
+      "research_type": "computational",
+      "url": "https://arxiv.org/abs/1512.03385v1",
+      "read_status": "partial",
+      "material_note": "逐页文本全部读取，共12页，含附录；未查看PDF图像，不据曲线像素或热图自行量数。"
+    },
+    {
+      "paper_id": "highway",
+      "work_id": "arxiv:1505.00387",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "title": "Highway Networks",
+      "authors": [
+        "Rupesh Kumar Srivastava",
+        "Klaus Greff",
+        "Jürgen Schmidhuber"
+      ],
+      "identifier": "arXiv:1505.00387",
+      "version": "v1",
+      "domain": "深度学习与视觉识别",
+      "research_type": "computational",
+      "url": "https://arxiv.org/abs/1505.00387v1",
+      "read_status": "partial",
+      "material_note": "逐页文本全部读取，共6页；这是extended abstract，未查看PDF图像，也未补读其后续论文。"
+    }
+  ],
+  "paper_cards": [
+    {
+      "paper_id": "resnet",
+      "question": {
+        "text": "加深已有模型后训练反而变差，能否通过学习相对输入的修正，降低寻找可行解的难度？",
+        "claim_refs": [
+          "cr1",
+          "cr2"
+        ]
+      },
+      "conditions": [
+        {
+          "text": "ImageNet比较18/34层plain与残差；首轮捷径用A选项，保持参数、宽度和层数可对应。CIFAR另检查更极端深度。",
+          "claim_refs": [
+            "cr3",
+            "cr5"
+          ]
+        }
+      ],
+      "assumptions": [
+        {
+          "text": "恒等映射可作为合理参照是动机假设；残差更容易学习由实验支持，文章没有给出适用于所有网络的收敛定理。",
+          "claim_refs": [
+            "cr1",
+            "cr2"
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "text": "同维处保留无门捷径，学习F；变维可以补零或投影，并把全投影的微小提升与时间、参数开销一起判断。",
+          "claim_refs": [
+            "cr2",
+            "cr4"
+          ]
+        }
+      ],
+      "discriminating_evidence": [
+        {
+          "text": "34层残差相对plain同时降低训练与验证误差，支持优化改进；A/B/C皆优于plain，削弱“必须额外投影参数才有效”的解释。",
+          "claim_refs": [
+            "cr3",
+            "cr4"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "text": "支持边界是已测试训练设置。1202层训练误差小于0.1%仍不及110层测试表现，说明训练畅通与继续加深的价值要分开。",
+          "claim_refs": [
+            "cr5"
+          ]
+        }
+      ],
+      "limitations": [
+        "本文只读逐页文本，不核验图线形状；ResNet表6所引Highway混含另一篇报告，不能补成对本次v1的同条件比较。"
+      ],
+      "open_questions": [
+        "无门结构的优势在统一预算下是否仍成立？相加后的非线性与门的区别，分别贡献多少？",
+        "论文将残差更易优化作为受实验支持的动机；若替代初始化或训练计划消除了plain退化，原有优势还剩下多少，需要重新测量而不能从当前表格推出。"
+      ],
+      "evidence_refs": [
+        "er1",
+        "er2",
+        "er3",
+        "er4",
+        "er5",
+        "er6",
+        "er7"
+      ]
+    },
+    {
+      "paper_id": "highway",
+      "question": {
+        "text": "在不把网络无限加宽的情况下，能否让很深的网络用普通SGD开始并持续学习？",
+        "claim_refs": [
+          "ch2",
+          "ch3"
+        ]
+      },
+      "conditions": [
+        {
+          "text": "MNIST优化对照覆盖10至100层；Highway宽50、plain宽71近似配平参数。每种配置40次随机搜索，以最佳训练交叉熵观察优化。",
+          "claim_refs": [
+            "ch3"
+          ]
+        }
+      ],
+      "assumptions": [
+        {
+          "text": "负门偏置让初始状态偏向carry；这是作者采用并报告有效的设计，不保证所有门值、激活或任务都能训练。",
+          "claim_refs": [
+            "ch1",
+            "ch2"
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "text": "让T随输入学习，使用H(x)T+x(1−T)的耦合门，在保持输入和进行变换之间调整；改维处本文使用plain层。",
+          "claim_refs": [
+            "ch1"
+          ]
+        }
+      ],
+      "discriminating_evidence": [
+        {
+          "text": "百层训练曲线的文字报告支持可优化；CIFAR表另外观察测试表现，不能拿训练交叉熵代替泛化评价。",
+          "claim_refs": [
+            "ch3",
+            "ch4"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "text": "门活动的选择性由作者图示解读给出，但尚不能证明它是性能提升原因；900层结果仍在进行中，不能当成完整测试结论。",
+          "claim_refs": [
+            "ch5",
+            "ch6"
+          ]
+        }
+      ],
+      "limitations": [
+        "表1部分模型只用40K样本；图2仅能核查文字解释，无法确认稀疏模式和个别样本代表性。"
+      ],
+      "open_questions": [
+        "固定相同平均开度的门是否同样有效？输入相关性本身能否经消融得到支持？",
+        "图示支持作者对路由的描述，却没有报告门控计算能被跳过。若后续目标是降低推理开销，应另测运行时间、实现代价与精度，不以稀疏门值充当速度证据。"
+      ],
+      "evidence_refs": [
+        "eh1",
+        "eh2",
+        "eh3",
+        "eh4",
+        "eh5",
+        "eh6"
+      ]
+    }
+  ],
+  "search": {
+    "status": "provided_only",
+    "queries": [],
+    "note": "用户明确限定仅提供材料；没有执行外部检索，没有推荐或新增论文，不需要候选采纳决定。",
+    "candidates": []
+  },
+  "comparisons": [
+    {
+      "axis_id": "axis-mechanism",
+      "title": "通路怎样控制",
+      "comparability": "比较同维块的计算选择，不把表示形式等同于实际因果机制。",
+      "cells": [
+        {
+          "paper_id": "resnet",
+          "summary": "无门的F+x；相加后仍有ReLU，不能声称整个网络是纯恒等通道。",
+          "claim_refs": [
+            "cr2"
+          ]
+        },
+        {
+          "paper_id": "highway",
+          "summary": "H与x按输入相关T混合；实际sigmoid只接近而不精确达到开关极限。",
+          "claim_refs": [
+            "ch1"
+          ]
+        }
+      ]
+    },
+    {
+      "axis_id": "axis-evidence",
+      "title": "怎样识别优化困难",
+      "comparability": "训练指标可比较研究策略；数据集、宽度、BN与搜索条件不同，数值不可横排。",
+      "cells": [
+        {
+          "paper_id": "resnet",
+          "summary": "ImageNet同配置plain/残差训练与验证对照；CIFAR检验极深情况。",
+          "claim_refs": [
+            "cr3",
+            "cr5"
+          ]
+        },
+        {
+          "paper_id": "highway",
+          "summary": "MNIST参数近似匹配、宽度不同，40次搜索选最佳训练交叉熵。",
+          "claim_refs": [
+            "ch3"
+          ]
+        }
+      ]
+    },
+    {
+      "axis_id": "axis-boundary",
+      "title": "更深是否更值得",
+      "comparability": "各自报告的支持范围不同，不能把900与1202这个层数比较成性能证据。",
+      "cells": [
+        {
+          "paper_id": "resnet",
+          "summary": "1202层训练很低、测试退步；继续加深需另查泛化。",
+          "claim_refs": [
+            "cr5"
+          ]
+        },
+        {
+          "paper_id": "highway",
+          "summary": "900层仍在80 epochs进行中；最多说明当时未见优化阻碍。",
+          "claim_refs": [
+            "ch6"
+          ]
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "cluster_id": "cluster-training",
+      "title": "深度、保留输入与可训练性",
+      "rationale": "按共同问题形成的分析簇，不表示团队归属或真实研究纲领。",
+      "paper_refs": [
+        "resnet",
+        "highway"
+      ],
+      "claim_refs": [
+        "ci1"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "relation_id": "rel-choice",
+      "from_paper_id": "resnet",
+      "to_paper_id": "highway",
+      "kind": "competing",
+      "directed": false,
+      "label": "同一训练瓶颈下的不同通路选择",
+      "explanation": "有依据推断：两者可作为是否学习路由的设计备选。无方向连线只表达可比较选择，不宣称继承、时间因果或已证实优劣。",
+      "epistemic_status": "inferred",
+      "claim_refs": [
+        "ci1",
+        "ci2",
+        "ci3"
+      ],
+      "evidence_refs": [
+        "er1",
+        "er2",
+        "er3",
+        "eh1",
+        "eh3",
+        "eh4",
+        "er7"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "s-resnet",
+      "title": "Deep Residual Learning for Image Recognition — v1逐页文本",
+      "kind": "paper",
+      "url": "https://arxiv.org/abs/1512.03385v1",
+      "version": "v1",
+      "published_at": "2015-12-10",
+      "read_status": "partial",
+      "fingerprint": "sha256:690614f5553d49de231dce0e4f95c108422af4c2f9f5aa845336f69907ac91ba",
+      "availability_note": "逐页文本全部读取，共12页，含附录；未查看PDF图像，不据曲线像素或热图自行量数。 指纹属于本次实际读取的TXT，不是原PDF。",
+      "paper_refs": [
+        "resnet"
+      ]
+    },
+    {
+      "source_id": "s-highway",
+      "title": "Highway Networks — v1逐页文本",
+      "kind": "paper",
+      "url": "https://arxiv.org/abs/1505.00387v1",
+      "version": "v1",
+      "published_at": "2015-05-03",
+      "read_status": "partial",
+      "fingerprint": "sha256:d141478bc7b439ceeac9d3e406a3171c848a56ac7676060ed9efea3a0ddd5c87",
+      "availability_note": "逐页文本全部读取，共6页；这是extended abstract，未查看PDF图像，也未补读其后续论文。 指纹属于本次实际读取的TXT，不是原PDF。",
+      "paper_refs": [
+        "highway"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "er1",
+      "source_id": "s-resnet",
+      "locator": {
+        "section": "1. Introduction",
+        "figure_or_table": "Figure 1",
+        "pdf_page_index": 0,
+        "printed_page": "1",
+        "text_anchor": "adding more layers"
+      },
+      "paraphrase": "作者指出更深plain网络训练误差更高，并以增加恒等层的构造说明：存在不劣解不意味着当前求解器能找到它。",
+      "quote": null,
+      "scope": "CIFAR-10所述退化现象与作者动机；不是退化机制的数学证明。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "er2",
+      "source_id": "s-resnet",
+      "locator": {
+        "section": "3.1–3.2",
+        "figure_or_table": "Equation (1), Figure 2",
+        "pdf_page_index": 2,
+        "printed_page": "3",
+        "text_anchor": "second nonlinearity after the addition"
+      },
+      "paraphrase": "残差块写为y=F(x)+x，相加后使用ReLU；同维identity shortcut不新增参数。异维可用投影。作者将“残差更易学”作为假设。",
+      "quote": null,
+      "scope": "区分相加前的公式与相加后的非线性，不声称端到端存在完全无阻的恒等路径。",
+      "evidence_type": "theoretical_argument",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "er3",
+      "source_id": "s-resnet",
+      "locator": {
+        "section": "4.1. ImageNet Classification",
+        "figure_or_table": "Figure 4, Table 2",
+        "pdf_page_index": 4,
+        "printed_page": "5",
+        "text_anchor": "no extra parameter"
+      },
+      "paraphrase": "18/34层plain的10-crop top-1验证误差为27.94/28.54%，残差对应27.88/25.03%；正文报告34层残差训练误差也更低，首轮使用无额外参数的A选项。",
+      "quote": null,
+      "scope": "表格文本与正文报告已核对；未从曲线图像独立读取轨迹。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "er4",
+      "source_id": "s-resnet",
+      "locator": {
+        "section": "Identity vs. Projection Shortcuts",
+        "figure_or_table": "Table 3",
+        "pdf_page_index": 5,
+        "printed_page": "6",
+        "text_anchor": "small differences among A/B/C"
+      },
+      "paraphrase": "A/B/C的34层top-1误差25.03/24.52/24.19%；三者都优于plain。作者因复杂度考虑不继续用全投影C。",
+      "quote": null,
+      "scope": "这是同论文的投影对照，不是对Highway门控的消融。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "er5",
+      "source_id": "s-resnet",
+      "locator": {
+        "section": "4.2. CIFAR-10 and Analysis",
+        "figure_or_table": "Figure 6, Table 6",
+        "pdf_page_index": 7,
+        "printed_page": "8",
+        "text_anchor": "Exploring Over 1000 layers"
+      },
+      "paraphrase": "1202层训练误差小于0.1%，但测试误差7.93%，高于110层最佳6.43%；作者将差异解释为过拟合并提出正则化方向。",
+      "quote": null,
+      "scope": "训练/测试现象是报告结果，过拟合原因是作者解释；没有新增正则化实验。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "er6",
+      "source_id": "s-resnet",
+      "locator": {
+        "section": "2. Related Work",
+        "figure_or_table": null,
+        "pdf_page_index": 1,
+        "printed_page": "2",
+        "text_anchor": "Concurrent with our work"
+      },
+      "paraphrase": "作者将Highway称作同期工作，区分带参数、数据相关的门与自身不闭合的identity shortcut。",
+      "quote": null,
+      "scope": "这是论文明确的比较表述，不是作者实际构思过程或继承顺序的证据。",
+      "evidence_type": "author_interpretation",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "er7",
+      "source_id": "s-resnet",
+      "locator": {
+        "section": "4.2. CIFAR-10 and Analysis",
+        "figure_or_table": "Table 6",
+        "pdf_page_index": 6,
+        "printed_page": "7",
+        "text_anchor": "Highway [42, 43]"
+      },
+      "paraphrase": "表6列19层Highway误差7.54（7.72±0.16）和32层8.80，引用[42,43]；ResNet训练用随机裁剪、翻转、BN和确定的学习率计划。",
+      "quote": null,
+      "scope": "不能仅凭此表确认每个Highway数值对应本次v1的哪个训练运行；[43]未纳入。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "eh1",
+      "source_id": "s-highway",
+      "locator": {
+        "section": "2. Highway Networks",
+        "figure_or_table": "Equations (2)–(5)",
+        "pdf_page_index": 1,
+        "printed_page": null,
+        "text_anchor": "For simplicity, in this paper"
+      },
+      "paraphrase": "一般形式为H(x)T(x)+xC(x)，本文令C=1−T；T=0的形式极限对应恒等传递，T=1对应普通变换；实际sigmoid不精确到0或1。",
+      "quote": null,
+      "scope": "最后一点见同页2.2；不能把形式极限当作实验中精确关闭。",
+      "evidence_type": "theoretical_argument",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "eh2",
+      "source_id": "s-highway",
+      "locator": {
+        "section": "2.2. Training Deep Highway Networks",
+        "figure_or_table": null,
+        "pdf_page_index": 1,
+        "printed_page": null,
+        "text_anchor": "initially biased towards carry behavior"
+      },
+      "paraphrase": "T使用sigmoid并以负偏置初始化，初始偏向carry。作者报告不同H激活与零均值权重初始分布下仍能学习。",
+      "quote": null,
+      "scope": "作者所试配置，不是任意初始化/任意深度的保证。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "eh3",
+      "source_id": "s-highway",
+      "locator": {
+        "section": "3.1. Optimization",
+        "figure_or_table": "Figure 1",
+        "pdf_page_index": 2,
+        "printed_page": null,
+        "text_anchor": "random search of 40 runs"
+      },
+      "paraphrase": "MNIST比较10/20/50/100层，Highway宽50、plain宽71以近似匹配参数；每配置40次随机超参搜索，报告最佳训练交叉熵。100层仍可优化。",
+      "quote": null,
+      "scope": "比较训练优化而非测试泛化；宽度不同，选择最佳搜索运行也影响解释。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "eh4",
+      "source_id": "s-highway",
+      "locator": {
+        "section": "3.2. Comparison to Fitnets",
+        "figure_or_table": "Table 1",
+        "pdf_page_index": 3,
+        "printed_page": null,
+        "text_anchor": "40K out of 50K"
+      },
+      "paraphrase": "CIFAR-10表1中19层约2.3M参数Highway准确率92.24%；另两个带星号配置只用40K训练样本。表内Fitnet数值来自另文报告。",
+      "quote": null,
+      "scope": "仅使用本篇表中数值与注释，未读取Fitnets原文，不能称独立复现。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "eh5",
+      "source_id": "s-highway",
+      "locator": {
+        "section": "4. Analysis",
+        "figure_or_table": "Figure 2",
+        "pdf_page_index": 3,
+        "printed_page": null,
+        "text_anchor": "We hypothesize that this difference"
+      },
+      "paraphrase": "正文描述50隐层网络的门活动输入相关且稀疏，块输出跨层大多不变；MNIST/CIFAR-100主要变化层数不同，被作者猜测与任务复杂度有关。",
+      "quote": null,
+      "scope": "只核查作者对图的文字解读，未目视检查热图；选择性和任务复杂度的因果解释未由干预证实。",
+      "evidence_type": "author_interpretation",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "eh6",
+      "source_id": "s-highway",
+      "locator": {
+        "section": "3.1. Optimization",
+        "figure_or_table": null,
+        "pdf_page_index": 2,
+        "printed_page": null,
+        "text_anchor": "only at 80 epochs as of now"
+      },
+      "paraphrase": "900层CIFAR-100网络当时只训练到80 epochs，作者称尚无优化困难。",
+      "quote": null,
+      "scope": "这是进行中试验的有限观察，不是已完成900层泛化评估。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "cr1",
+      "text": "ResNet以加深plain后训练误差变高定位优化问题，而非仅凭测试误差归因。",
+      "paper_refs": [
+        "resnet"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "er1",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "er3",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "cr2",
+      "text": "ResNet在同维块用F(x)+x并在相加后施加非线性；恒等捷径无可训练门。",
+      "paper_refs": [
+        "resnet"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "er2",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "cr3",
+      "text": "ImageNet的无额外参数残差对照降低34层训练误差及验证误差；这支持该设置下重参数化的作用。",
+      "paper_refs": [
+        "resnet"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "er3",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "cr4",
+      "text": "A/B/C投影对照表明全投影不是缓解本实验退化的必要条件；作者为效率采用较简洁捷径。",
+      "paper_refs": [
+        "resnet"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "er4",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "cr5",
+      "text": "1202层可获得很低训练误差但测试不及110层；过拟合是作者给出的解释。",
+      "paper_refs": [
+        "resnet"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "er5",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "cr6",
+      "text": "ResNet明确将Highway描述为同期且机制有别，未提供真实开发先后的记录。",
+      "paper_refs": [
+        "resnet"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "er6",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "cr7",
+      "text": "ResNet表6的Highway数值关联[42,43]，不能无条件归给本次选定的Highway v1运行。",
+      "paper_refs": [
+        "resnet"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "er7",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "ch1",
+      "text": "Highway v1以输入相关T在H(x)与x之间混合，实际采用C=1−T。",
+      "paper_refs": [
+        "highway"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "eh1",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "ch2",
+      "text": "Highway用负门偏置引导初始carry，并报告不同激活配置下的可训练性。",
+      "paper_refs": [
+        "highway"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "eh2",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "ch3",
+      "text": "Highway的深度优化对照以MNIST训练交叉熵为目标，参数近似匹配但宽度不同，40次搜索后展示最佳配置。",
+      "paper_refs": [
+        "highway"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "eh3",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "ch4",
+      "text": "Highway v1的CIFAR表中19层2.3M配置准确率92.24%，部分其他配置只有40K训练样本。",
+      "paper_refs": [
+        "highway"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "eh4",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "ch5",
+      "text": "Highway作者把图示解释为输入相关的选择性路由；该观察本身不是路由收益的干预证明。",
+      "paper_refs": [
+        "highway"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "eh5",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "ch6",
+      "text": "Highway v1的900层例子是80 epochs时进行中的观察，不能当作完整泛化验证。",
+      "paper_refs": [
+        "highway"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "eh6",
+          "relation": "supports",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "ci1",
+      "text": "两篇可以围绕“为深层变换保留接近输入的通路”形成一个问题簇，但不构成已证明的统一研究纲领或作者影响史。",
+      "paper_refs": [
+        "resnet",
+        "highway"
+      ],
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "er1",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "er2",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "eh1",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "eh3",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [
+        "只比较所给版本的研究问题与表示形式。"
+      ],
+      "alternatives": [
+        "相似形式可能来自共同优化困难，未必来自直接继承。"
+      ]
+    },
+    {
+      "claim_id": "ci2",
+      "text": "门控与无门残差可以视为针对同一优化瓶颈的竞争设计选项；现有材料不足以判定哪个机制在匹配条件下更优。",
+      "paper_refs": [
+        "resnet",
+        "highway"
+      ],
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "er2",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "er3",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "eh1",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "eh3",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [
+        "竞争仅指设计选择，不表示已有一对一实验胜负。"
+      ],
+      "alternatives": [
+        "数据、宽度、归一化、搜索和训练预算差异可能解释表现差别。"
+      ]
+    },
+    {
+      "claim_id": "ci3",
+      "text": "当前材料只允许机制和证据策略比较，不允许把两个表格直接合并为性能排名。",
+      "paper_refs": [
+        "resnet",
+        "highway"
+      ],
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "er7",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "eh4",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [
+        "同名方法的不同运行与版本需要单独核对。"
+      ],
+      "alternatives": [
+        "数值差别也可能来自未纳入的后续报告、随机性或评测设置。"
+      ]
+    },
+    {
+      "claim_id": "ci4",
+      "text": "容易训练、输入相关路由、增加深度带来泛化收益是三个不同命题，不能凭其中一个自动获得另外两个。",
+      "paper_refs": [
+        "resnet",
+        "highway"
+      ],
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "er5",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "eh3",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "eh5",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "eh6",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [
+        "按训练损失、机制干预与留出测试分别检验。"
+      ],
+      "alternatives": [
+        "统一机制可能同时影响三者，但所给实验不足以隔离这种因果关系。"
+      ]
+    },
+    {
+      "claim_id": "ci5",
+      "text": "Highway耦合门公式可写成x+T(x)(H(x)−x)，这给出形式上的共同参照，但不使两篇的参数化、初始化和计算图等价。",
+      "paper_refs": [
+        "resnet",
+        "highway"
+      ],
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "er2",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "eh1",
+          "relation": "conditional_support",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [
+        "代数展开只限于所述同维块，不把相加前表达式扩展成整个网络。"
+      ],
+      "alternatives": [
+        "相同输入输出函数可能由不同参数化实现，并具有不同的优化过程。"
+      ]
+    },
+    {
+      "claim_id": "cx1",
+      "text": "在匹配数据、预算和调参机会的试验中，比较plain、无门残差、学习门和固定门，可检验学习路由是否带来额外收益；这是本次提出的实验。",
+      "paper_refs": [
+        "resnet",
+        "highway"
+      ],
+      "epistemic_status": "hypothetical",
+      "evidence_links": [
+        {
+          "evidence_id": "er3",
+          "relation": "compatible",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "eh3",
+          "relation": "compatible",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        },
+        {
+          "evidence_id": "eh5",
+          "relation": "compatible",
+          "scope_note": "仅支持该主张所述的论文文本、实验设置或作者解释；不构成独立复现。"
+        }
+      ],
+      "assumptions": [
+        "需要可执行代码、统一训练协议与多随机种子。"
+      ],
+      "alternatives": [
+        "即使门有收益，也可能来自参数量或正则化变化而非输入适应性。"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": "n-diagnose",
+      "title": "先判断深度失败在哪一层面",
+      "question": "应该先改优化路径还是先处理泛化？",
+      "paper_refs": [
+        "resnet",
+        "highway"
+      ],
+      "path_contexts": [
+        {
+          "path_id": "p-retro",
+          "known_information": [
+            {
+              "text": "ResNet以加深plain后训练误差变高定位优化问题，而非仅凭测试误差归因。",
+              "claim_refs": [
+                "cr1"
+              ]
+            },
+            {
+              "text": "Highway的深度优化对照以MNIST训练交叉熵为目标，参数近似匹配但宽度不同，40次搜索后展示最佳配置。",
+              "claim_refs": [
+                "ch3"
+              ]
+            },
+            {
+              "text": "1202层可获得很低训练误差但测试不及110层；过拟合是作者给出的解释。",
+              "claim_refs": [
+                "cr5"
+              ]
+            }
+          ],
+          "assumptions": [
+            "这是事后比较；仅使用已纳入的两篇v1，不重建作者真实开发时间线。"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "训练误差变高不能单独辨别具体优化机理。"
+      ],
+      "options": [
+        {
+          "option_id": "n-diagnose-o1",
+          "label": "optimize",
+          "description": "若训练随深度恶化，优先检测与改变优化路径。",
+          "claim_refs": [
+            "cr1",
+            "ch3"
+          ]
+        },
+        {
+          "option_id": "n-diagnose-o2",
+          "label": "generalize",
+          "description": "若训练充分而测试变差，先控制容量或正则化。",
+          "claim_refs": [
+            "cr5"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "n-diagnose-t1",
+          "question": "失败发生在拟合训练集还是推广到新样本？",
+          "method": "提出统一训练/验证划分、预算和种子记录训练损失与留出误差；先对plain深浅模型做诊断，再在同设置比较通路。",
+          "claim_refs": [
+            "cx1"
+          ],
+          "outcomes": [
+            {
+              "observation": "深层训练更差且留出同步恶化",
+              "next_action": "检查训练协议、初始化与归一化，再比较门控/无门通路。",
+              "claim_refs": [
+                "cx1"
+              ]
+            },
+            {
+              "observation": "深层训练不差但留出更差",
+              "next_action": "保留可训练结构，优先验证容量和正则化，不再只以加深为目标。",
+              "claim_refs": [
+                "cx1"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "cr1",
+        "ch3",
+        "cr5",
+        "ci4",
+        "cx1"
+      ],
+      "paper_connection": "将两篇已报告的研究选择作为事后比较材料；这里的反事实实验与下一步建议均属探索性假设。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "n-diagnose-l1",
+          "context": "新增层使任务效果下降。",
+          "distinguish": "训练拟合失败与泛化失败。",
+          "action": "同时看训练和留出曲线，再选择优化或容量实验。",
+          "boundary": "不同数据划分、标签质量与训练预算会破坏诊断。",
+          "claim_refs": [
+            "cr1",
+            "ch3",
+            "cr5",
+            "ci4",
+            "cx1"
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "n-gate",
+      "title": "学门是否值得",
+      "question": "输入相关门是否比固定通路提供额外可证实价值？",
+      "paper_refs": [
+        "resnet",
+        "highway"
+      ],
+      "path_contexts": [
+        {
+          "path_id": "p-retro",
+          "known_information": [
+            {
+              "text": "ResNet在同维块用F(x)+x并在相加后施加非线性；恒等捷径无可训练门。",
+              "claim_refs": [
+                "cr2"
+              ]
+            },
+            {
+              "text": "ImageNet的无额外参数残差对照降低34层训练误差及验证误差；这支持该设置下重参数化的作用。",
+              "claim_refs": [
+                "cr3"
+              ]
+            },
+            {
+              "text": "Highway v1以输入相关T在H(x)与x之间混合，实际采用C=1−T。",
+              "claim_refs": [
+                "ch1"
+              ]
+            },
+            {
+              "text": "Highway用负门偏置引导初始carry，并报告不同激活配置下的可训练性。",
+              "claim_refs": [
+                "ch2"
+              ]
+            },
+            {
+              "text": "Highway作者把图示解释为输入相关的选择性路由；该观察本身不是路由收益的干预证明。",
+              "claim_refs": [
+                "ch5"
+              ]
+            },
+            {
+              "text": "当前材料只允许机制和证据策略比较，不允许把两个表格直接合并为性能排名。",
+              "claim_refs": [
+                "ci3"
+              ]
+            }
+          ],
+          "assumptions": [
+            "这是事后比较；仅使用已纳入的两篇v1，不重建作者真实开发时间线。"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "本次材料没有两种结构的统一运行结果；不预设胜者。"
+      ],
+      "options": [
+        {
+          "option_id": "n-gate-o1",
+          "label": "residual",
+          "description": "采用F+x的无门残差块，减少门参数和开度选择。",
+          "claim_refs": [
+            "cr2"
+          ]
+        },
+        {
+          "option_id": "n-gate-o2",
+          "label": "gated",
+          "description": "采用耦合门H T+x(1−T)，允许按输入调节路由。",
+          "claim_refs": [
+            "ch1",
+            "ch2"
+          ]
+        },
+        {
+          "option_id": "n-gate-o3",
+          "label": "fixed",
+          "description": "以固定开度或输入无关可学习门作为控制。",
+          "claim_refs": [
+            "cx1"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "n-gate-t1",
+          "question": "收益来自输入相关路由，还是额外参数、初始化或其他配置？",
+          "method": "探索性方案：统一数据增强、归一化、迭代及调参预算；既报同宽度组也报同参数/计算预算组；比较无门、学习门、固定门与打乱输入对应门的干预。记录训练、留出误差及实际成本，多种子重复。",
+          "claim_refs": [
+            "cx1"
+          ],
+          "outcomes": [
+            {
+              "observation": "学习门稳定优于无门且固定/打乱门丢失收益",
+              "next_action": "保留门控，继续检查哪些样本与条件需要路由；不能只凭一次热图下结论。",
+              "claim_refs": [
+                "cx1"
+              ]
+            },
+            {
+              "observation": "固定门或无门在匹配预算下同样好或更好",
+              "next_action": "采用较简单方案，并把选择性门活动降为描述性现象。",
+              "claim_refs": [
+                "cx1"
+              ]
+            },
+            {
+              "observation": "优势只在同宽度而不同参数预算下出现",
+              "next_action": "分离容量与机制贡献，补做预算匹配后再选结构。",
+              "claim_refs": [
+                "cx1"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "ci2",
+        "ci3",
+        "ch5",
+        "cx1"
+      ],
+      "paper_connection": "将两篇已报告的研究选择作为事后比较材料；这里的反事实实验与下一步建议均属探索性假设。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "n-gate-l1",
+          "context": "两种方法都宣称改善同一瓶颈。",
+          "distinguish": "可视化现象、参数增加和输入适应性的独立贡献。",
+          "action": "设计能取消某项机制且保留其他条件的控制。",
+          "boundary": "参数匹配可能改变宽度；单一配平方式不足，干预还可能引入分布变化。",
+          "claim_refs": [
+            "ci2",
+            "ci3",
+            "ch5",
+            "cx1"
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "n-depth",
+      "title": "训练通畅后是否继续加深",
+      "question": "优化问题缓解后，新增深度还产生任务价值吗？",
+      "paper_refs": [
+        "resnet",
+        "highway"
+      ],
+      "path_contexts": [
+        {
+          "path_id": "p-retro",
+          "known_information": [
+            {
+              "text": "1202层可获得很低训练误差但测试不及110层；过拟合是作者给出的解释。",
+              "claim_refs": [
+                "cr5"
+              ]
+            },
+            {
+              "text": "Highway v1的900层例子是80 epochs时进行中的观察，不能当作完整泛化验证。",
+              "claim_refs": [
+                "ch6"
+              ]
+            },
+            {
+              "text": "容易训练、输入相关路由、增加深度带来泛化收益是三个不同命题，不能凭其中一个自动获得另外两个。",
+              "claim_refs": [
+                "ci4"
+              ]
+            }
+          ],
+          "assumptions": [
+            "这是事后比较；仅使用已纳入的两篇v1，不重建作者真实开发时间线。"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "泛化退步的过拟合解释尚无本文新实验排除替代因素。"
+      ],
+      "options": [
+        {
+          "option_id": "n-depth-o1",
+          "label": "deepen",
+          "description": "在预设预算和验证集上继续测更深模型。",
+          "claim_refs": [
+            "cr5"
+          ]
+        },
+        {
+          "option_id": "n-depth-o2",
+          "label": "stop",
+          "description": "停止加深，转向容量、正则化与泛化控制。",
+          "claim_refs": [
+            "cr5",
+            "ci4"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "n-depth-t1",
+          "question": "更深的收益是否越过训练损失而到达独立留出数据？",
+          "method": "探索性方案：固定训练协议和留出评估，报告多次运行与成本；若改变正则化，将其作为单独对照轴，不同时改所有设置。",
+          "claim_refs": [
+            "cx1"
+          ],
+          "outcomes": [
+            {
+              "observation": "训练与留出都改善且成本可接受",
+              "next_action": "继续有界扩深，并用新的留出检查收益稳定性。",
+              "claim_refs": [
+                "cx1"
+              ]
+            },
+            {
+              "observation": "训练下降而留出停滞或退步",
+              "next_action": "停止以深度作为单一目标，比较容量与正则化解释。",
+              "claim_refs": [
+                "cx1"
+              ]
+            },
+            {
+              "observation": "训练尚未结束或优化未达可比状态",
+              "next_action": "延后泛化结论，先取得完整训练轨迹。",
+              "claim_refs": [
+                "cx1"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "cr5",
+        "ch6",
+        "ci4",
+        "cx1"
+      ],
+      "paper_connection": "将两篇已报告的研究选择作为事后比较材料；这里的反事实实验与下一步建议均属探索性假设。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "n-depth-l1",
+          "context": "一种结构已能训练到很深。",
+          "distinguish": "可训练性与深度的边际收益。",
+          "action": "用留出改善及成本决定是否继续扩深。",
+          "boundary": "同一测试集反复选模型会让证据失真；进行中的结果不能替代完整评估。",
+          "claim_refs": [
+            "cr5",
+            "ch6",
+            "ci4",
+            "cx1"
+          ]
+        }
+      ]
+    }
+  ],
+  "paths": [
+    {
+      "path_id": "p-retro",
+      "title": "事后比较：诊断→通路→深度价值",
+      "premise": "只用已提供两篇的v1报告比较逻辑选择，不声称历史重建。",
+      "assumptions": [
+        "不同数据和训练设置的数字不直接比较。"
+      ],
+      "node_refs": [
+        "n-diagnose",
+        "n-gate",
+        "n-depth"
+      ],
+      "edge_refs": [
+        "e-diagnose-gate",
+        "e-gate-depth"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "er1",
+          "relation": "conditional_support",
+          "scope_note": "支持这条诊断逻辑，而非作者实际采用此顺序。"
+        },
+        {
+          "evidence_id": "eh3",
+          "relation": "conditional_support",
+          "scope_note": "支持这条诊断逻辑，而非作者实际采用此顺序。"
+        },
+        {
+          "evidence_id": "er5",
+          "relation": "conditional_support",
+          "scope_note": "支持这条诊断逻辑，而非作者实际采用此顺序。"
+        }
+      ],
+      "perspective": "retrospective",
+      "available_source_refs": [
+        "s-resnet",
+        "s-highway"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "e-diagnose-gate",
+      "source_node_id": "n-diagnose",
+      "target_node_id": "n-gate",
+      "path_ids": [
+        "p-retro"
+      ],
+      "relation_type": "logical_dependency",
+      "label": "训练困难成立后比较通路",
+      "epistemic_status": "inferred",
+      "evidence_refs": [
+        "er1",
+        "eh3"
+      ]
+    },
+    {
+      "edge_id": "e-gate-depth",
+      "source_node_id": "n-gate",
+      "target_node_id": "n-depth",
+      "path_ids": [
+        "p-retro"
+      ],
+      "relation_type": "logical_dependency",
+      "label": "训练缓解后另验深度收益",
+      "epistemic_status": "inferred",
+      "evidence_refs": [
+        "er5",
+        "eh6"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "s1",
+      "title": "一、分析范围与核心问题",
+      "blocks": [
+        {
+          "block_id": "s1-b1",
+          "markdown": "本次只联合阅读ResNet与Highway Networks的指定v1逐页文本。用户的线索是二者都借跨层通路帮助训练；它足以形成一个待检验的问题，却不能先当作“同一个机制”的答案。两篇材料都已从头读到尾，但没有查看曲线与热图像素，图像结论只在正文明确描述的范围内使用。仅提供材料模式下没有检索候选，也没有把引用文献补进分析清单。",
+          "claim_refs": [
+            "ci1"
+          ],
+          "node_refs": [],
+          "evidence_refs": [
+            "er1",
+            "er2",
+            "eh1",
+            "eh3"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": [
+            "rel-choice"
+          ]
+        },
+        {
+          "block_id": "s1-b2",
+          "markdown": "核心问题可以收窄为：深层网络已经能够启动训练，却未能兑现额外层的潜力时，应当让网络学习何时保留输入，还是直接提供一个无门的输入参照？这把模糊的“跨层很像”转换为可比较的选择。判断既要看是否更容易拟合训练集，也要问新增机制和新增深度是否给留出数据带来收益；三个问题不能互相替代。",
+          "claim_refs": [
+            "ci2",
+            "ci4"
+          ],
+          "node_refs": [
+            "n-diagnose",
+            "n-gate"
+          ],
+          "evidence_refs": [
+            "er2",
+            "er3",
+            "eh1",
+            "eh3",
+            "er5",
+            "eh5",
+            "eh6"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": [
+            "rel-choice"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "s2",
+      "title": "二、各篇工作的分工与可比性",
+      "blocks": [
+        {
+          "block_id": "s2-b1",
+          "markdown": "Highway承担的是“能否把深网络训练起来”的证据角色：MNIST实验直接观察训练交叉熵，并用约等参数量的plain网络作对照。为了配平参数，宽度分别为50与71；每个配置做40次随机搜索后展示最佳结果。因而它支持特定搜索条件下的优化改善，不等于固定宽度、固定学习率时结构的纯效应，更不是已证明任意深度都能成功。",
+          "claim_refs": [
+            "ch3",
+            "ch6"
+          ],
+          "node_refs": [
+            "n-diagnose"
+          ],
+          "evidence_refs": [
+            "eh3",
+            "eh6"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": []
+        },
+        {
+          "block_id": "s2-b2",
+          "markdown": "ResNet进一步把退化与恒等解的可达性联系起来，并以同深度plain/残差对照追踪训练和验证误差。34层网络加上无额外参数的捷径后，ImageNet的10-crop top-1验证误差从28.54%降到25.03%，正文也报告训练误差降低。这个对照比“冠军结果更高”更接近结构选择的证据，但依然依赖其归一化、训练计划与模型设计。",
+          "claim_refs": [
+            "cr1",
+            "cr3"
+          ],
+          "node_refs": [
+            "n-diagnose"
+          ],
+          "evidence_refs": [
+            "er1",
+            "er3"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": []
+        },
+        {
+          "block_id": "s2-b3",
+          "markdown": "两篇能比较的是问题诊断、通路参数化和证据组织方式。不能直接把Highway的MNIST交叉熵、CIFAR准确率与ResNet的ImageNet错误率排在同一榜单上。即使都叫CIFAR-10，Highway v1中部分配置仅用40K样本；ResNet表6所列Highway还引用另一篇未纳入工作，19层数值也与本次v1表1不完全相同。版本与训练条件未对齐前，不给二者性能排序。",
+          "claim_refs": [
+            "ci3",
+            "ch4",
+            "cr7"
+          ],
+          "node_refs": [],
+          "evidence_refs": [
+            "er7",
+            "eh4"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": [
+            "rel-choice"
+          ]
+        },
+        {
+          "block_id": "s2-b4",
+          "markdown": "还需区分同一结果被多少次引用与真正有多少次独立检验。ResNet将Highway列入相关工作和结果表，不能因此给Highway增加一次独立复现实验。两篇各自的plain对照更适合回答“本设置中加入该通路是否有帮助”；它们合起来使共同问题更清楚，却不能拼成一个排除了全部混杂因素的统一试验。若要形成更强的共同支持，下一步需要把运行配置和版本对应清楚，再在同一协议里实际测量。",
+          "claim_refs": [
+            "ci3",
+            "cr3",
+            "ch3"
+          ],
+          "node_refs": [],
+          "evidence_refs": [
+            "er7",
+            "eh4",
+            "er3",
+            "eh3"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": [
+            "rel-choice"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "s3",
+      "title": "三、关键联系与跨论文决策",
+      "blocks": [
+        {
+          "block_id": "s3-b1",
+          "markdown": "第一步决策是定位失败。ResNet的动机不是简单的“测试分数低”，而是加层后训练误差上升；Highway也刻意用训练交叉熵把优化与泛化拆开。由此得到的有依据推断是：先问模型有没有学好已见样本，再决定改通路还是控制容量。如果训练不差而测试退步，直接把失败统称为梯度问题，会把实验方向带偏。节点n-diagnose保存了两种观察分别应走向的行动。",
+          "claim_refs": [
+            "cr1",
+            "ch3",
+            "ci4"
+          ],
+          "node_refs": [
+            "n-diagnose"
+          ],
+          "evidence_refs": [
+            "er1",
+            "er3",
+            "eh3",
+            "er5",
+            "eh5",
+            "eh6"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": []
+        },
+        {
+          "block_id": "s3-b2",
+          "markdown": "第二步是选择通路。Highway采用H(x)T(x)+x(1−T(x))，让输入相关门决定变换与保留的混合，并用负门偏置偏向初始carry。ResNet同维块采用F(x)+x，使捷径不受可训练门开关控制。共同点是允许接近输入的变换较容易表达；差异是究竟学习混合比例还是学习相对输入的修正。还须保留细节：ResNet相加后有ReLU，不能据相加前公式声称整个网络始终无损传递信息。",
+          "claim_refs": [
+            "ch1",
+            "ch2",
+            "cr2",
+            "ci2"
+          ],
+          "node_refs": [
+            "n-gate"
+          ],
+          "evidence_refs": [
+            "eh1",
+            "eh2",
+            "er2",
+            "er3",
+            "eh3"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": [
+            "rel-choice"
+          ]
+        },
+        {
+          "block_id": "s3-b3",
+          "markdown": "最能改变选择的后续证据不是再画一张门热图，而是统一数据、增强、归一化、训练与调参预算，比较无门残差、学习门和固定门。方案同时报告同宽度和同参数/计算预算两组，防止一种配平掩盖另一种差异。若学习门稳定胜出且固定或打乱输入对应门会丢失收益，才进一步保留输入适应性解释；若固定门或无门同样好，就优先采用简单结构。这个试验由本次提出，尚未执行。",
+          "claim_refs": [
+            "cx1",
+            "ci3",
+            "ch5"
+          ],
+          "node_refs": [
+            "n-gate"
+          ],
+          "evidence_refs": [
+            "er3",
+            "eh3",
+            "eh5",
+            "er7",
+            "eh4"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": []
+        },
+        {
+          "block_id": "s3-b4",
+          "markdown": "公式还有一个容易误判的地方：把Highway耦合门展开，可以写成x+T(x)(H(x)−x)。这说明两种表达都能围绕输入谈“修正”，但不能由代数重写宣布它们就是同一个模型。Highway的修正项内部仍包含门与H的耦合、门偏置和乘法；ResNet直接学习F。相同目标函数的表示能力、某个函数的等价表达，以及训练器沿参数空间找到它的难易，是不同层次。这里的联系是本次推导，不是两篇已经联合证明的定理。",
+          "claim_refs": [
+            "ci5",
+            "ch2"
+          ],
+          "node_refs": [
+            "n-gate"
+          ],
+          "evidence_refs": [
+            "er2",
+            "eh1",
+            "eh2"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": [
+            "rel-choice"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "s4",
+      "title": "四、分歧、替代解释与适用边界",
+      "blocks": [
+        {
+          "block_id": "s4-b1",
+          "markdown": "两篇对恒等附近的通路都有兴趣，并不意味着它们证明了同一种因果机制。Highway的门活动具有选择性，是作者据图给出的解释；它可能反映有用的路由，也可能只是训练所得的伴随现象。ResNet的A/B/C对照说明在所测退化问题中不必全面使用投影，却没有消融Highway的门。不能用“投影不是必要的”偷换成“门控没有价值”。",
+          "claim_refs": [
+            "ch5",
+            "cr4",
+            "ci2"
+          ],
+          "node_refs": [
+            "n-gate"
+          ],
+          "evidence_refs": [
+            "eh5",
+            "er4",
+            "er2",
+            "er3",
+            "eh1",
+            "eh3"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": [
+            "rel-choice"
+          ]
+        },
+        {
+          "block_id": "s4-b2",
+          "markdown": "相反方向的结果也必须保留。Highway v1的900层报告只到80 epochs，不能说已完成泛化验证；ResNet的1202层已经有极低训练误差，测试却逊于110层。后者对“越深越好”形成范围限制，但作者的过拟合解释仍是解释，不是排除所有优化、正则化与模型选择因素后的定论。比较这些证据，应得出分层问题，而非一种网络全面击败另一种网络。",
+          "claim_refs": [
+            "ch6",
+            "cr5",
+            "ci4"
+          ],
+          "node_refs": [
+            "n-depth"
+          ],
+          "evidence_refs": [
+            "eh6",
+            "er5",
+            "eh3",
+            "eh5"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": []
+        },
+        {
+          "block_id": "s4-b3",
+          "markdown": "最后，不把发表顺序写成构思顺序。ResNet相关工作明确称Highway为同期工作，并讨论机制差异；这证明作者在论文中进行了比较，不证明其设计从Highway逐步演化而来。训练曲线、结构消融和结果表都没有提供这种历史证据。地图因此用无方向的竞争设计关系连接两篇，箭头仅用于本报告中“先诊断再选择再评估”的逻辑依赖。",
+          "claim_refs": [
+            "cr6",
+            "ci1",
+            "ci2"
+          ],
+          "node_refs": [],
+          "evidence_refs": [
+            "er6",
+            "er1",
+            "er2",
+            "eh1",
+            "eh3",
+            "er3"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": [
+            "rel-choice"
+          ]
+        },
+        {
+          "block_id": "s4-b4",
+          "markdown": "因此，门偏置很负不能直接读成“网络没有使用这些层”。Highway正文把低层偏置与平均门活动的关系解释为更有选择性，而不是简单关闭。即便接受作者的观察，仍须区分单个样本的稀疏活动、跨样本的平均活动和减少实际计算量：材料没有给出按样本跳过算子的运行计时。门在数值上抑制某些变换，并不自动支持“推理省算力”的结论。这也限制了从热图直接提炼效率经验。",
+          "claim_refs": [
+            "ch5",
+            "ch1"
+          ],
+          "node_refs": [
+            "n-gate"
+          ],
+          "evidence_refs": [
+            "eh5",
+            "eh1"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "s5",
+      "title": "五、综合认识与可能的研究主线",
+      "blocks": [
+        {
+          "block_id": "s5-b1",
+          "markdown": "在已读材料范围内，可以形成一个有限的问题簇：如何让增加深度既在表示上有可能不损害已有解，也在实际训练中更容易达到有效解。Highway展示了学习保留/变换比例这一条路；ResNet展示了围绕输入学习修正的一条路。它们共同削弱“只能依靠普通层逐层重学恒等”的设定，但并未共同证明一个完备优化理论，更不足以称作某个团队真实的统一研究纲领。",
+          "claim_refs": [
+            "ci1",
+            "ci2"
+          ],
+          "node_refs": [],
+          "evidence_refs": [
+            "er1",
+            "er2",
+            "eh1",
+            "eh3",
+            "er3"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": [
+            "rel-choice"
+          ]
+        },
+        {
+          "block_id": "s5-b2",
+          "markdown": "综合认识的价值是把三个证据层次排开：可训练性由训练指标判断，输入适应性由相应干预判断，额外深度的价值由留出收益与成本判断。Highway的路由观察补充了一个待检验机制，ResNet的超深泛化退步给出了不能越过的边界。二者组合后最值得带走的是更严格的问题拆分，而不是一张把年代连成因果链的研究史。",
+          "claim_refs": [
+            "ci4",
+            "ch5",
+            "cr5"
+          ],
+          "node_refs": [
+            "n-diagnose",
+            "n-depth"
+          ],
+          "evidence_refs": [
+            "er5",
+            "eh3",
+            "eh5",
+            "eh6"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": []
+        },
+        {
+          "block_id": "s5-b3",
+          "markdown": "这条主线仍然保留多个竞争解释：通路可能改善求解器接近有用解的条件，门可能提供输入相关控制，实验上的收益也可能部分依赖训练协议及预算。所给材料并没有一项对照同时隔离全部因素。研究地图应当帮助读者找到这些解释各自需要哪条证据，而不是通过连线密度让解释看起来更确定。一条关系若还需要未执行的干预，点击后就应当读到该缺口与可能推翻关系的结果。",
+          "claim_refs": [
+            "ci1",
+            "ci2",
+            "cx1"
+          ],
+          "node_refs": [
+            "n-gate"
+          ],
+          "evidence_refs": [
+            "er1",
+            "er2",
+            "eh1",
+            "eh3",
+            "er3",
+            "eh5"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": [
+            "rel-choice"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "s6",
+      "title": "六、可迁移判断与开放问题",
+      "blocks": [
+        {
+          "block_id": "s6-b1",
+          "markdown": "迁移一：遇到复杂模型表现退步，先区分训练拟合与泛化，再决定改优化、容量或数据。对应n-diagnose，两篇的训练指标提供出发点，ResNet极深模型提供反例。适用前提是有可信训练/留出划分与可比训练预算；标签错误或训练不足会让诊断失真。迁移二：两种方法都宣称改善同一瓶颈时，按n-gate设计能取消核心机制的控制，而不只比较最终分数。",
+          "claim_refs": [
+            "ci4",
+            "cr1",
+            "ch3",
+            "cr5",
+            "cx1"
+          ],
+          "node_refs": [
+            "n-diagnose",
+            "n-gate"
+          ],
+          "evidence_refs": [
+            "er5",
+            "eh3",
+            "eh5",
+            "eh6",
+            "er1",
+            "er3"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": []
+        },
+        {
+          "block_id": "s6-b2",
+          "markdown": "迁移三：当一个技术障碍被缓解，按n-depth重新确认目标是否实现，不能把“可以更深”当成“值得更深”。仍开放的问题包括：输入相关门在何种数据和预算下有独立收益，固定门能否保留大部分好处，正则化能否改变极深模型的泛化边界。这些都是探索性方向；需要统一实现、完整运行和留出检验，本次没有完成实验，也没有将模型自审标作人工质量评审。",
+          "claim_refs": [
+            "ci4",
+            "cx1",
+            "cr5",
+            "ch6"
+          ],
+          "node_refs": [
+            "n-depth",
+            "n-gate"
+          ],
+          "evidence_refs": [
+            "er5",
+            "eh3",
+            "eh5",
+            "eh6",
+            "er3"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": []
+        },
+        {
+          "block_id": "s6-b3",
+          "markdown": "检验方案也须避免预先替一个结构安排有利条件。负门偏置是Highway设计的一部分，直接套用另一结构的初始化后宣布门无效，会测到失配而非机制；但只给门控更多调参机会也会偏置结论。可先预注册各自合理搜索空间与相同搜索预算，再公开完整运行分布，而非只选最佳单次结果。若结论随配平方式改变，应报告这种敏感性，将推荐收缩到稳定成立的条件。以上仍是未来试验要求，不是本次已做的结果。",
+          "claim_refs": [
+            "ch2",
+            "ch3",
+            "cx1"
+          ],
+          "node_refs": [
+            "n-gate"
+          ],
+          "evidence_refs": [
+            "eh2",
+            "eh3",
+            "er3",
+            "eh5"
+          ],
+          "paper_refs": [
+            "resnet",
+            "highway"
+          ],
+          "relation_refs": []
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "仅指定版本逐页文本；图线和热图未目视核验，引用文献未另行读取。",
+    "无统一实现或复现实验，不能判定门控与残差的条件匹配优劣。",
+    "仅一组两篇计算研究试用；模型自审，未获得独立人工质量评审。"
+  ],
+  "provenance": {
+    "model": null,
+    "generated_at": "2026-10-26T14:10:17.816Z",
+    "host": "Codex agent trial",
+    "material_policy": "provided_only",
+    "tools": [
+      "functions.exec",
+      "exec_command",
+      "apply_patch",
+      "clock.curr_time",
+      "Node.js 22.13.0",
+      "packaged paper-reconstruction CLI"
+    ],
+    "usage": {
+      "elapsed_seconds": null,
+      "model_calls": null,
+      "tokens": null,
+      "note": "开始时刻记录在start-record.json；结束用run-record.json记录。模型标识、模型调用次数、token与价格不可获取，保持null。"
+    }
+  },
+  "validation": {
+    "semantic_review": "self_reviewed",
+    "notes": [
+      "核对了所引页标、正文和表格文本；图像只有正文所述可确认。",
+      "区分了原文明示的作者解释、跨文推断和未执行干预方案；没有独立人工审阅。"
+    ]
+  },
+  "revision": null,
+  "manifest": {
+    "included": [
+      "原创联合正文、证据卡、比较表、关系与决策结构、材料指纹及定位索引"
+    ],
+    "external": [
+      "ResNet v1原始PDF与Highway v1原始PDF未附带。",
+      "论文引用的其他工作未读取、未纳入联合证据链。"
+    ]
+  }
+}

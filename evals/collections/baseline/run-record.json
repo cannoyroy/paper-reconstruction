@@ -1,0 +1,69 @@
+{
+  "trial": "strong_baseline",
+  "reviewer": "model_only",
+  "started_at": "2026-10-26T13:58:00Z",
+  "generation_completed_at": "2026-10-26T14:12:44.196Z",
+  "ended_at": "2026-10-26T14:12:49.347Z",
+  "model": null,
+  "model_calls": null,
+  "tokens": null,
+  "cost": null,
+  "material_policy": "provided_only",
+  "external_search": false,
+  "figure_visual_review": false,
+  "skill_methods_read": false,
+  "other_outputs_read": false,
+  "inputs": [
+    {
+      "path": "work/v02-input/resnet.txt",
+      "sha256": "690614f5553d49de231dce0e4f95c108422af4c2f9f5aa845336f69907ac91ba",
+      "pdf_pages": 12,
+      "read": "all fixed page-marked text including appendix"
+    },
+    {
+      "path": "work/v02-input/highway.txt",
+      "sha256": "d141478bc7b439ceeac9d3e406a3171c848a56ac7676060ed9efea3a0ddd5c87",
+      "pdf_pages": 6,
+      "read": "all fixed page-marked text including captions and references"
+    }
+  ],
+  "contract_hashes": {
+    "collection_schema": "26863919c366632af2edcd46bcc81e659e80c6597b47793fb7519a6e7a69ad85",
+    "format_document": "3ffc6f046407f7b29f8675c82fcc56600e7a60e2606093a401afda590fda9506",
+    "cli": "587c305503202de223d042763eccf8fa935c139da835dd0372c0abd17f719019"
+  },
+  "core_narrative_han_characters": 3525,
+  "core_narrative_all_characters": 4398,
+  "output_budget": "实质正文、证据卡和比较表目标3500–5000中文字符；索引与节点元数据额外",
+  "start_time_note": "13:58:00 UTC为第一条成功可见的时钟记录；此前工具输出因上下文上限被截断，故不伪造更早开始时间。",
+  "validation": {
+    "first_attempt": {
+      "valid": false,
+      "errors": [
+        "A4: claim paper scope mismatch",
+        "A4: claim paper scope mismatch"
+      ],
+      "repair": "将比较表单篇单元格中的跨论文主张CX4引用拆为CR5与CH5，保持原证据及结论。"
+    },
+    "final": {
+      "command": "node release/paper-reconstruction/scripts/paper-reconstruction.mjs validate work/v02-trial-baseline/analysis.json",
+      "exit_code": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"analysis_id\": \"baseline-resnet-highway-v1\",\n  \"analysis_version\": 1,\n  \"warnings\": []\n}\n",
+      "stderr": ""
+    },
+    "markdown_export": {
+      "command": "node release/paper-reconstruction/scripts/paper-reconstruction.mjs markdown work/v02-trial-baseline/analysis.json work/v02-trial-baseline/report.md",
+      "exit_code": 0,
+      "stdout": "已导出 work/v02-trial-baseline/report.md\n",
+      "stderr": ""
+    },
+    "json_round_trip_equal": true
+  },
+  "elapsed_seconds": 889,
+  "contract_snapshot_at": "2026-10-26T14:12:44.196Z",
+  "outputs": {
+    "analysis_sha256": "85e5a294157703ebe032176e3709db6fffdc400ff1b32dc99c2ae06786241416",
+    "report_sha256": "8875ca1dc0407c83b5c329e0e6b001549002d7e9813b03a3a6c5dea1c37251ee"
+  },
+  "semantic_review": "model self-review only; all factual evidence checked against supplied page-marked text, no human review, no figure visual audit or experiment replication"
+}

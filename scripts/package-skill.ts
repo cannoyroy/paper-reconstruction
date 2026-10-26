@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { zipSync } from "fflate";
 import "./export-schemas";
 import { writeNotices } from "./notices";
+const version = JSON.parse(await readFile("package.json", "utf8")).version;
 const root = "release/paper-reconstruction";
 await mkdir(root, { recursive: true });
 await cp("skills/paper-reconstruction", root, { recursive: true });
@@ -29,7 +30,7 @@ async function collect(dir: string, prefix: string) {
   }
 }
 await collect(root, "paper-reconstruction");
-await writeFile("release/paper-reconstruction-0.1.0.zip", zipSync(files));
+await writeFile(`release/paper-reconstruction-${version}.zip`, zipSync(files));
 console.log(
-  "Packaged self-contained Node.js CLI + skill: release/paper-reconstruction-0.1.0.zip",
+  `Packaged self-contained Node.js CLI + skill: release/paper-reconstruction-${version}.zip`,
 );

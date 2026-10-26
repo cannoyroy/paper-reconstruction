@@ -1,5 +1,5 @@
 import { readFile, readdir } from "node:fs/promises";
-import { parseBundle } from "../core/validate";
+import { parseAnyBundle as parseBundle } from "../core/workbench";
 for (const file of (await readdir("examples")).filter((f) =>
   f.endsWith(".json"),
 )) {

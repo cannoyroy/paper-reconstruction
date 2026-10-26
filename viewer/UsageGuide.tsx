@@ -57,6 +57,10 @@ export function UsageGuide() {
             文件，也可给出标题，先确认身份与版本。让 Skill 生成{" "}
             <code>analysis.json</code>。
           </p>
+          <p>
+            也可同时提供多篇。Skill 初读后最多推荐 3
+            篇补充论文，等待你明确选择再联合分析；“仅提供材料”会跳过检索。
+          </p>
           <button className="button outline" onClick={() => void copyPrompt()}>
             <Copy size={14} />
             复制调用示例
@@ -84,13 +88,19 @@ export function UsageGuide() {
             生成的文件。阅读正文、切换候选路径，查看节点和“主张与依据”。
           </p>
           <p>网页接收分析 JSON；PDF、链接和标题在 Codex 对话中提交。</p>
+          <p>
+            多篇结果还可查看单篇证据卡、比较表、论文关系图与决策地图。筛选仅用于定位，不改变联合结论。
+          </p>
         </li>
         <li>
           <span className="step-number">04</span>
           <h3>带着问题继续讨论</h3>
           <p>
-            在节点详情填写问题，复制或下载节点上下文，带回
+            在节点或论文关系详情填写问题，复制或下载上下文，带回
             Codex。采纳修改后生成新分析版本，再导入网页，旧版继续保留。
+          </p>
+          <p>
+            增删论文或切换论文版本会建立新分析身份；同一范围的修订递增版本，旧结果仍保留。
           </p>
         </li>
       </ol>

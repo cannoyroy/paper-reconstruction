@@ -1,9 +1,17 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { analysisSchema, discussionSchema } from "../core/schema";
+import {
+  collectionSchema,
+  collectionDiscussionSchema,
+  intakeSchema,
+} from "../core/collection-schema";
 await mkdir("schemas", { recursive: true });
 for (const [name, schema] of [
   ["analysis", analysisSchema],
   ["discussion", discussionSchema],
+  ["collection", collectionSchema],
+  ["collection-discussion", collectionDiscussionSchema],
+  ["collection-intake", intakeSchema],
 ] as const) {
   await writeFile(
     `schemas/${name}.schema.json`,

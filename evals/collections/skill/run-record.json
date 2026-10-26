@@ -1,0 +1,207 @@
+{
+  "trial": "skill",
+  "evaluation_kind": "model_trial_with_self_review",
+  "started_at": "2026-10-26T13:56:20Z",
+  "finished_at": "2026-10-26T14:12:37.718Z",
+  "elapsed_seconds": 977.718,
+  "model": null,
+  "model_configuration": null,
+  "model_calls": null,
+  "tokens": null,
+  "cost": null,
+  "unknown_note": "Inherited configuration; exact model ID, calls, tokens, and price not exposed. No independent or human quality review.",
+  "environment": {
+    "node": "v22.13.0",
+    "platform": "win32",
+    "tools_used": [
+      "functions.exec",
+      "clock.curr_time",
+      "exec_command",
+      "apply_patch",
+      "PowerShell text reading",
+      "Node.js file/hash APIs",
+      "packaged CLI"
+    ]
+  },
+  "materials_read": [
+    {
+      "path": "work/v02-input/resnet.txt",
+      "pdf_page_indexes_read": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "sha256": "690614f5553d49de231dce0e4f95c108422af4c2f9f5aa845336f69907ac91ba"
+    },
+    {
+      "path": "work/v02-input/highway.txt",
+      "pdf_page_indexes_read": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sha256": "d141478bc7b439ceeac9d3e406a3171c848a56ac7676060ed9efea3a0ddd5c87"
+    }
+  ],
+  "image_inspection": false,
+  "external_search": false,
+  "other_trials_read": false,
+  "package_snapshot_note": "Full package hashed at the beginning, before completing paper reading; start timestamp is the task start, not a per-file timestamp.",
+  "integrity_checks": [
+    {
+      "path": "work/v02-input/resnet.txt",
+      "sha256_at_start": "690614f5553d49de231dce0e4f95c108422af4c2f9f5aa845336f69907ac91ba",
+      "sha256_at_end": "690614f5553d49de231dce0e4f95c108422af4c2f9f5aa845336f69907ac91ba",
+      "unchanged": true
+    },
+    {
+      "path": "work/v02-input/highway.txt",
+      "sha256_at_start": "d141478bc7b439ceeac9d3e406a3171c848a56ac7676060ed9efea3a0ddd5c87",
+      "sha256_at_end": "d141478bc7b439ceeac9d3e406a3171c848a56ac7676060ed9efea3a0ddd5c87",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/agents/openai.yaml",
+      "sha256_at_start": "50ff6611351898d9a27b2233677480181c53d03231517ea9c3b19b024fb89752",
+      "sha256_at_end": "50ff6611351898d9a27b2233677480181c53d03231517ea9c3b19b024fb89752",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/LICENSE",
+      "sha256_at_start": "000a396839e5438a61765e0f8711dc8a9068aa7c430602ad290de222d70aab15",
+      "sha256_at_end": "000a396839e5438a61765e0f8711dc8a9068aa7c430602ad290de222d70aab15",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/collection-method.md",
+      "sha256_at_start": "71aeb52b64c53079514433d15b213a5064066db4345d8880a69c0a9ff666e54d",
+      "sha256_at_end": "71aeb52b64c53079514433d15b213a5064066db4345d8880a69c0a9ff666e54d",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/collection-output.md",
+      "sha256_at_start": "3ffc6f046407f7b29f8675c82fcc56600e7a60e2606093a401afda590fda9506",
+      "sha256_at_end": "3ffc6f046407f7b29f8675c82fcc56600e7a60e2606093a401afda590fda9506",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/discussion.md",
+      "sha256_at_start": "849ef0706e971df7028aa6d40a47cd50865fe6c52901a5ceb4f83a194bc96a4b",
+      "sha256_at_end": "849ef0706e971df7028aa6d40a47cd50865fe6c52901a5ceb4f83a194bc96a4b",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/method.md",
+      "sha256_at_start": "90d6007b1e3e6b36632641b25acde06db027d95a7d3a4de82f0012d30af13621",
+      "sha256_at_end": "90d6007b1e3e6b36632641b25acde06db027d95a7d3a4de82f0012d30af13621",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/output.md",
+      "sha256_at_start": "71efdc19693bf813f7093ecb41486f57ef388fcf51e267eab8e04a9db1bcbc0e",
+      "sha256_at_end": "71efdc19693bf813f7093ecb41486f57ef388fcf51e267eab8e04a9db1bcbc0e",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/analysis.schema.json",
+      "sha256_at_start": "560e5036ef5b6d1dca445072018469e9211d4d587a395194a011450e529e7537",
+      "sha256_at_end": "560e5036ef5b6d1dca445072018469e9211d4d587a395194a011450e529e7537",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/collection-discussion.schema.json",
+      "sha256_at_start": "58c0a1d5634c896b6f1c25dc4d0edde56bbf66afb785a621a7d787882af69ef2",
+      "sha256_at_end": "58c0a1d5634c896b6f1c25dc4d0edde56bbf66afb785a621a7d787882af69ef2",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/collection-intake.schema.json",
+      "sha256_at_start": "c60f2bc17771d1f30703c0a73a93202c64489d654ed5e5899ab32dad6e9551b9",
+      "sha256_at_end": "c60f2bc17771d1f30703c0a73a93202c64489d654ed5e5899ab32dad6e9551b9",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/collection.schema.json",
+      "sha256_at_start": "26863919c366632af2edcd46bcc81e659e80c6597b47793fb7519a6e7a69ad85",
+      "sha256_at_end": "26863919c366632af2edcd46bcc81e659e80c6597b47793fb7519a6e7a69ad85",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/discussion.schema.json",
+      "sha256_at_start": "95f14b543d2e03570ae602c23ad6acae48189cb6d9484804d17f148baf2b77c1",
+      "sha256_at_end": "95f14b543d2e03570ae602c23ad6acae48189cb6d9484804d17f148baf2b77c1",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/scripts/paper-reconstruction.mjs",
+      "sha256_at_start": "587c305503202de223d042763eccf8fa935c139da835dd0372c0abd17f719019",
+      "sha256_at_end": "587c305503202de223d042763eccf8fa935c139da835dd0372c0abd17f719019",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/SKILL.md",
+      "sha256_at_start": "447007dc0e8d36d581aa2f051897568a13e1b4a74c21e442302fdf569f2cd61b",
+      "sha256_at_end": "447007dc0e8d36d581aa2f051897568a13e1b4a74c21e442302fdf569f2cd61b",
+      "unchanged": true
+    },
+    {
+      "path": "release/paper-reconstruction/THIRD_PARTY_NOTICES.md",
+      "sha256_at_start": "633e2738f1ac4ed08d021221ab8969c2d9f5f27253365c6ea4c7b673d6d309af",
+      "sha256_at_end": "633e2738f1ac4ed08d021221ab8969c2d9f5f27253365c6ea4c7b673d6d309af",
+      "unchanged": true
+    }
+  ],
+  "all_input_and_package_hashes_unchanged": true,
+  "validation_log": "cli-validation.json",
+  "length": {
+    "narrative_chinese": 2680,
+    "cards_chinese": 734,
+    "comparison_chinese": 200,
+    "total_chinese": 3614,
+    "total_characters": 4615
+  },
+  "artifacts": [
+    {
+      "path": "intake.json",
+      "sha256": "740533b68fe8f41b1a8c690fe8d5a2ef9340eb307e1c7cffa2e92d38f1edd115",
+      "bytes": 1936
+    },
+    {
+      "path": "analysis.json",
+      "sha256": "27a76f466647c35adc6786afa8f5530b3865198ef953301368c50fb0cc5cc8e4",
+      "bytes": 70595
+    },
+    {
+      "path": "report.md",
+      "sha256": "a57b0069e159f512984104ae9e14e996a990565534f91af069fb6f4d6a301347",
+      "bytes": 50950
+    },
+    {
+      "path": "stages.md",
+      "sha256": "d6e9b5e970f99f72bbe8a5573190c3229b0b618ebfa7991157d705a7a80b8411",
+      "bytes": 2495
+    },
+    {
+      "path": "cli-validation.json",
+      "sha256": "ea08d6e334ca96bc0a2391cec93a92bb5cd6d3f11106bf9780ced95311a43325",
+      "bytes": 975
+    },
+    {
+      "path": "length-record.json",
+      "sha256": "eac57c3ba23a84ee19aa490860f38d7d94cd5400600f964d7e0b6b6a54c9390e",
+      "bytes": 138
+    }
+  ]
+}

@@ -1,0 +1,1536 @@
+{
+  "schema_version": "0.2.0",
+  "workflow_version": "0.2.0-frozen-skill-holdout",
+  "kind": "collection_analysis",
+  "analysis_id": "resnet-ligo-weak-holdout",
+  "analysis_version": 1,
+  "example_kind": "real_paper",
+  "status": "complete",
+  "collection": {
+    "title": "ResNet与LIGO：可比较的判断方式，不足以建立共同研究纲领",
+    "goal": "判断两篇是否存在共同研究主线，允许方法论类比、分簇或无实质联系。",
+    "user_clue": "我想看看这两篇是否有共同研究主线。",
+    "derived_from": null
+  },
+  "papers": [
+    {
+      "paper_id": "resnet",
+      "work_id": "arxiv:1512.03385",
+      "title": "Deep Residual Learning for Image Recognition",
+      "authors": [
+        "Kaiming He",
+        "Xiangyu Zhang",
+        "Shaoqing Ren",
+        "Jian Sun"
+      ],
+      "identifier": "arXiv:1512.03385",
+      "version": "v1",
+      "domain": "图像识别与深度学习",
+      "research_type": "computational",
+      "url": "https://arxiv.org/abs/1512.03385v1",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "read_status": "partial",
+      "material_note": "12页固定逐页文本已读（含附录、图注）；没有视觉核图和训练复现。"
+    },
+    {
+      "paper_id": "ligo",
+      "work_id": "doi:10.1103/PhysRevLett.116.061102",
+      "title": "Observation of Gravitational Waves from a Binary Black Hole Merger",
+      "authors": [
+        "B. P. Abbott et al.",
+        "LIGO Scientific Collaboration and Virgo Collaboration"
+      ],
+      "identifier": "doi:10.1103/PhysRevLett.116.061102",
+      "version": "PRL 116, 061102；2016-02-11正式发表版；arXiv修订号未由材料确认",
+      "domain": "引力波观测与天体物理",
+      "research_type": "observational",
+      "url": "https://doi.org/10.1103/PhysRevLett.116.061102",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "read_status": "partial",
+      "material_note": "16页固定逐页文本已读（含参考文献与作者名单）；只确认文本中的正式发表版信息，无arXiv修订号证据。没有读取独立配套论文、原始观测数据或视觉核图。"
+    }
+  ],
+  "search": {
+    "status": "provided_only",
+    "queries": [],
+    "candidates": [],
+    "note": "用户明确仅提供材料，因此跳过检索，不推荐、不纳入独立外部论文。"
+  },
+  "paper_cards": [
+    {
+      "paper_id": "resnet",
+      "question": {
+        "text": "为什么加深普通网络反而增加训练误差，改变参数化能否使更深模型产生可用收益？",
+        "claim_refs": [
+          "CR1"
+        ]
+      },
+      "conditions": [
+        {
+          "text": "ImageNet对应普通/残差结构作计算对照，CIFAR-10检查极深模型。",
+          "claim_refs": [
+            "CR1",
+            "CR3"
+          ]
+        }
+      ],
+      "assumptions": [
+        {
+          "text": "恒等参照有助优化是待检验假设；表达能力并不自动保证有限预算下易训练。",
+          "claim_refs": [
+            "CR2"
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "text": "直接拟合映射，或学习相对输入的修正并加恒等捷径；升维需处理维度。",
+          "claim_refs": [
+            "CR2"
+          ]
+        }
+      ],
+      "discriminating_evidence": [
+        {
+          "text": "34层普通/残差的训练与验证结果可区分结构干预；1202层训练/测试分离约束“更深必更好”。",
+          "claim_refs": [
+            "CR1",
+            "CR3"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "text": "给定设置下改善优化和验证性能；收益并非无条件随深度增长。",
+          "claim_refs": [
+            "CR1",
+            "CR3"
+          ]
+        }
+      ],
+      "limitations": [
+        "未复现训练；图只读文字与图注。",
+        "没有引力波任务数据或相关方法迁移实验。"
+      ],
+      "open_questions": [
+        "其他任务的优化收益及泛化边界如何变化？"
+      ],
+      "evidence_refs": [
+        "ER1",
+        "ER2",
+        "ER3",
+        "ER4"
+      ]
+    },
+    {
+      "paper_id": "ligo",
+      "question": {
+        "text": "双站瞬变是否是天体引力波，噪声可否解释，源与理论的一致性能够支持到什么程度？",
+        "claim_refs": [
+          "CL1",
+          "CL2",
+          "CL4"
+        ]
+      },
+      "conditions": [
+        {
+          "text": "16天双站同时观测，仪器噪声非平稳且非高斯；只能从数据估计背景。",
+          "claim_refs": [
+            "CL1"
+          ]
+        }
+      ],
+      "assumptions": [
+        {
+          "text": "时移背景对站间不相关噪声有效；源参数估计还依赖波形模型。",
+          "claim_refs": [
+            "CL1",
+            "CL3"
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "text": "模板匹配提高目标信号敏感性，通用瞬变搜索降低波形假设依赖；同时用环境通道检查噪声竞争解释。",
+          "claim_refs": [
+            "CL1",
+            "CL2"
+          ]
+        }
+      ],
+      "discriminating_evidence": [
+        {
+          "text": "已监测环境扰动幅度不足，双站符合、时移背景与两类搜索共同收束；去形态约束后仍显著。",
+          "claim_refs": [
+            "CL1",
+            "CL2"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "text": "支持这次引力波与双黑洞并合观测；检测显著度、源参数区间和理论一致性仍有各自条件。",
+          "claim_refs": [
+            "CL1",
+            "CL3",
+            "CL4"
+          ]
+        }
+      ],
+      "limitations": [
+        "未读取原始时序、配套分析论文或独立核图；这里核对的是主文报告。",
+        "未确认arXiv修订号；使用文本可确认的正式发表版。"
+      ],
+      "open_questions": [
+        "未知噪声耦合、其他波形族与更广理论偏离能排查到什么程度？"
+      ],
+      "evidence_refs": [
+        "EL1",
+        "EL2",
+        "EL3",
+        "EL4",
+        "EL5",
+        "EL6",
+        "EL7"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "axis_id": "A1",
+      "title": "核心对象与目标",
+      "comparability": "对象不同，只能比较论证组织，不比较研究结果大小。",
+      "cells": [
+        {
+          "paper_id": "resnet",
+          "summary": "改变可训练计算模型，解释深度退化。",
+          "claim_refs": [
+            "CR1"
+          ]
+        },
+        {
+          "paper_id": "ligo",
+          "summary": "从自然观测中辨认事件并估计天体参数。",
+          "claim_refs": [
+            "CL1",
+            "CL3"
+          ]
+        }
+      ]
+    },
+    {
+      "axis_id": "A2",
+      "title": "对照与背景",
+      "comparability": "计算结构对照与经验噪声背景不是同一统计对象。",
+      "cells": [
+        {
+          "paper_id": "resnet",
+          "summary": "匹配架构与预算后改变捷径，比较训练和验证表现。",
+          "claim_refs": [
+            "CR1"
+          ]
+        },
+        {
+          "paper_id": "ligo",
+          "summary": "双站时移及环境通道建立噪声排查和误报背景。",
+          "claim_refs": [
+            "CL1"
+          ]
+        }
+      ]
+    },
+    {
+      "axis_id": "A3",
+      "title": "残差的含义",
+      "comparability": "词语相同不构成方法继承；比较具体运算目的。",
+      "cells": [
+        {
+          "paper_id": "resnet",
+          "summary": "模型内部学习的函数修正。",
+          "claim_refs": [
+            "CR2"
+          ]
+        },
+        {
+          "paper_id": "ligo",
+          "summary": "测量减去波形重构后的剩余量。",
+          "claim_refs": [
+            "CL3"
+          ]
+        }
+      ]
+    },
+    {
+      "axis_id": "A4",
+      "title": "可支持的结论层级",
+      "comparability": "错误率、误报率、可信区间没有统一排名尺度。",
+      "cells": [
+        {
+          "paper_id": "resnet",
+          "summary": "训练改善不保证任意深度的测试收益。",
+          "claim_refs": [
+            "CR3"
+          ]
+        },
+        {
+          "paper_id": "ligo",
+          "summary": "检测显著度、源参数可信区间与理论一致性分别解释。",
+          "claim_refs": [
+            "CL3",
+            "CL4"
+          ]
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "cluster_id": "KR",
+      "title": "深层计算模型的优化",
+      "rationale": "研究对象、具体结构干预和计算证据构成独立问题。",
+      "paper_refs": [
+        "resnet"
+      ],
+      "claim_refs": [
+        "CR1",
+        "CR2",
+        "CR3"
+      ]
+    },
+    {
+      "cluster_id": "KL",
+      "title": "引力波事件与源的识别",
+      "rationale": "自然观测、噪声排查和源参数推断构成独立问题。",
+      "paper_refs": [
+        "ligo"
+      ],
+      "claim_refs": [
+        "CL1",
+        "CL2",
+        "CL3",
+        "CL4"
+      ]
+    }
+  ],
+  "relations": [],
+  "sources": [
+    {
+      "source_id": "SR",
+      "title": "ResNet arXiv v1固定逐页文本",
+      "kind": "paper",
+      "url": "https://arxiv.org/abs/1512.03385v1",
+      "version": "v1",
+      "published_at": "2015-12-10",
+      "read_status": "partial",
+      "fingerprint": "sha256:text:690614f5553d49de231dce0e4f95c108422af4c2f9f5aa845336f69907ac91ba",
+      "availability_note": "12页固定逐页文本已读（含附录、图注）；没有视觉核图和训练复现。",
+      "paper_refs": [
+        "resnet"
+      ]
+    },
+    {
+      "source_id": "SL",
+      "title": "LIGO PRL 116,061102正式发表版固定逐页文本",
+      "kind": "paper",
+      "url": "https://doi.org/10.1103/PhysRevLett.116.061102",
+      "version": "PRL 116, 061102；2016-02-11正式发表版；arXiv修订号未由材料确认",
+      "published_at": "2016-02-11",
+      "read_status": "partial",
+      "fingerprint": "sha256:text:d0c5a8bf57b7340bb6e7926a1b2d0cab978cbf1a1917283b6ba7b2767a70c9f0",
+      "availability_note": "16页固定逐页文本已读（含参考文献与作者名单）；只确认文本中的正式发表版信息，无arXiv修订号证据。没有读取独立配套论文、原始观测数据或视觉核图。",
+      "paper_refs": [
+        "ligo"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ER1",
+      "source_id": "SR",
+      "locator": {
+        "section": "1. Introduction",
+        "figure_or_table": "Figure 1",
+        "pdf_page_index": 0,
+        "printed_page": "1",
+        "text_anchor": "higher training error"
+      },
+      "paraphrase": "深层普通网络不仅测试更差，训练误差也更高；作者将其与过拟合区分。",
+      "quote": null,
+      "scope": "给定模型与训练设置的退化诊断，不意味着所有深层失败原因相同。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "ER2",
+      "source_id": "SR",
+      "locator": {
+        "section": "3.1–3.2",
+        "figure_or_table": "Equation (1); Figure 2",
+        "pdf_page_index": 2,
+        "printed_page": "3",
+        "text_anchor": "residual function"
+      },
+      "paraphrase": "用F(x)+x重新参数化所需映射，并在加法后施加ReLU；对应普通/残差网络可保持深度、宽度和参数量，除加法外计算代价相同。",
+      "quote": null,
+      "scope": "残差指学习的函数修正；不是测量数据减掉理论模板后的噪声。",
+      "evidence_type": "theoretical_argument",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "ER3",
+      "source_id": "SR",
+      "locator": {
+        "section": "4.1. ImageNet Classification",
+        "figure_or_table": "Figure 4; Table 2",
+        "pdf_page_index": 4,
+        "printed_page": "5",
+        "text_anchor": "no extra parameter"
+      },
+      "paraphrase": "34层ResNet相对于对应普通网络有更低训练误差；10裁剪验证top-1误差从28.54%降至25.03%。18层对应结果为27.94%和27.88%。",
+      "quote": null,
+      "scope": "支持给定训练协议下结构干预的效果；不排他证明所有优化机制。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "ER4",
+      "source_id": "SR",
+      "locator": {
+        "section": "4.2. Exploring Over 1000 layers",
+        "figure_or_table": "Figure 6; Table 6 on page 7",
+        "pdf_page_index": 7,
+        "printed_page": "8",
+        "text_anchor": "training error"
+      },
+      "paraphrase": "1202层可训练到误差低于0.1%，测试误差7.93%，差于110层；作者认为可能过拟合。",
+      "quote": null,
+      "scope": "低训练误差与泛化收益不同；过拟合解释未被所有竞争解释排他检验。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "EL1",
+      "source_id": "SL",
+      "locator": {
+        "section": "II. Observation",
+        "figure_or_table": "Figure 1",
+        "pdf_page_index": 1,
+        "printed_page": "061102-2",
+        "text_anchor": "Residuals after subtracting"
+      },
+      "paraphrase": "双站时序与波形重构被比较，图注说明残差是滤波应变减去数值相对论波形；模型波形和小波重构使用同一事件数据。",
+      "quote": null,
+      "scope": "文本与图注核查，不是独立视觉复核；残差一致性不等于残差学习。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "EL2",
+      "source_id": "SL",
+      "locator": {
+        "section": "IV. Detector Validation",
+        "figure_or_table": null,
+        "pdf_page_index": 4,
+        "printed_page": "061102-5",
+        "text_anchor": "environmental fluctuations"
+      },
+      "paraphrase": "作者报告定量测试仪器对环境激励的响应；事件秒内已监测环境扰动最多只能解释6%的应变幅度，未找到显著跨站相关扰动。",
+      "quote": null,
+      "scope": "对已监测通道与耦合检验范围的噪声排查；不等于逻辑排除所有未知噪声。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "EL3",
+      "source_id": "SL",
+      "locator": {
+        "section": "V. Searches",
+        "figure_or_table": null,
+        "pdf_page_index": 4,
+        "printed_page": "061102-5",
+        "text_anchor": "time-shift technique"
+      },
+      "paraphrase": "分析使用16天双站同时观测；两类搜索都用超过站间传播时间的时移估计背景；有效性依赖站间仪器噪声不相关，信号与噪声偶合会保守地抬高背景。",
+      "quote": null,
+      "scope": "时移不是可屏蔽引力波的无信号实验；非平稳与非高斯背景需要经验估计。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "EL4",
+      "source_id": "SL",
+      "locator": {
+        "section": "V.A. Generic transient search",
+        "figure_or_table": "Figure 4",
+        "pdf_page_index": 5,
+        "printed_page": "061102-6",
+        "text_anchor": "two-class search"
+      },
+      "paraphrase": "通用瞬变搜索按三类计试验因子，给出误报率低于1/22500年、4.6σ；去掉频率上升形态限制后，两类搜索仍给出1/8400年、4.4σ。",
+      "quote": null,
+      "scope": "显著度取决于具体搜索与背景；不同搜索的σ不能相加，也不能当成独立事件。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "EL5",
+      "source_id": "SL",
+      "locator": {
+        "section": "V.B. Binary coalescence search",
+        "figure_or_table": "Figure 4",
+        "pdf_page_index": 6,
+        "printed_page": "061102-7",
+        "text_anchor": "upper bound"
+      },
+      "paraphrase": "模板搜索以分频一致性重加权SNR，并要求双站15ms内同模板符合；背景等效608000年。候选超过背景事件，经三类搜索修正，误报率上界1/203000年，对应噪声假警概率小于2×10^-7。",
+      "quote": null,
+      "scope": "这是有限背景给出的误报率上界，不是事件为假的后验概率，也不是源参数的不确定度。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "EL6",
+      "source_id": "SL",
+      "locator": {
+        "section": "VI. Source Discussion",
+        "figure_or_table": "Table I",
+        "pdf_page_index": 6,
+        "printed_page": "061102-7",
+        "text_anchor": "posterior distributions"
+      },
+      "paraphrase": "在探测之后，以相对论波形模型做贝叶斯参数估计；表I给出90%可信区间，并计入不同模型结果平均造成的系统误差。",
+      "quote": null,
+      "scope": "参数估计依赖所用波形、先验及模型覆盖，不能与检测显著度混为一谈。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "EL7",
+      "source_id": "SL",
+      "locator": {
+        "section": "VI. Source Discussion",
+        "figure_or_table": null,
+        "pdf_page_index": 7,
+        "printed_page": "061102-8",
+        "text_anchor": "no evidence for"
+      },
+      "paraphrase": "早晚波形推断的末态质量、自旋相容；相位偏离检验未见违反广义相对论证据。",
+      "quote": null,
+      "scope": "在检验灵敏度和模型族范围内未发现偏离，不是证明理论在全部条件下成立。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "CR1",
+      "text": "ResNet把训练退化与过拟合区分，并通过对应普通/残差模型检验结构改变。",
+      "epistemic_status": "explicit",
+      "paper_refs": [
+        "resnet"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "ER1",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "ER2",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "ER3",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "CR2",
+      "text": "ResNet中的残差是相对输入学习的函数修正，块后有ReLU。",
+      "epistemic_status": "explicit",
+      "paper_refs": [
+        "resnet"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "ER2",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "CR3",
+      "text": "1202层ResNet低训练误差并未带来比110层更好的测试误差。",
+      "epistemic_status": "explicit",
+      "paper_refs": [
+        "resnet"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "ER4",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "CL1",
+      "text": "LIGO对双站符合进行仪器环境排查，并在非高斯经验背景中估计显著度。",
+      "epistemic_status": "explicit",
+      "paper_refs": [
+        "ligo"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "EL2",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL3",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL5",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "CL2",
+      "text": "模板搜索与较少波形假设的瞬变搜索都找到了同一事件；去掉上升频率约束后仍有显著结果。",
+      "epistemic_status": "explicit",
+      "paper_refs": [
+        "ligo"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "EL4",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL5",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "CL3",
+      "text": "LIGO的残差是观测减去重构波形后的剩余量；检测显著度与源参数可信区间属于不同分析。",
+      "epistemic_status": "explicit",
+      "paper_refs": [
+        "ligo"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "EL1",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL5",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL6",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "CL4",
+      "text": "该观测的若干一致性检验没有发现偏离广义相对论的证据。",
+      "epistemic_status": "explicit",
+      "paper_refs": [
+        "ligo"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "EL7",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "CX1",
+      "text": "可识别的方法论类比是先构造可区分的替代解释，再决定结论强度；它并不证明两篇共享研究对象、机制或研究纲领。",
+      "epistemic_status": "inferred",
+      "paper_refs": [
+        "resnet",
+        "ligo"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "ER1",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "ER3",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL2",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL3",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL4",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        }
+      ],
+      "assumptions": [
+        "只比较判断结构，不把计算实验与自然观测互相替代。"
+      ],
+      "alternatives": [
+        "这种结构是广泛的科研原则，不是这两篇独有联系。"
+      ]
+    },
+    {
+      "claim_id": "CX2",
+      "text": "在已读材料内，没有足够证据建立共同问题延续、方法继承或团队研究主线；保留两个研究簇比添加实质论文关系更恰当。",
+      "epistemic_status": "inferred",
+      "paper_refs": [
+        "resnet",
+        "ligo"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "ER2",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "ER3",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL2",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL5",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL6",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        }
+      ],
+      "assumptions": [
+        "结论限于两篇固定文本和本次材料范围，未检索两领域的其他连接。"
+      ],
+      "alternatives": [
+        "外部工作可能建立新的交叉联系；方法论相似仍可用于教学比较。"
+      ]
+    },
+    {
+      "claim_id": "CX3",
+      "text": "残差学习与波形残差检查共享词语但承担不同推理角色，不能据名称推出方法迁移。",
+      "epistemic_status": "inferred",
+      "paper_refs": [
+        "resnet",
+        "ligo"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "ER2",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL1",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        }
+      ],
+      "assumptions": [
+        "比较的是原论文中的具体运算与目的。"
+      ],
+      "alternatives": [
+        "可在更抽象层面讨论参照与偏离，但这种抽象尚未带来实证方法联系。"
+      ]
+    },
+    {
+      "claim_id": "CX4",
+      "text": "两篇都要求区分阶段性成功与最终主张：训练改善不等于泛化，事件显著不等于参数精确或理论被全面证实。",
+      "epistemic_status": "inferred",
+      "paper_refs": [
+        "resnet",
+        "ligo"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "ER4",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL5",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL6",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        },
+        {
+          "evidence_id": "EL7",
+          "relation": "supports",
+          "scope_note": "支持范围按证据条目与本主张前提限定。"
+        }
+      ],
+      "assumptions": [
+        "这里是论证层级的类比，不认为各阶段的数学含义相同。"
+      ],
+      "alternatives": [
+        "不同领域可能需要其他阶段划分。"
+      ]
+    },
+    {
+      "claim_id": "HX1",
+      "text": "若未来要探索机器学习与引力波分析的连接，可用独立保留噪声时段、注入信号和校准后的误报率验证新算法；这不是两篇已证明的共同纲领。",
+      "epistemic_status": "hypothetical",
+      "paper_refs": [
+        "resnet",
+        "ligo"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "ER3",
+          "relation": "compatible",
+          "scope_note": "来源提供问题背景，不表示提出的方案已执行。"
+        },
+        {
+          "evidence_id": "EL3",
+          "relation": "compatible",
+          "scope_note": "来源提供问题背景，不表示提出的方案已执行。"
+        },
+        {
+          "evidence_id": "EL5",
+          "relation": "compatible",
+          "scope_note": "来源提供问题背景，不表示提出的方案已执行。"
+        }
+      ],
+      "assumptions": [
+        "必须先定义跨领域的新任务，重新检验训练数据代表性与探测选择效应。"
+      ],
+      "alternatives": [
+        "已有物理搜索可能已经满足目标，新模型未必提供值得成本的收益。"
+      ]
+    }
+  ],
+  "paths": [
+    {
+      "path_id": "P1",
+      "title": "事后联合审视：先独立取证，再判断联系",
+      "premise": "两篇完整固定文本可见；不构造作者候选形成历史。",
+      "assumptions": [
+        "论文报告未经独立实验或观测复现。"
+      ],
+      "node_refs": [
+        "NR",
+        "NL",
+        "NX"
+      ],
+      "edge_refs": [
+        "DRX",
+        "DLX"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "ER3",
+          "relation": "supports",
+          "scope_note": "支持计算实验中的判断。"
+        },
+        {
+          "evidence_id": "EL3",
+          "relation": "supports",
+          "scope_note": "支持观测背景估计中的判断。"
+        }
+      ],
+      "perspective": "retrospective",
+      "available_source_refs": [
+        "SR",
+        "SL"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": "NR",
+      "title": "为训练退化选择结构干预",
+      "question": "完整映射与残差参数化，哪种证据能改变选择？",
+      "paper_refs": [
+        "resnet"
+      ],
+      "path_contexts": [
+        {
+          "path_id": "P1",
+          "known_information": [
+            {
+              "text": "普通深网络训练退化及残差对应实验已报告。",
+              "claim_refs": [
+                "CR1"
+              ]
+            }
+          ],
+          "assumptions": [
+            "事后比较，两篇固定文本均可见；不表示作者真实研发时间线。"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "仅核对主文文本报告，未独立复现实验或数据分析。"
+      ],
+      "options": [
+        {
+          "option_id": "NRa",
+          "label": "保持直接映射",
+          "description": "先检查训练预算与初始化，再比较结构。",
+          "claim_refs": [
+            "CR1"
+          ]
+        },
+        {
+          "option_id": "NRb",
+          "label": "引入恒等参照",
+          "description": "学习修正并在相同主体架构下检验。",
+          "claim_refs": [
+            "CR2"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "TR",
+          "question": "结构改变是否在对应设置下改善训练且保留泛化？",
+          "method": "用相同深度与主体架构记录训练和验证误差，明确训练预算。",
+          "claim_refs": [
+            "CR1",
+            "CR3"
+          ],
+          "outcomes": [
+            {
+              "observation": "训练与验证共同改善。",
+              "next_action": "在此设置保留结构，再检验资源与深度边界。",
+              "claim_refs": [
+                "CR1"
+              ]
+            },
+            {
+              "observation": "只有训练改善，验证退步。",
+              "next_action": "转向容量、正则与数据条件，不继续只凭训练误差加深。",
+              "claim_refs": [
+                "CR3"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "CR1",
+        "CR2",
+        "CR3"
+      ],
+      "paper_connection": "提供计算实验中的竞争解释检验，不是LIGO方法的来源。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "LR",
+          "context": "计算模型复杂度增加但表现退步。",
+          "distinguish": "优化失败与泛化不足。",
+          "action": "做匹配结构对照并同时看训练和验证。",
+          "boundary": "预算、数据或损失不一致时无法单独归因结构。",
+          "claim_refs": [
+            "CR1",
+            "CR3"
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "NL",
+      "title": "将波形相符推进为可信观测",
+      "question": "何时继续天体解释，何时优先噪声排查？",
+      "paper_refs": [
+        "ligo"
+      ],
+      "path_contexts": [
+        {
+          "path_id": "P1",
+          "known_information": [
+            {
+              "text": "双站事件、环境排查和两类搜索结果均已报告。",
+              "claim_refs": [
+                "CL1",
+                "CL2"
+              ]
+            }
+          ],
+          "assumptions": [
+            "事后比较，两篇固定文本均可见；不表示作者真实研发时间线。"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "仅核对主文文本报告，未独立复现实验或数据分析。"
+      ],
+      "options": [
+        {
+          "option_id": "NLa",
+          "label": "天体信号候选",
+          "description": "满足符合与背景检验后继续源参数推断。",
+          "claim_refs": [
+            "CL1"
+          ]
+        },
+        {
+          "option_id": "NLb",
+          "label": "噪声解释优先",
+          "description": "若辅助通道或偶然符合可解释信号，先修复数据质量或背景模型。",
+          "claim_refs": [
+            "CL1"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "TL",
+          "question": "仪器或偶然符合能否解释事件？",
+          "method": "按论文的环境耦合检查、站间时移与放宽形态约束搜索分别检验竞争解释。",
+          "claim_refs": [
+            "CL1",
+            "CL2"
+          ],
+          "outcomes": [
+            {
+              "observation": "辅助通道存在足够幅度且同形的扰动，或背景不可靠。",
+              "next_action": "暂停强天体结论，重新校准耦合或背景。",
+              "claim_refs": [
+                "CL1"
+              ]
+            },
+            {
+              "observation": "未见足够噪声解释，放宽形态约束仍显著。",
+              "next_action": "继续源参数分析并保留检测与参数不确定度区别。",
+              "claim_refs": [
+                "CL2",
+                "CL3"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "CL1",
+        "CL2",
+        "CL3"
+      ],
+      "paper_connection": "展示观测型排错与背景估计；与计算模型的干预不能互换。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "LL",
+          "context": "自然观测出现高度匹配目标的信号。",
+          "distinguish": "模板相符与替代噪声解释的不足。",
+          "action": "增加环境与经验背景检查，并改变模型假设核验稳健性。",
+          "boundary": "跨站相关噪声或未覆盖模型会限制推断。",
+          "claim_refs": [
+            "CL1",
+            "CL2",
+            "CL3"
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "NX",
+      "title": "区分共同纲领与方法论类比",
+      "question": "两篇究竟需要连接成共同研究主线吗？",
+      "paper_refs": [
+        "resnet",
+        "ligo"
+      ],
+      "path_contexts": [
+        {
+          "path_id": "P1",
+          "known_information": [
+            {
+              "text": "研究对象与具体残差运算不同，但都有分层检验。",
+              "claim_refs": [
+                "CX1",
+                "CX3",
+                "CX4"
+              ]
+            }
+          ],
+          "assumptions": [
+            "事后比较，两篇固定文本均可见；不表示作者真实研发时间线。"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "仅核对主文文本报告，未独立复现实验或数据分析。"
+      ],
+      "options": [
+        {
+          "option_id": "NXa",
+          "label": "共同研究主线",
+          "description": "要求同一持续问题、方法或证据的具体跨论文连接。",
+          "claim_refs": [
+            "CX2"
+          ]
+        },
+        {
+          "option_id": "NXb",
+          "label": "保留两个研究簇",
+          "description": "只保留有条件的判断方式类比，不添加实质论文关系。",
+          "claim_refs": [
+            "CX1",
+            "CX2"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "TX",
+          "question": "共同点能否超出普遍科研原则，产生受支持的具体连接？",
+          "method": "逐项对照核心对象、运算目的、证据角色及明确的跨论文依赖；只使用两份材料。",
+          "claim_refs": [
+            "CX1",
+            "CX2",
+            "CX3"
+          ],
+          "outcomes": [
+            {
+              "observation": "仅有残差词语与排错原则的相似。",
+              "next_action": "保留分簇，关系清单为空；当前材料支持此结果。",
+              "claim_refs": [
+                "CX2",
+                "CX3"
+              ]
+            },
+            {
+              "observation": "将来取得具体共享任务、方法或证据连接。",
+              "next_action": "另建范围明确的联合分析并核查其机制和边界，不能倒写本次关系。",
+              "claim_refs": [
+                "HX1"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "CX1",
+        "CX2",
+        "CX3",
+        "CX4",
+        "HX1"
+      ],
+      "paper_connection": "这是一项分析者的联合判断，不是两组作者共同做过的研究决策。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "LX",
+          "context": "用户把可能相似的跨学科论文放在一起。",
+          "distinguish": "实质问题延续与一般判断原则类比。",
+          "action": "先找具体共同对象、方法或证据；不足时允许分簇。",
+          "boundary": "未读材料可能改变关系，因此不作永久无关断言。",
+          "claim_refs": [
+            "CX1",
+            "CX2"
+          ]
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "DRX",
+      "source_node_id": "NR",
+      "target_node_id": "NX",
+      "path_ids": [
+        "P1"
+      ],
+      "relation_type": "logical_dependency",
+      "label": "取证后判断可比范围",
+      "epistemic_status": "inferred",
+      "evidence_refs": [
+        "ER2",
+        "ER3"
+      ]
+    },
+    {
+      "edge_id": "DLX",
+      "source_node_id": "NL",
+      "target_node_id": "NX",
+      "path_ids": [
+        "P1"
+      ],
+      "relation_type": "logical_dependency",
+      "label": "取证后判断可比范围",
+      "epistemic_status": "inferred",
+      "evidence_refs": [
+        "EL2",
+        "EL3",
+        "EL6"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "scope",
+      "title": "一、分析范围与核心问题",
+      "blocks": [
+        {
+          "block_id": "B1",
+          "markdown": "用户希望判断两篇是否有共同研究主线。ResNet为arXiv:1512.03385v1；LIGO材料可确认是PRL 116, 061102、2016年2月11日正式发表版，不能据此推定arXiv修订号。本次只读两份逐页文本，不外扩检索。问题分成两层：是否有实质的工作延续，以及是否有可迁移的研究判断。",
+          "claim_refs": [
+            "CX1",
+            "CX2"
+          ],
+          "evidence_refs": [
+            "ER2",
+            "EL5"
+          ],
+          "node_refs": [],
+          "paper_refs": [
+            "resnet",
+            "ligo"
+          ],
+          "relation_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "comparability",
+      "title": "二、各篇工作的分工与可比性",
+      "blocks": [
+        {
+          "block_id": "B2",
+          "markdown": "ResNet改变人造计算系统并检验训练行为，LIGO识别自然事件并排除噪声。前者能够构造对应普通/残差模型；后者不能屏蔽引力波取得纯噪声，因此结合环境通道与站间时移估计背景。两者可在“如何让竞争解释接受检验”这一层比较，但不能把分类错误率与假警率放在同一尺度上。",
+          "claim_refs": [
+            "CR1",
+            "CL1",
+            "CX1"
+          ],
+          "evidence_refs": [
+            "ER3",
+            "EL2",
+            "EL3"
+          ],
+          "node_refs": [],
+          "paper_refs": [
+            "resnet",
+            "ligo"
+          ],
+          "relation_refs": []
+        },
+        {
+          "block_id": "B3",
+          "markdown": "两篇都出现残差一词，也不足以形成技术联系。ResNet的残差是相对输入学习的函数，LIGO的残差是扣除重构波形后的测量剩余。一个改变模型参数化，一个检查模型与观测的相容性。将二者都概括成“学习残差来降噪”会改写原论文实际方法。",
+          "claim_refs": [
+            "CX3"
+          ],
+          "evidence_refs": [
+            "ER2",
+            "EL1"
+          ],
+          "node_refs": [],
+          "paper_refs": [
+            "resnet",
+            "ligo"
+          ],
+          "relation_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "decisions",
+      "title": "三、关键联系与决策",
+      "blocks": [
+        {
+          "block_id": "B4",
+          "markdown": "节点NR讨论ResNet的选择：继续直接拟合完整映射，或加恒等参照学习修正。应看相同深度与主体架构的训练、验证结果，而不是仅看竞赛排名。34层普通/残差对照支持后者在该设置下改善训练；若只改善训练而验证退步，下一步应转查容量与正则。若合理训练预算内没有改善，不能仅凭残差公式坚持原解释。",
+          "claim_refs": [
+            "CR1",
+            "CR3"
+          ],
+          "evidence_refs": [
+            "ER1",
+            "ER3",
+            "ER4"
+          ],
+          "node_refs": [
+            "NR"
+          ],
+          "paper_refs": [
+            "resnet"
+          ],
+          "relation_refs": []
+        },
+        {
+          "block_id": "B5",
+          "markdown": "节点NL讨论LIGO的选择：把相符波形解释为天体事件，或继续按仪器及偶然符合排查。双站符合和漂亮波形还不够；需要检查环境通道、耦合强度、经验背景与波形依赖。若辅助通道出现能解释幅度的同形扰动，应先重新评估数据质量；若没有足够噪声解释，且去掉强形态约束后仍显著，才支持继续做源参数分析。",
+          "claim_refs": [
+            "CL1",
+            "CL2"
+          ],
+          "evidence_refs": [
+            "EL2",
+            "EL3",
+            "EL4",
+            "EL5"
+          ],
+          "node_refs": [
+            "NL"
+          ],
+          "paper_refs": [
+            "ligo"
+          ],
+          "relation_refs": []
+        },
+        {
+          "block_id": "B6",
+          "markdown": "节点NX才是联合判断：两条证据链是否支持共同研究纲领，还是只支持方法论类比？目前共同之处是避免从单个成功指标直接跳到最强结论；但研究对象、操作与目标都不相同，材料也没有建立两篇之间的技术依赖。因而保留两个研究簇，实质论文关系为空；不为连通地图而补上继承或因果箭头。",
+          "claim_refs": [
+            "CX1",
+            "CX2",
+            "CX4"
+          ],
+          "evidence_refs": [
+            "ER2",
+            "ER4",
+            "EL3",
+            "EL5",
+            "EL6"
+          ],
+          "node_refs": [
+            "NX"
+          ],
+          "paper_refs": [
+            "resnet",
+            "ligo"
+          ],
+          "relation_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "boundaries",
+      "title": "四、替代解释与适用边界",
+      "blocks": [
+        {
+          "block_id": "B7",
+          "markdown": "LIGO的两类搜索分析同一事件数据，方法不同并不等于获得两个独立天体事件，显著度不能相加。时移的有效性以站间噪声不相关为条件；环境检查帮助检验该前提，却不逻辑消灭所有未知噪声。1/203000年的值是有限背景下的误报率上界，不是“事件为假的概率”。源参数的90%可信区间又属于另外的贝叶斯分析。",
+          "claim_refs": [
+            "CL1",
+            "CL2",
+            "CL3"
+          ],
+          "evidence_refs": [
+            "EL2",
+            "EL3",
+            "EL4",
+            "EL5",
+            "EL6"
+          ],
+          "node_refs": [
+            "NL"
+          ],
+          "paper_refs": [
+            "ligo"
+          ],
+          "relation_refs": []
+        },
+        {
+          "block_id": "B8",
+          "markdown": "ResNet中1202层的低训练误差并未带来更好的测试结果；LIGO中未见理论偏离也不等于全面证明理论。两者均提醒我们按主张逐层收束，但这是综合推断，不是论文明确共同宣称的纲领。其他未读工作可能连接这些领域；当前的弱联系结论只限制本次材料，不宣称两个领域永远无关。",
+          "claim_refs": [
+            "CR3",
+            "CL4",
+            "CX2",
+            "CX4"
+          ],
+          "evidence_refs": [
+            "ER4",
+            "EL7"
+          ],
+          "node_refs": [
+            "NX"
+          ],
+          "paper_refs": [
+            "resnet",
+            "ligo"
+          ],
+          "relation_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "synthesis",
+      "title": "五、综合认识与可能主线",
+      "blocks": [
+        {
+          "block_id": "B9",
+          "markdown": "本次没有足够证据支持共同研究纲领，也没有建立方法继承、竞争方案或共同机制。两个独立研究簇分别是深层计算模型的优化和引力波事件的识别。仍有有用的比较结果：一个对照应当让替代解释给出不同预期；一个成功指标只能支持其对应的结论层级。这种教学层面的相似性保留在正文和比较表中，不升级为实质论文关系。",
+          "claim_refs": [
+            "CX1",
+            "CX2",
+            "CX4"
+          ],
+          "evidence_refs": [
+            "ER3",
+            "ER4",
+            "EL2",
+            "EL3",
+            "EL6"
+          ],
+          "node_refs": [
+            "NX"
+          ],
+          "paper_refs": [
+            "resnet",
+            "ligo"
+          ],
+          "relation_refs": []
+        }
+      ]
+    },
+    {
+      "section_id": "transfer",
+      "title": "六、可迁移判断与开放问题",
+      "blocks": [
+        {
+          "block_id": "B10",
+          "markdown": "遇到表现改善或疑似发现，先问要排除哪个替代解释，再选对照：计算模型可做匹配结构干预，观测研究需检查仪器、选择效应和经验背景。若对照本身违反了独立性或预算条件，就先修复对照。迁移的是这套问法，不是把机器学习实验表照搬到观测物理。",
+          "claim_refs": [
+            "CX1"
+          ],
+          "evidence_refs": [
+            "ER3",
+            "EL2",
+            "EL3"
+          ],
+          "node_refs": [
+            "NR",
+            "NL"
+          ],
+          "paper_refs": [
+            "resnet",
+            "ligo"
+          ],
+          "relation_refs": []
+        },
+        {
+          "block_id": "B11",
+          "markdown": "若未来探索新交叉任务，例如用学习系统辅助引力波候选排序，需要另外定义数据、注入信号、保留噪声时段、选择偏差与校准后的误报率。只有在这些检验下出现条件明确的收益，才可提出实际方法迁移。这是探索性设想，当前材料没有证明ResNet适合该任务，也没有授权本次扩展论文集合。",
+          "claim_refs": [
+            "HX1"
+          ],
+          "evidence_refs": [
+            "ER3",
+            "EL3",
+            "EL5"
+          ],
+          "node_refs": [
+            "NX"
+          ],
+          "paper_refs": [
+            "resnet",
+            "ligo"
+          ],
+          "relation_refs": []
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "仅提供材料；没有外部检索及新增论文。",
+    "全文逐页文本已读，未视觉核图；没有原始训练、观测数据或独立复现。",
+    "LIGO正文可确认正式发表版，无法由当前文本确认arXiv修订号。",
+    "模型自审，不是人工评审；弱联系结论限于当前固定材料。"
+  ],
+  "provenance": {
+    "model": null,
+    "generated_at": "2026-10-26T14:22:20.192Z",
+    "host": "Codex desktop model holdout trial",
+    "material_policy": "provided_only",
+    "tools": [
+      "PowerShell固定逐页文本读取",
+      "发布包Skill与按需参考文件",
+      "Node.js共享CLI"
+    ],
+    "usage": {
+      "elapsed_seconds": 505,
+      "model_calls": null,
+      "tokens": null,
+      "note": "使用当前会话配置，不调用独立模型API；具体模型标识、使用量与费用未由可见计量接口提供。"
+    }
+  },
+  "validation": {
+    "semantic_review": "self_reviewed",
+    "notes": [
+      "所有主要事实回查提供文本；source_checked仅表示文本核查。",
+      "未把相同术语或通用排错原则升级为技术继承；空relations是有根据的分析结果。",
+      "不同搜索使用同一事件，未重复计为独立探测；没有合并显著度。",
+      "没有将观察显著度写成事件为假的后验概率，也未把未见偏离写成理论被全面证明。"
+    ]
+  },
+  "revision": null,
+  "manifest": {
+    "included": [
+      "原创联合报告",
+      "单篇证据卡",
+      "比较表",
+      "主张转述及章节页码",
+      "两个独立研究簇",
+      "事后决策地图元数据"
+    ],
+    "external": [
+      "原始ResNet论文（仅引用）",
+      "原始LIGO论文（仅引用）",
+      "输入逐页文本未嵌入JSON",
+      "LIGO配套分析论文未实际读取"
+    ]
+  }
+}

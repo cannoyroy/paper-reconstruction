@@ -9,3 +9,5 @@ ResNet 原始来源为 arXiv 1512.03385v1；CRISPR 来源为 DOI 10.1126/science
 React、Vite、React Flow、Ajv、TypeBox、idb、react-markdown、remark-gfm、Lucide 与构建测试依赖采用各自许可证。分发包中的第三方代码另附 THIRD_PARTY_NOTICES，版权条款保留；React Flow 的默认归属信息保留显示。
 
 案例中的研究路线包含明确标记的系统推断与教学假设，不代表作者认可，也不代表已经复现实验或验证历史。
+
+多篇材料新增 arXiv 1603.05027v1（Identity Mappings）、1505.00387v1（Highway Networks）与 DOI 10.1038/nature13011（Sternberg等2014）。仅分发原创分析、来源链接及版本指纹，原论文和图像不进入仓库或公开构建。

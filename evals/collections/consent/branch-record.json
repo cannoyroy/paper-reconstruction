@@ -1,0 +1,12 @@
+{
+  "started_at": "2026-10-26T14:11:08Z",
+  "generated_at": "2026-10-26T14:19:20.491Z",
+  "original_pending_sha256": "d7887e3d4b2c1105f31a51dae474e47fb8f4aef1e66501581c12ddb3148a378b",
+  "identity_text_sha256": "7fedf6175c8b1612a91815dc5a5c6b31201a0dd3603e3eecefdb79e74d4f8b5d",
+  "simulated_user_instruction": "A 明确接受 Identity v1；B 明确拒绝全部；两个分支独立范围，不冒充人类采纳。",
+  "source_scope": "ResNet 12 页、Highway 6 页、Identity 15 页提取文本均完整读取；图像未视觉核查。B 只使用两篇原始证据，A 的取证不进入 B 证据链。",
+  "branch_synthesis": "共用原始论文的事实卡；B 单独围绕诊断与选型撰写两篇综合，A 单独围绕传播条件、门控边界与预激活归因撰写三篇综合。没有先生成 A 再删论文得到 B。",
+  "model": null,
+  "usage": null,
+  "human_review": false
+}

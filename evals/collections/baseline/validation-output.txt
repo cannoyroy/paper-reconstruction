@@ -1,0 +1,23 @@
+{
+  "first_attempt": {
+    "valid": false,
+    "errors": [
+      "A4: claim paper scope mismatch",
+      "A4: claim paper scope mismatch"
+    ],
+    "repair": "将比较表单篇单元格中的跨论文主张CX4引用拆为CR5与CH5，保持原证据及结论。"
+  },
+  "final": {
+    "command": "node release/paper-reconstruction/scripts/paper-reconstruction.mjs validate work/v02-trial-baseline/analysis.json",
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"analysis_id\": \"baseline-resnet-highway-v1\",\n  \"analysis_version\": 1,\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  "markdown_export": {
+    "command": "node release/paper-reconstruction/scripts/paper-reconstruction.mjs markdown work/v02-trial-baseline/analysis.json work/v02-trial-baseline/report.md",
+    "exit_code": 0,
+    "stdout": "已导出 work/v02-trial-baseline/report.md\n",
+    "stderr": ""
+  },
+  "json_round_trip_equal": true
+}

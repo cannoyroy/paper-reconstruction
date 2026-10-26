@@ -1,6 +1,6 @@
 # 宿主与工具支持
 
-首版针对 Codex desktop 的本地项目工作流。安装按 Codex 的本地 Skill 发现路径进行；可参考 [官方技能文档](https://learn.chatgpt.com/docs/build-skills)。其他宿主不列为实测兼容。
+v0.1与v0.2针对 Codex desktop 的本地项目工作流。安装按 Codex 的本地 Skill 发现路径进行；可参考 [官方技能文档](https://learn.chatgpt.com/docs/build-skills)。其他宿主不列为实测兼容。
 
 | 能力 | 要求与降级 |
 | --- | --- |
@@ -9,7 +9,7 @@
 | 公开补读 | 需要检索与来源读取工具；缺少时退回提供材料模式 |
 | 结果落盘 | 需要用户授权目录的写入能力；没有时输出文本并说明未保存 |
 | 确定性校验 | 自足 CLI 需要 Node.js 22；不可执行时保留草稿并标明未校验 |
-| 持久讨论 | 通过版本绑定的节点包续接；不要求宿主自动同步历史 |
+| 持久讨论 | 通过版本绑定的节点或论文关系包续接；不要求宿主自动同步历史 |
 
 可安装包保留标准 SKILL.md、按需 references、agents/openai.yaml 和已打包脚本。Skill 不自带模型服务、OCR 或实验复现工具。
 

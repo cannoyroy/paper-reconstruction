@@ -1,0 +1,85 @@
+{
+  "trial": "frozen_method_weak_relation_holdout",
+  "started_at": "2026-10-26T14:13:55Z",
+  "ended_at": "2026-10-26T14:22:22.295Z",
+  "elapsed_seconds": 507,
+  "model": null,
+  "model_calls": null,
+  "tokens": null,
+  "cost": null,
+  "reviewer": "model_self_review_only",
+  "previous_baseline_output_modified": false,
+  "materials": [
+    {
+      "path": "work/v02-input/resnet.txt",
+      "sha256": "690614f5553d49de231dce0e4f95c108422af4c2f9f5aa845336f69907ac91ba",
+      "pdf_pages": 12,
+      "version": "arXiv:1512.03385v1"
+    },
+    {
+      "path": "work/evaluation-input/ligo.txt",
+      "sha256": "d0c5a8bf57b7340bb6e7926a1b2d0cab978cbf1a1917283b6ba7b2767a70c9f0",
+      "pdf_pages": 16,
+      "version": "PRL 116, 061102；2016-02-11正式发表版；arXiv修订号未由材料确认"
+    }
+  ],
+  "scope": "Only supplied page-marked texts; all substantive body, table text, captions and appendices read; no external retrieval or visual figure inspection.",
+  "skill_contract_snapshot_at": "2026-10-26T14:22:22.295Z",
+  "skill_contract_hashes": {
+    "release/paper-reconstruction/SKILL.md": "447007dc0e8d36d581aa2f051897568a13e1b4a74c21e442302fdf569f2cd61b",
+    "release/paper-reconstruction/references/method.md": "90d6007b1e3e6b36632641b25acde06db027d95a7d3a4de82f0012d30af13621",
+    "release/paper-reconstruction/references/collection-method.md": "71aeb52b64c53079514433d15b213a5064066db4345d8880a69c0a9ff666e54d",
+    "release/paper-reconstruction/references/collection-output.md": "3ffc6f046407f7b29f8675c82fcc56600e7a60e2606093a401afda590fda9506",
+    "release/paper-reconstruction/references/schemas/collection.schema.json": "26863919c366632af2edcd46bcc81e659e80c6597b47793fb7519a6e7a69ad85",
+    "release/paper-reconstruction/references/schemas/collection-intake.schema.json": "c60f2bc17771d1f30703c0a73a93202c64489d654ed5e5899ab32dad6e9551b9",
+    "release/paper-reconstruction/scripts/paper-reconstruction.mjs": "587c305503202de223d042763eccf8fa935c139da835dd0372c0abd17f719019"
+  },
+  "stages": [
+    {
+      "stage": "registered",
+      "record": "Identity and versions established from the supplied texts."
+    },
+    {
+      "stage": "frozen",
+      "record": "Explicit provided_only policy; no retrieval, candidates or consent waiting."
+    },
+    {
+      "stage": "evidence_cards_saved",
+      "file": "paper-cards.json"
+    },
+    {
+      "stage": "joint_analysis",
+      "record": "Compared objects, operations and evidence before concluding; two singleton clusters, no substantive paper relations."
+    }
+  ],
+  "intake_validation": {
+    "command": "node release/paper-reconstruction/scripts/paper-reconstruction.mjs validate work/v02-weak-trial/intake.json",
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"kind\": \"collection_intake\"\n}\n",
+    "stderr": ""
+  },
+  "validation": {
+    "command": "node release/paper-reconstruction/scripts/paper-reconstruction.mjs validate work/v02-weak-trial/analysis.json",
+    "exit_code": 0,
+    "stdout": "{\n  \"valid\": true,\n  \"analysis_id\": \"resnet-ligo-weak-holdout\",\n  \"analysis_version\": 1,\n  \"warnings\": []\n}\n",
+    "stderr": ""
+  },
+  "markdown_export": {
+    "command": "node release/paper-reconstruction/scripts/paper-reconstruction.mjs markdown work/v02-weak-trial/analysis.json work/v02-weak-trial/report.md",
+    "exit_code": 0,
+    "stdout": "已导出 work/v02-weak-trial/report.md\n",
+    "stderr": ""
+  },
+  "limitations": [
+    "No independent human feedback, training reproduction or observational reanalysis.",
+    "LIGO arXiv revision not established from supplied material.",
+    "Output is a model holdout trial, not proof of universal method performance."
+  ],
+  "output_sha256": {
+    "analysis.json": "f5af26612430bc3dc8f464f10347398ff42b7102da93c1cd89738b03e7da85dd",
+    "report.md": "ae7173d33e6838eec9ab1214d4f97d738afddee462f58d608c2b8b5e2d23ba95",
+    "intake.json": "4c1e5d8261437a04111201252461f6c4446757eb7e75897ed290aab8e2f32760",
+    "paper-cards.json": "98456c24f4229a2170cfc481cc7d5c6bac98d8b94cf7de0c5ce18a7869abf99c"
+  },
+  "json_round_trip_equal": true
+}

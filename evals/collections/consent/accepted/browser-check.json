@@ -1,0 +1,9 @@
+{
+  "checked_at": "2026-10-26T14:24:28.256Z",
+  "analysis_id": "consent-accepted-rhi-v1",
+  "target": "REL_HI",
+  "inference_and_sources_shown": true,
+  "downloaded_from_reader": true,
+  "review_kind": "model_ui_check",
+  "human_review": false
+}

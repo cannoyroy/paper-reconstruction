@@ -15,7 +15,7 @@ pnpm test:e2e
 
 Windows 如已安装 Edge，PowerShell 可执行 `$env:PLAYWRIGHT_CHANNEL='msedge'` 再跑浏览器测试。测试使用独立无头实例，浏览器数据与用户日常配置分开。
 
-Skill 打包把同一份校验器与 Schema 放入 release 目录，并生成 ZIP；辅助 CLI 不需要另装 npm 包。以解压包在仓库外运行 validate、markdown 和 discussion，检验其自足性。发布包只包含分发必需内容。
+Skill 打包把同一份校验器与 Schema 放入 release 目录，并从 package.json 版本生成 paper-reconstruction-版本.zip；辅助 CLI 不需要另装 npm 包。以解压包在仓库外运行 validate、markdown、discussion、relation-discussion 和 revision，检验其自足性。发布包只包含分发必需内容。
 
 ## GitHub Actions 与 Pages
 
@@ -28,3 +28,5 @@ Vite 默认使用相对资源路径；CI 构建使用仓库子路径 /paper-reco
 ## 案例维护
 
 ResNet 与 CRISPR 为打磨案例，scripts/curate-examples.ts 保留原创编辑内容，运行会更新生成时间并重新生成两份案例，不是自动论文分析器。LIGO 通过冻结后独立试用制作。修改方法后，记录它解决的具体缺陷，不以案例文字长度或节点数作为收益指标。
+
+多篇打磨案例为 ResNet＋Identity Mappings，原创编辑源在 scripts/curate-collection.ts。冻结后的原始输出和配对比较见 evals/collections。新旧结果由 core/workbench.ts 分派；检索和采纳属于 Skill 行为，确定性校验器检查记录一致性，不能替代语义审查。

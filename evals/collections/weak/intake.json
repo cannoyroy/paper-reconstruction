@@ -1,0 +1,55 @@
+{
+  "kind": "collection_intake",
+  "schema_version": "0.2.0",
+  "stage": "frozen",
+  "goal": "判断两篇是否存在共同研究主线，允许方法论类比、分簇或无实质联系。",
+  "user_clue": "我想看看这两篇是否有共同研究主线。",
+  "provided_papers": [
+    {
+      "paper_id": "resnet",
+      "work_id": "arxiv:1512.03385",
+      "title": "Deep Residual Learning for Image Recognition",
+      "authors": [
+        "Kaiming He",
+        "Xiangyu Zhang",
+        "Shaoqing Ren",
+        "Jian Sun"
+      ],
+      "identifier": "arXiv:1512.03385",
+      "version": "v1",
+      "domain": "图像识别与深度学习",
+      "research_type": "computational",
+      "url": "https://arxiv.org/abs/1512.03385v1",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "read_status": "partial",
+      "material_note": "12页固定逐页文本已读（含附录、图注）；没有视觉核图和训练复现。"
+    },
+    {
+      "paper_id": "ligo",
+      "work_id": "doi:10.1103/PhysRevLett.116.061102",
+      "title": "Observation of Gravitational Waves from a Binary Black Hole Merger",
+      "authors": [
+        "B. P. Abbott et al.",
+        "LIGO Scientific Collaboration and Virgo Collaboration"
+      ],
+      "identifier": "doi:10.1103/PhysRevLett.116.061102",
+      "version": "PRL 116, 061102；2016-02-11正式发表版；arXiv修订号未由材料确认",
+      "domain": "引力波观测与天体物理",
+      "research_type": "observational",
+      "url": "https://doi.org/10.1103/PhysRevLett.116.061102",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "read_status": "partial",
+      "material_note": "16页固定逐页文本已读（含参考文献与作者名单）；只确认文本中的正式发表版信息，无arXiv修订号证据。没有读取独立配套论文、原始观测数据或视觉核图。"
+    }
+  ],
+  "search": {
+    "status": "provided_only",
+    "queries": [],
+    "candidates": [],
+    "note": "用户明确仅提供材料，因此跳过检索，不推荐、不纳入独立外部论文。"
+  }
+}

@@ -23,8 +23,18 @@ export function validateBundle(input: unknown): ValidationResult {
           `${e.instancePath || "/"} ${e.message}${e.params.additionalProperty ? ` (${e.params.additionalProperty})` : ""}`,
       ),
     };
-  const b = input,
-    errors: string[] = [],
+  return validateShared(input);
+}
+
+export function validateShared<
+  T extends Omit<AnalysisBundle, "paper" | "schema_version" | "revision"> & {
+    revision: AnalysisBundle["revision"];
+  },
+>(
+  b: T,
+):
+  { ok: true; value: T; warnings: string[] } | { ok: false; errors: string[] } {
+  const errors: string[] = [],
     warnings: string[] = [];
   const index = <T>(items: T[], key: keyof T, name: string) => {
     const map = new Map<string, T>();

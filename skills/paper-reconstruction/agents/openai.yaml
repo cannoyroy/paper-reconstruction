@@ -1,4 +1,4 @@
 interface:
   display_name: "论文研究复盘"
-  short_description: "根据论文证据重建候选研究决策与路径，提炼有条件的科研判断"
-  default_prompt: "请使用 $paper-reconstruction 为这篇论文生成完整研究复盘和阅读器结果包。"
+  short_description: "单篇或多篇论文联合复盘，核查研究关系与证据，提炼有条件的科研判断"
+  default_prompt: "请使用 $paper-reconstruction 分析提供的一篇或多篇论文，生成研究复盘与阅读器结果包；多篇时先初读并检索，最多推荐三篇，等我明确选择后再纳入。"

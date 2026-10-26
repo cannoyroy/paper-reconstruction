@@ -1,0 +1,84 @@
+{
+  "kind": "collection_intake",
+  "schema_version": "0.2.0",
+  "stage": "awaiting_selection",
+  "goal": "检验两篇工作的相似性是否对应相同问题、机制与条件，并重建可比较的研究选择。",
+  "user_clue": "我觉得它们很像",
+  "provided_papers": [
+    {
+      "title": "Deep Residual Learning for Image Recognition",
+      "authors": [
+        "Kaiming He",
+        "Xiangyu Zhang",
+        "Shaoqing Ren",
+        "Jian Sun"
+      ],
+      "identifier": "arXiv:1512.03385",
+      "version": "arXiv:1512.03385v1",
+      "domain": "深度学习与图像识别",
+      "research_type": "computational",
+      "url": "https://arxiv.org/abs/1512.03385v1",
+      "paper_id": "P_RESNET",
+      "work_id": "arXiv:1512.03385",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "read_status": "partial",
+      "material_note": "已初读提供文本前 155 行，覆盖 PDF 第 1–2 页的大部，确认身份、退化问题与残差构形；尚未完成逐篇取证。"
+    },
+    {
+      "title": "Highway Networks",
+      "authors": [
+        "Rupesh Kumar Srivastava",
+        "Klaus Greff",
+        "Jürgen Schmidhuber"
+      ],
+      "identifier": "arXiv:1505.00387",
+      "version": "arXiv:1505.00387v1",
+      "domain": "深度学习与图像识别",
+      "research_type": "computational",
+      "url": "https://arxiv.org/abs/1505.00387v1",
+      "paper_id": "P_HIGHWAY",
+      "work_id": "arXiv:1505.00387",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "read_status": "partial",
+      "material_note": "已初读提供文本前 150 行，覆盖 PDF 第 1–2 页的大部，确认身份与门控表达式；尚未完成逐篇取证。"
+    }
+  ],
+  "search": {
+    "status": "completed",
+    "queries": [
+      "site.arxiv.org residual highway networks identity mapping gates direct paths optimization"
+    ],
+    "note": "真实定向检索一轮。只推荐一篇与门控/恒等通路这一具体缺口直接相关的桥接与边界工作；不凑足三篇。检索结果中的非原始研究解读不作推荐依据。本次为行为验收，当前没有任何用户或模拟用户采纳决定。",
+    "candidates": [
+      {
+        "candidate_id": "C_IDENTITY",
+        "work_id": "arXiv:1603.05027",
+        "title": "Identity Mappings in Deep Residual Networks",
+        "authors": [
+          "Kaiming He",
+          "Xiangyu Zhang",
+          "Shaoqing Ren",
+          "Jian Sun"
+        ],
+        "year": 2016,
+        "version": "arXiv:1603.05027v1",
+        "url": "https://arxiv.org/abs/1603.05027v1",
+        "related_paper_refs": [
+          "P_RESNET",
+          "P_HIGHWAY"
+        ],
+        "gap": "两份初读材料都尝试让深层网络容易训练，但恒等相加与输入依赖门控并非同一选择。需要一个直接考察通路变换及门控条件的对照来源，检验“相似就等价”的解释。",
+        "expected_change": "加入后可以用后续的条件化对照考察门控、初始化及传播假设；也可能使共同解释收窄。该文实验并不自动成为两篇原始模型的公平性能排名，更不能倒推原作者的开发顺序。",
+        "inspected_material": "已核验 arXiv v1 身份页、版本历史与摘要，并读取 PDF 文本第 1–6 页（至第 6 页门控段落开头；包含式 1–8、图 2 的文字与表 1 提取文本）。全文 PDF 可访问，尚未通读后半部分及视觉核对曲线。",
+        "full_text_status": "available",
+        "decision": "pending",
+        "decision_record": null,
+        "decision_source": null
+      }
+    ]
+  }
+}

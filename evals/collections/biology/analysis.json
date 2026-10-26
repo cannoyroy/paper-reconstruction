@@ -1,0 +1,1526 @@
+{
+  "kind": "collection_analysis",
+  "schema_version": "0.2.0",
+  "workflow_version": "0.2.0",
+  "analysis_id": "biology-heldout-jinek-sternberg",
+  "analysis_version": 1,
+  "example_kind": "user_analysis",
+  "status": "complete",
+  "collection": {
+    "title": "从双RNA切割体系到PAM审查与周转边界",
+    "goal": "在合作线索下独立核查两篇机制工作的问题联系与证据边界。",
+    "user_clue": "课题组与合作线索；不是经验证的同一导师或统一研究纲领。",
+    "derived_from": null
+  },
+  "papers": [
+    {
+      "paper_id": "jinek2012",
+      "work_id": "doi:10.1126/science.1225829",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "title": "A programmable dual RNA-guided DNA endonuclease in adaptive bacterial immunity",
+      "authors": [
+        "Martin Jinek",
+        "Krzysztof Chylinski",
+        "Ines Fonfara",
+        "Michael Hauer",
+        "Jennifer A. Doudna",
+        "Emmanuelle Charpentier"
+      ],
+      "identifier": "doi:10.1126/science.1225829",
+      "version": "PMC作者稿，available 2018-12-07；取读2026-10-26",
+      "domain": "RNA引导核酸识别与酶机制",
+      "research_type": "experimental",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6286148/",
+      "read_status": "partial",
+      "material_note": "已读HTML主文P1–P13及主图图注，目视Figure 4。PDF请求返回验证页，未声称读取PDF；补充材料未读。"
+    },
+    {
+      "paper_id": "sternberg2014",
+      "work_id": "doi:10.1038/nature13011",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "title": "DNA interrogation by the CRISPR RNA-guided endonuclease Cas9",
+      "authors": [
+        "Samuel H. Sternberg",
+        "Sy Redding",
+        "Martin Jinek",
+        "Eric C. Greene",
+        "Jennifer A. Doudna"
+      ],
+      "identifier": "doi:10.1038/nature13011",
+      "version": "eScholarship作者稿；PMC available 2014-09-06；取读2026-10-26",
+      "domain": "RNA引导核酸识别与酶机制",
+      "research_type": "experimental",
+      "url": "https://escholarship.org/content/qt9r55k6pk/qt9r55k6pk.pdf",
+      "read_status": "partial",
+      "material_note": "17页PDF（1页库封面+16页作者稿）；主文、Methods和主图图注已读，目视Figure 3/4；Extended Data与视频未读。"
+    }
+  ],
+  "paper_cards": [
+    {
+      "paper_id": "jinek2012",
+      "question": {
+        "text": "Cas9需要哪些RNA组分才能进行序列特异的双链切割？",
+        "claim_refs": [
+          "j1"
+        ]
+      },
+      "conditions": [
+        {
+          "text": "主要是纯化组分、质粒与短DNA体外体系，另有细菌转化读出；本次补充方法未读。",
+          "claim_refs": [
+            "j1",
+            "j2"
+          ]
+        }
+      ],
+      "assumptions": [
+        {
+          "text": "以失活突变体帮助区分结合和切割；失活突变不等于所有动力学均与野生型相同。",
+          "claim_refs": [
+            "j1",
+            "j2"
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "text": "组分恢复、催化域突变和PAM突变将“能切”拆为不同必要条件；再探索RNA结构融合。",
+          "claim_refs": [
+            "j1",
+            "j2",
+            "j4"
+          ]
+        }
+      ],
+      "discriminating_evidence": [
+        {
+          "text": "单个催化域失活与逐链标记支持链分工；PAM结合与切割读出支持PAM相关要求。",
+          "claim_refs": [
+            "j1",
+            "j2"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "text": "建立可编程系统并提出PAM许可解链的解释；多轮结论在本次仅能作为正文报告保存。",
+          "claim_refs": [
+            "j2",
+            "j3",
+            "j4"
+          ]
+        }
+      ],
+      "limitations": [
+        "补充S6B及补充方法未读取，不能复算多轮证据；仅Figure 4图像核查。"
+      ],
+      "open_questions": [
+        "PAM是否只负责打开DNA？组分和条件变化如何影响产物释放？"
+      ],
+      "evidence_refs": [
+        "ej1",
+        "ej2",
+        "ej3",
+        "ej4",
+        "ej5"
+      ]
+    },
+    {
+      "paper_id": "sternberg2014",
+      "question": {
+        "text": "Cas9如何从大量DNA中找到目标，并在何种步骤依赖PAM？",
+        "claim_refs": [
+          "s1",
+          "s3"
+        ]
+      },
+      "conditions": [
+        {
+          "text": "单分子DNA curtains与整体生化读出结合；本文使用双RNA体系，不默认等同所有单RNA与细胞环境。",
+          "claim_refs": [
+            "s1",
+            "s4"
+          ]
+        }
+      ],
+      "assumptions": [
+        {
+          "text": "竞争导致的反应延迟可约束驻留与审查；这是间接读出，需结合结合测量和底物控制解释。",
+          "claim_refs": [
+            "s1",
+            "s2"
+          ]
+        }
+      ],
+      "choices": [
+        {
+          "text": "系统改变PAM、互补区位置与局部配对状态，把随机成核与方向性模型提出不同预测。",
+          "claim_refs": [
+            "s1",
+            "s2"
+          ]
+        }
+      ],
+      "discriminating_evidence": [
+        {
+          "text": "PAM邻近错配与气泡底物区分解链模型；结合相近但切割差异支持结合后的限制。",
+          "claim_refs": [
+            "s2",
+            "s3"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "text": "支持PAM参与审查和后续激活；稳定产物保持提示该体外体系呈单轮特征。",
+          "claim_refs": [
+            "s1",
+            "s3",
+            "s4"
+          ]
+        }
+      ],
+      "limitations": [
+        "Extended Data、补充视频和原始单分子轨迹未读取；不能把未检测到的快速接触说成不存在。"
+      ],
+      "open_questions": [
+        "体外产物保持在细胞环境中如何改变？不同条件下是否仍保持相同阶段依赖？"
+      ],
+      "evidence_refs": [
+        "es1",
+        "es2",
+        "es3",
+        "es4",
+        "es5"
+      ]
+    }
+  ],
+  "search": {
+    "status": "provided_only",
+    "queries": [],
+    "candidates": [],
+    "note": "provided_only记录请求策略，实际存在协议偏差：为定位指定Jinek全文执行了一次外部精确标题搜索。本应只直接取读已给链接/作者稿。搜索未产生候选，没有打开、纳入或引用其他论文；旁出摘要片段未作为证据。"
+  },
+  "comparisons": [
+    {
+      "axis_id": "axis-question",
+      "title": "问题与读出",
+      "comparability": "机制层次可比；不同底物、观测装置与RNA构型下的数值不直接比较。",
+      "cells": [
+        {
+          "paper_id": "jinek2012",
+          "summary": "组分、催化域与PAM必要性；切割与结合。",
+          "claim_refs": [
+            "j1",
+            "j2"
+          ]
+        },
+        {
+          "paper_id": "sternberg2014",
+          "summary": "搜索、竞争、解链与结合后激活；单分子及整体读出。",
+          "claim_refs": [
+            "s1",
+            "s2",
+            "s3"
+          ]
+        }
+      ]
+    },
+    {
+      "axis_id": "axis-turnover",
+      "title": "周转边界",
+      "comparability": "原补充条件未齐，保留差异，暂不宣布实验互相推翻。",
+      "cells": [
+        {
+          "paper_id": "jinek2012",
+          "summary": "正文称补充试验提供多轮证据。",
+          "claim_refs": [
+            "j3"
+          ]
+        },
+        {
+          "paper_id": "sternberg2014",
+          "summary": "产物平台和稳定产物保持支持所测条件下单轮特征。",
+          "claim_refs": [
+            "s4"
+          ]
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "cluster_id": "cas9-mechanism",
+      "title": "Cas9识别与切割的阶段机制",
+      "rationale": "按内容联系组织，而不是按机构合并贡献。",
+      "paper_refs": [
+        "jinek2012",
+        "sternberg2014"
+      ],
+      "claim_refs": [
+        "i1"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "relation_id": "r-question",
+      "from_paper_id": "jinek2012",
+      "to_paper_id": "sternberg2014",
+      "kind": "problem_continuation",
+      "directed": true,
+      "label": "从组分要求到审查机制",
+      "explanation": "文内问题与方法引用支持问题延续；不以共同作者或年份证明指导关系及真实构思顺序。",
+      "epistemic_status": "inferred",
+      "claim_refs": [
+        "i1",
+        "i2"
+      ],
+      "evidence_refs": [
+        "ej1",
+        "ej3",
+        "es1",
+        "es3",
+        "es5"
+      ]
+    },
+    {
+      "relation_id": "r-turnover",
+      "from_paper_id": "jinek2012",
+      "to_paper_id": "sternberg2014",
+      "kind": "uncertain",
+      "directed": false,
+      "label": "周转表述待条件核对",
+      "explanation": "保存张力，不在补充条件未核查时判定直接矛盾。",
+      "epistemic_status": "inferred",
+      "claim_refs": [
+        "i3"
+      ],
+      "evidence_refs": [
+        "ej4",
+        "es4"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "sj",
+      "title": "A programmable dual RNA-guided DNA endonuclease in adaptive bacterial immunity",
+      "kind": "paper",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6286148/",
+      "version": "PMC作者稿，available 2018-12-07；取读2026-10-26",
+      "published_at": "2012-08-17",
+      "read_status": "partial",
+      "fingerprint": "sha256:d72e12cc80da9df9cea60cc39eb85ae4d543bebaa6246f15f698d9dcb4572f10",
+      "availability_note": "已读HTML主文P1–P13及主图图注，目视Figure 4。PDF请求返回验证页，未声称读取PDF；补充材料未读。",
+      "paper_refs": [
+        "jinek2012"
+      ]
+    },
+    {
+      "source_id": "ss",
+      "title": "DNA interrogation by the CRISPR RNA-guided endonuclease Cas9",
+      "kind": "paper",
+      "url": "https://escholarship.org/content/qt9r55k6pk/qt9r55k6pk.pdf",
+      "version": "eScholarship作者稿；PMC available 2014-09-06；取读2026-10-26",
+      "published_at": "2014-03-06",
+      "read_status": "partial",
+      "fingerprint": "sha256:9d7907a4f857092103261fb626d8ad16ee1dc3208fb2b557b08481e2679713d6",
+      "availability_note": "17页PDF（1页库封面+16页作者稿）；主文、Methods和主图图注已读，目视Figure 3/4；Extended Data与视频未读。",
+      "paper_refs": [
+        "sternberg2014"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ej1",
+      "source_id": "sj",
+      "locator": {
+        "section": "Cas9 is a DNA endonuclease guided by two RNAs.",
+        "figure_or_table": "Figure 1",
+        "pdf_page_index": null,
+        "printed_page": null,
+        "text_anchor": "P6"
+      },
+      "paraphrase": "crRNA单独不能引导所测切割，加入tracrRNA后支持特异切割；正文同时比较非匹配crRNA。",
+      "quote": null,
+      "scope": "已核查正文与图注；Figure 1图像未目视。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "ej2",
+      "source_id": "sj",
+      "locator": {
+        "section": "Each Cas9 nuclease domain cleaves one DNA strand.",
+        "figure_or_table": "Figure 2",
+        "pdf_page_index": null,
+        "printed_page": null,
+        "text_anchor": "P8"
+      },
+      "paraphrase": "单个催化域突变产生缺口产物，逐链标记实验分配HNH与RuvC-like各自的切割链。",
+      "quote": null,
+      "scope": "作者报告的功能分离，不由结构同源性单独推导催化分工。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "ej3",
+      "source_id": "sj",
+      "locator": {
+        "section": "A short sequence motif dictates R-loop formation.",
+        "figure_or_table": "Figure 4",
+        "pdf_page_index": null,
+        "printed_page": null,
+        "text_anchor": "P11"
+      },
+      "paraphrase": "PAM突变降低双链DNA的切割和结合；单链靶标切割对所测PAM突变不敏感，作者提出PAM可能许可解链及R-loop形成。",
+      "quote": null,
+      "scope": "目视Figure 4并核对正文；“仅在双链环境需要”是作者由这些底物提出的解释，不能普遍外推。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "ej4",
+      "source_id": "sj",
+      "locator": {
+        "section": "Cas9 is a DNA endonuclease guided by two RNAs.",
+        "figure_or_table": "Supplementary Figure S6B (未读取)",
+        "pdf_page_index": null,
+        "printed_page": null,
+        "text_anchor": "P7"
+      },
+      "paraphrase": "正文称五倍摩尔过量底物的结果提供多轮反应证据。",
+      "quote": null,
+      "scope": "只读正文陈述，未读S6B图或补充方法；不能独立验证底物/活性酶计量。",
+      "evidence_type": "author_interpretation",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "ej5",
+      "source_id": "sj",
+      "locator": {
+        "section": "Cas9 can be programmed with a single chimeric RNA.",
+        "figure_or_table": "Figure 5",
+        "pdf_page_index": null,
+        "printed_page": null,
+        "text_anchor": "P12"
+      },
+      "paraphrase": "作者将双RNA所需结构融合为单RNA，并在所测体外底物验证；短嵌合版本效率差。",
+      "quote": null,
+      "scope": "主文与图注；不将体外切割等同于所有细胞和靶点的编辑成功。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "es1",
+      "source_id": "ss",
+      "locator": {
+        "section": "A PAM is required for DNA interrogation",
+        "figure_or_table": "Figure 3b,c",
+        "pdf_page_index": 5,
+        "printed_page": "5",
+        "text_anchor": "a single point mutation in the adjacent PAM"
+      },
+      "paraphrase": "完全互补但PAM突变的竞争DNA几乎不拖慢靶标切割；无互补竞争物的阻滞随PAM数量增加。",
+      "quote": null,
+      "scope": "正文和Figure 3目视；竞争时间为间接动力学读出，极短暂非PAM接触不可检出不等于没有接触。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "es2",
+      "source_id": "ss",
+      "locator": {
+        "section": "Mechanism of RNA:DNA heteroduplex formation",
+        "figure_or_table": "Figure 3d,e",
+        "pdf_page_index": 5,
+        "printed_page": "5",
+        "text_anchor": "random nucleation and sequential unwinding models"
+      },
+      "paraphrase": "通过改变互补区位置和长度区分随机成核与从PAM邻近处逐步解链；邻近错配削弱竞争，局部DNA气泡可恢复竞争。",
+      "quote": null,
+      "scope": "正文p5–6与图3；与逐步模型相符，不是直接拍到每个碱基的解链顺序。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "es3",
+      "source_id": "ss",
+      "locator": {
+        "section": "The PAM triggers Cas9 nuclease activity",
+        "figure_or_table": "Figure 4a,b",
+        "pdf_page_index": 6,
+        "printed_page": "6",
+        "text_anchor": "more than two orders of magnitude slower"
+      },
+      "paraphrase": "单链靶标结合与双链相近，但切割慢超过两个数量级；补上跨越PAM的双链侧翼可激活切割，止于PAM前则不行。",
+      "quote": null,
+      "scope": "正文p6–7及目视图4；支持结合后作用，变构调控是作者机制解释。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "es4",
+      "source_id": "ss",
+      "locator": {
+        "section": "Single-molecule visualization of Cas9",
+        "figure_or_table": "Figure 2b–d",
+        "pdf_page_index": 3,
+        "printed_page": "3",
+        "text_anchor": "single-turnover enzyme"
+      },
+      "paraphrase": "产物量随酶/底物比例达到平台；成像下切割产物仍被Cas9保持，强解离处理显露断裂，作者据此提出单轮特征。",
+      "quote": null,
+      "scope": "正文已读，Figure 2图像和Extended Data 4/5未目视；结论限于所测体外条件。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "es5",
+      "source_id": "ss",
+      "locator": {
+        "section": "Methods; Introduction; Author contributions",
+        "figure_or_table": null,
+        "pdf_page_index": 1,
+        "printed_page": "1",
+        "text_anchor": "AUTHOR CONTRIBUTIONS"
+      },
+      "paraphrase": "作者列出Berkeley与Columbia等单位，明确不同实验与分析贡献；引言和Methods引用Jinek2012的双RNA系统与蛋白制备。",
+      "quote": null,
+      "scope": "可支持公开合作及方法使用线索，不证明指导关系、课题归属边界或完整开发史。",
+      "evidence_type": "historical_account",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "es6",
+      "source_id": "ss",
+      "locator": {
+        "section": "METHODS — Cas9 and RNA preparation",
+        "figure_or_table": null,
+        "pdf_page_index": 7,
+        "printed_page": "7",
+        "text_anchor": "were purified as described6"
+      },
+      "paraphrase": "Methods明确将Cas9制备指向参考文献6；作者稿第11页将文献6列为Jinek等2012论文。",
+      "quote": null,
+      "scope": "支持公开的方法引用，不证明后续问题如何在研究者脑中形成。",
+      "evidence_type": "historical_account",
+      "verification_status": "source_checked"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "j1",
+      "text": "Jinek2012用组分去除与恢复检验双RNA所需功能，并把双链切割分配到两个催化域。",
+      "paper_refs": [
+        "jinek2012"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "ej1",
+          "relation": "supports",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        },
+        {
+          "evidence_id": "ej2",
+          "relation": "supports",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "j2",
+      "text": "Jinek2012报告PAM突变影响结合和双链切割，提出PAM许可解链/R-loop的解释。",
+      "paper_refs": [
+        "jinek2012"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "ej3",
+          "relation": "supports",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "j3",
+      "text": "Jinek2012正文把补充试验解释为多轮反应证据；本次未核查原补充图。",
+      "paper_refs": [
+        "jinek2012"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "ej4",
+          "relation": "supports",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "j4",
+      "text": "Jinek2012将双RNA的结构要求转为单RNA设计并进行了有限体外测试。",
+      "paper_refs": [
+        "jinek2012"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "ej5",
+          "relation": "supports",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "s1",
+      "text": "Sternberg2014通过竞争物PAM与互补区变化检验先识别PAM再审查邻近序列。",
+      "paper_refs": [
+        "sternberg2014"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "es1",
+          "relation": "supports",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "s2",
+      "text": "互补区位置和气泡底物结果支持从PAM邻近处逐步解链；并非直接观测每一步。",
+      "paper_refs": [
+        "sternberg2014"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "es2",
+          "relation": "supports",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "s3",
+      "text": "结合相近而切割不同的杂合底物结果支持PAM在结合后仍有作用。",
+      "paper_refs": [
+        "sternberg2014"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "es3",
+          "relation": "supports",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "s4",
+      "text": "Sternberg2014在所测体外条件观察稳定产物保持和与酶量相关的产物平台，解释为单轮反应特征。",
+      "paper_refs": [
+        "sternberg2014"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "es4",
+          "relation": "supports",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "s5",
+      "text": "Sternberg2014署名与贡献显示合作，并明确使用Jinek2012所述系统；不能从单位推出师生关系。",
+      "paper_refs": [
+        "sternberg2014"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "es5",
+          "relation": "supports",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        },
+        {
+          "evidence_id": "es6",
+          "relation": "supports",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "i1",
+      "text": "两篇可组织为“建立可编程切割系统→拆解靶标审查各阶段”的问题延续；该箭头描述文本支持的问题依赖。",
+      "paper_refs": [
+        "jinek2012",
+        "sternberg2014"
+      ],
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "ej1",
+          "relation": "conditional_support",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        },
+        {
+          "evidence_id": "ej3",
+          "relation": "conditional_support",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        },
+        {
+          "evidence_id": "es1",
+          "relation": "conditional_support",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        },
+        {
+          "evidence_id": "es3",
+          "relation": "conditional_support",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        },
+        {
+          "evidence_id": "es5",
+          "relation": "conditional_support",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        },
+        {
+          "evidence_id": "es6",
+          "relation": "conditional_support",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        }
+      ],
+      "assumptions": [
+        "限定同类S. pyogenes Cas9体外系统，不以作者重合代替内容证据。"
+      ],
+      "alternatives": [
+        "后续问题也可能由技术应用、其他工作或合作方法共同推动；现有材料不足以复原其开发过程。"
+      ]
+    },
+    {
+      "claim_id": "i2",
+      "text": "2014年的结合后激活证据限制了把PAM作用仅归于DNA初始结合或解链的简单解释。",
+      "paper_refs": [
+        "jinek2012",
+        "sternberg2014"
+      ],
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "ej3",
+          "relation": "conditional_support",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        },
+        {
+          "evidence_id": "es3",
+          "relation": "conditional_support",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        }
+      ],
+      "assumptions": [
+        "比较不同读出所回答的环节，而非将不同底物速率直接排名。"
+      ],
+      "alternatives": [
+        "底物几何或稳定性也可能影响切割；作者的变构解释仍需更多结构或动力学证据。"
+      ]
+    },
+    {
+      "claim_id": "i3",
+      "text": "两篇对周转的表述有张力，但补充条件未核查，暂不能判定真正冲突来自哪项实验或解释。",
+      "paper_refs": [
+        "jinek2012",
+        "sternberg2014"
+      ],
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "ej4",
+          "relation": "conditional_support",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        },
+        {
+          "evidence_id": "es4",
+          "relation": "conditional_support",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        }
+      ],
+      "assumptions": [
+        "不同底物、RNA构型、活性酶比例与观察窗口都可能改变表观周转。"
+      ],
+      "alternatives": [
+        "可能存在条件依赖的产物释放，也可能是活性浓度或读出方式差异。"
+      ]
+    },
+    {
+      "claim_id": "h1",
+      "text": "下一轮可把PAM结合、解链、结合后切割和产物释放分别设为可判别问题，先补齐对应原始条件，再做匹配对照。",
+      "paper_refs": [
+        "jinek2012",
+        "sternberg2014"
+      ],
+      "epistemic_status": "hypothetical",
+      "evidence_links": [
+        {
+          "evidence_id": "ej3",
+          "relation": "compatible",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        },
+        {
+          "evidence_id": "es2",
+          "relation": "compatible",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        },
+        {
+          "evidence_id": "es3",
+          "relation": "compatible",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        },
+        {
+          "evidence_id": "ej4",
+          "relation": "compatible",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        },
+        {
+          "evidence_id": "es4",
+          "relation": "compatible",
+          "scope_note": "支持所述作者报告或有限比较；未读补充图不当作直接观察。"
+        }
+      ],
+      "assumptions": [
+        "这是提出的复核路径，未执行新生物实验。"
+      ],
+      "alternatives": [
+        "一个操作可能同时改变多个步骤，需要不同读出交叉约束。"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": "n-stage",
+      "title": "PAM究竟限制哪一步",
+      "question": "相同切割终点背后，是不能结合，还是结合后不能激活？",
+      "paper_refs": [
+        "jinek2012",
+        "sternberg2014"
+      ],
+      "path_contexts": [
+        {
+          "path_id": "p-compare",
+          "known_information": [
+            {
+              "text": "Jinek2012报告PAM突变影响结合和双链切割，提出PAM许可解链/R-loop的解释。",
+              "claim_refs": [
+                "j2"
+              ]
+            },
+            {
+              "text": "结合相近而切割不同的杂合底物结果支持PAM在结合后仍有作用。",
+              "claim_refs": [
+                "s3"
+              ]
+            },
+            {
+              "text": "2014年的结合后激活证据限制了把PAM作用仅归于DNA初始结合或解链的简单解释。",
+              "claim_refs": [
+                "i2"
+              ]
+            }
+          ],
+          "assumptions": [
+            "事后比较已读材料，不冒充作者历史；建议试验尚未执行。"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "未读补充材料和原始数据限制了条件复核。"
+      ],
+      "options": [
+        {
+          "option_id": "n-stage-o0",
+          "label": "binding",
+          "description": "把PAM效应主要归为结合/解链门槛。",
+          "claim_refs": [
+            "j2"
+          ]
+        },
+        {
+          "option_id": "n-stage-o1",
+          "label": "post-binding",
+          "description": "允许PAM在结合后继续限制切割。",
+          "claim_refs": [
+            "s3"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "n-stage-test",
+          "question": "相同切割终点背后，是不能结合，还是结合后不能激活？",
+          "method": "以已报道的完整、单链与局部双链底物为比较思路，同时检查结合和切割，先复核底物定义与失活酶读出。新增匹配验证属探索性建议。",
+          "claim_refs": [
+            "h1"
+          ],
+          "outcomes": [
+            {
+              "observation": "结合相近而缺PAM底物切割显著较慢",
+              "next_action": "保留结合后控制解释；进一步区分构象激活与底物几何。",
+              "claim_refs": [
+                "h1"
+              ]
+            },
+            {
+              "observation": "切割差异完全伴随结合差异，匹配占据率后消失",
+              "next_action": "收缩到招募/结合解释，不能仅凭终点切割声称变构。",
+              "claim_refs": [
+                "h1"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "j2",
+        "s3",
+        "i2",
+        "h1"
+      ],
+      "paper_connection": "从2012年的组分与PAM要求，追问2014年各反应步骤的判别证据；未将逻辑依赖写成作者实际开发顺序。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "n-stage-lesson",
+          "context": "同一因素被称为某反应必要条件。",
+          "distinguish": "必要性发生在哪个步骤。",
+          "action": "把结合与催化读出拆开，让解释产生不同预测。",
+          "boundary": "失活突变、底物构象和间接测量可能引入新的差异。",
+          "claim_refs": [
+            "j2",
+            "s3",
+            "i2",
+            "h1"
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "n-unwind",
+      "title": "随机成核还是从PAM端开始",
+      "question": "互补总量相同但位置不同，能否改变竞争效果？",
+      "paper_refs": [
+        "jinek2012",
+        "sternberg2014"
+      ],
+      "path_contexts": [
+        {
+          "path_id": "p-compare",
+          "known_information": [
+            {
+              "text": "Jinek2012报告PAM突变影响结合和双链切割，提出PAM许可解链/R-loop的解释。",
+              "claim_refs": [
+                "j2"
+              ]
+            },
+            {
+              "text": "互补区位置和气泡底物结果支持从PAM邻近处逐步解链；并非直接观测每一步。",
+              "claim_refs": [
+                "s2"
+              ]
+            }
+          ],
+          "assumptions": [
+            "事后比较已读材料，不冒充作者历史；建议试验尚未执行。"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "未读补充材料和原始数据限制了条件复核。"
+      ],
+      "options": [
+        {
+          "option_id": "n-unwind-o0",
+          "label": "random",
+          "description": "总体互补量决定随机成核机会。",
+          "claim_refs": [
+            "s2"
+          ]
+        },
+        {
+          "option_id": "n-unwind-o1",
+          "label": "sequential",
+          "description": "PAM邻近的连续互补启动逐步解链。",
+          "claim_refs": [
+            "s2"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "n-unwind-test",
+          "question": "互补总量相同但位置不同，能否改变竞争效果？",
+          "method": "核对2014图3的模型预测与位置变化底物；气泡恢复作为绕过局部解链障碍的交叉证据。拟议复核需用独立结合读出约束竞争解释。",
+          "claim_refs": [
+            "h1"
+          ],
+          "outcomes": [
+            {
+              "observation": "邻近错配使长远端互补无效，而局部气泡恢复",
+              "next_action": "支持局部解链障碍及方向性模型，继续排查结构变化解释。",
+              "claim_refs": [
+                "h1"
+              ]
+            },
+            {
+              "observation": "竞争只随总互补量而非位置改变",
+              "next_action": "重新评估方向性，转向随机成核或多起点模型。",
+              "claim_refs": [
+                "h1"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "j2",
+        "s2",
+        "h1"
+      ],
+      "paper_connection": "从2012年的组分与PAM要求，追问2014年各反应步骤的判别证据；未将逻辑依赖写成作者实际开发顺序。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "n-unwind-lesson",
+          "context": "终点实验发现某一段序列特别重要。",
+          "distinguish": "总结合能与空间/步骤顺序。",
+          "action": "保持互补量、改变位置，使竞争模型分离。",
+          "boundary": "方向性是模型支持程度，不能据此宣称直接观测逐碱基运动。",
+          "claim_refs": [
+            "j2",
+            "s2",
+            "h1"
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "n-turnover",
+      "title": "周转分歧如何处理",
+      "question": "多轮报告与稳定产物保持能否由条件差异调和？",
+      "paper_refs": [
+        "jinek2012",
+        "sternberg2014"
+      ],
+      "path_contexts": [
+        {
+          "path_id": "p-compare",
+          "known_information": [
+            {
+              "text": "Jinek2012正文把补充试验解释为多轮反应证据；本次未核查原补充图。",
+              "claim_refs": [
+                "j3"
+              ]
+            },
+            {
+              "text": "Sternberg2014在所测体外条件观察稳定产物保持和与酶量相关的产物平台，解释为单轮反应特征。",
+              "claim_refs": [
+                "s4"
+              ]
+            },
+            {
+              "text": "两篇对周转的表述有张力，但补充条件未核查，暂不能判定真正冲突来自哪项实验或解释。",
+              "claim_refs": [
+                "i3"
+              ]
+            }
+          ],
+          "assumptions": [
+            "事后比较已读材料，不冒充作者历史；建议试验尚未执行。"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "未读补充材料和原始数据限制了条件复核。"
+      ],
+      "options": [
+        {
+          "option_id": "n-turnover-o0",
+          "label": "conditional",
+          "description": "周转依赖具体底物及产物释放条件。",
+          "claim_refs": [
+            "i3"
+          ]
+        },
+        {
+          "option_id": "n-turnover-o1",
+          "label": "measurement",
+          "description": "表观差别来自活性酶计量或读出/时间窗口。",
+          "claim_refs": [
+            "i3"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "n-turnover-test",
+          "question": "多轮报告与稳定产物保持能否由条件差异调和？",
+          "method": "先补读2012 S6B与两篇对应方法，核对活性酶计量、底物与RNA形式、反应窗口；之后才考虑统一条件下产物/酶量和释放测量。当前不执行新实验。",
+          "claim_refs": [
+            "h1"
+          ],
+          "outcomes": [
+            {
+              "observation": "统一条件仍呈产物平台且保持结合",
+              "next_action": "在该条件下采用单轮模型，寻找释放步骤限制。",
+              "claim_refs": [
+                "h1"
+              ]
+            },
+            {
+              "observation": "统一条件持续产生超过活性酶量的产物",
+              "next_action": "支持该条件下多轮，单独解释成像体系的滞留。",
+              "claim_refs": [
+                "h1"
+              ]
+            },
+            {
+              "observation": "尚不能确认活性酶比例或原始条件",
+              "next_action": "维持未决，不给任一论文判错。",
+              "claim_refs": [
+                "h1"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "j3",
+        "s4",
+        "i3",
+        "h1"
+      ],
+      "paper_connection": "从2012年的组分与PAM要求，追问2014年各反应步骤的判别证据；未将逻辑依赖写成作者实际开发顺序。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "n-turnover-lesson",
+          "context": "多篇结果似乎矛盾。",
+          "distinguish": "真实机制冲突与实验条件/读出差异。",
+          "action": "先核对条件再匹配验证，明确什么结果改变解释。",
+          "boundary": "正文转述补充图不能替代原始条件与量化数据。",
+          "claim_refs": [
+            "j3",
+            "s4",
+            "i3",
+            "h1"
+          ]
+        }
+      ]
+    }
+  ],
+  "paths": [
+    {
+      "path_id": "p-compare",
+      "title": "事后机制比较",
+      "premise": "使用两篇已读材料比较逻辑选择，不声称历史开发顺序。",
+      "assumptions": [
+        "反应条件必须分别保存，未读补充不作为已验证数据。"
+      ],
+      "node_refs": [
+        "n-stage",
+        "n-unwind",
+        "n-turnover"
+      ],
+      "edge_refs": [
+        "edge-stage-unwind"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "ej3",
+          "relation": "conditional_support",
+          "scope_note": "支持提出阶段性问题。"
+        },
+        {
+          "evidence_id": "es3",
+          "relation": "conditional_support",
+          "scope_note": "支持比较结合前后解释。"
+        }
+      ],
+      "perspective": "retrospective",
+      "available_source_refs": [
+        "sj",
+        "ss"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "edge-stage-unwind",
+      "source_node_id": "n-stage",
+      "target_node_id": "n-unwind",
+      "path_ids": [
+        "p-compare"
+      ],
+      "relation_type": "logical_dependency",
+      "label": "将PAM依赖拆到解链环节",
+      "epistemic_status": "inferred",
+      "evidence_refs": [
+        "ej3",
+        "es2",
+        "es3"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "scope",
+      "title": "一、范围与核心问题",
+      "blocks": [
+        {
+          "block_id": "scope-b0",
+          "markdown": "输入线索是课题组与合作关联。两篇确有共同作者，2014文也列出跨机构实验贡献并引用2012工作；这些事实支持公开合作与方法联系，却不能单凭署名证明指导关系或统一研究纲领。本次只分析指定两篇：Jinek的PMC HTML作者稿、Sternberg的公开作者稿PDF。两篇主文已读，补充材料未读；只目视Jinek图4与Sternberg图3、4。",
+          "claim_refs": [
+            "s5",
+            "i1"
+          ],
+          "node_refs": [],
+          "relation_refs": [
+            "r-question"
+          ],
+          "paper_refs": [
+            "jinek2012",
+            "sternberg2014"
+          ],
+          "evidence_refs": [
+            "es5",
+            "es6",
+            "ej1",
+            "ej3",
+            "es1",
+            "es3"
+          ]
+        },
+        {
+          "block_id": "scope-b1",
+          "markdown": "待检验的问题是：一个可被RNA编程切割DNA的体系建立后，如何把“识别目标”分成招募、解链、切割激活和产物释放，而不把终点切割结果误当作全部过程？请求要求仅提供材料；本次为定位既有Jinek全文做过一次外部精确标题搜索，构成协议偏差，没有纳入或引用旁出的其他工作。",
+          "claim_refs": [
+            "i1",
+            "i2"
+          ],
+          "node_refs": [
+            "n-stage"
+          ],
+          "relation_refs": [],
+          "paper_refs": [
+            "jinek2012",
+            "sternberg2014"
+          ],
+          "evidence_refs": [
+            "ej1",
+            "ej3",
+            "es1",
+            "es3",
+            "es5",
+            "es6"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "roles",
+      "title": "二、分工与可比性",
+      "blocks": [
+        {
+          "block_id": "roles-b0",
+          "markdown": "2012工作首先以组分去除与恢复确定双RNA要求，以催化域突变和逐链读出识别切割分工，再把结构要求转换为单RNA设计。2014则将已经可工作的系统放进单分子与整体生化测量，追问它如何搜索、何时停留、何时切割。可以比较两者怎样排除机制解释，不适合把不同底物和读出的数值排成性能高低。",
+          "claim_refs": [
+            "j1",
+            "j4",
+            "s1",
+            "s3"
+          ],
+          "node_refs": [],
+          "relation_refs": [],
+          "paper_refs": [
+            "jinek2012",
+            "sternberg2014"
+          ],
+          "evidence_refs": [
+            "ej1",
+            "ej2",
+            "ej5",
+            "es1",
+            "es3"
+          ]
+        },
+        {
+          "block_id": "roles-b1",
+          "markdown": "尤其要区分直接观察与模型：竞争DNA拖慢目标切割可约束审查时间，却没有直接拍到每一个碱基的打开；PAM相关驻留支持筛选角色，未检测到极短暂非PAM接触也不能推出零接触。2014给出更细的机制证据，但不能因此把2012未测出的步骤写为当时已知。",
+          "claim_refs": [
+            "s1",
+            "s2"
+          ],
+          "node_refs": [
+            "n-unwind"
+          ],
+          "relation_refs": [],
+          "paper_refs": [
+            "jinek2012",
+            "sternberg2014"
+          ],
+          "evidence_refs": [
+            "es1",
+            "es2"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "decisions",
+      "title": "三、跨论文关键决策",
+      "blocks": [
+        {
+          "block_id": "decisions-b0",
+          "markdown": "关键选择一：PAM只是帮助接近或打开DNA，还是在结合后仍控制切割？2012的PAM突变影响结合和双链切割，让“许可解链”成为合理解释；2014用相近结合、不同切割的单链和局部双链底物将问题推进一步。若匹配结合占据率后切割差异仍在，就继续检查结合后的构象或底物几何；若差异消失，就收缩到结合解释。节点n-stage保存这两个方向，新增复核尚未实施。",
+          "claim_refs": [
+            "j2",
+            "s3",
+            "i2",
+            "h1"
+          ],
+          "node_refs": [
+            "n-stage"
+          ],
+          "relation_refs": [
+            "r-question"
+          ],
+          "paper_refs": [
+            "jinek2012",
+            "sternberg2014"
+          ],
+          "evidence_refs": [
+            "ej3",
+            "es3",
+            "es2",
+            "ej4",
+            "es4"
+          ]
+        },
+        {
+          "block_id": "decisions-b1",
+          "markdown": "关键选择二：互补区随机成核还是从PAM附近依次推进？2014图3让两种模型对互补区位置产生不同预测；邻近错配让远端连续互补失去竞争能力，而局部DNA气泡可以恢复。该组合支持局部解链障碍的解释。若改位置但保持总互补量后只有总量起作用，方向性模型就应降级。气泡恢复是进一步的判别证据，不是对微观每一步运动的直接录像。",
+          "claim_refs": [
+            "s2",
+            "h1"
+          ],
+          "node_refs": [
+            "n-unwind"
+          ],
+          "relation_refs": [],
+          "paper_refs": [
+            "jinek2012",
+            "sternberg2014"
+          ],
+          "evidence_refs": [
+            "es2",
+            "ej3",
+            "es3",
+            "ej4",
+            "es4"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "boundaries",
+      "title": "四、分歧与竞争解释",
+      "blocks": [
+        {
+          "block_id": "boundaries-b0",
+          "markdown": "周转不能强行拼成一致故事。2012正文把五倍底物过量的补充试验解读为多轮反应；2014则以产物平台和切后仍保持两端的观察提出单轮特征。本次没有读取2012 S6B图与补充方法，无法确认两个实验在底物、RNA形式、活性酶计量及时间窗口上可直接比较，所以保留“条件依赖”与“计量/读出差异”两类竞争解释。",
+          "claim_refs": [
+            "j3",
+            "s4",
+            "i3"
+          ],
+          "node_refs": [
+            "n-turnover"
+          ],
+          "relation_refs": [
+            "r-turnover"
+          ],
+          "paper_refs": [
+            "jinek2012",
+            "sternberg2014"
+          ],
+          "evidence_refs": [
+            "ej4",
+            "es4"
+          ]
+        },
+        {
+          "block_id": "boundaries-b1",
+          "markdown": "下一步先对齐原始条件再判断：统一条件若仍出现与酶量对应的平台，按该条件下的单轮模型追问释放限制；若可持续生成超过活性酶量的产物，则支持多轮并解释成像体系为何滞留。条件未补齐就维持未决。文中“PAM作为变构调控”的解释也应与结合后效应的实验现象分开，底物构象变化仍是需要排查的可能性。",
+          "claim_refs": [
+            "i2",
+            "i3",
+            "h1"
+          ],
+          "node_refs": [
+            "n-stage",
+            "n-turnover"
+          ],
+          "relation_refs": [],
+          "paper_refs": [
+            "jinek2012",
+            "sternberg2014"
+          ],
+          "evidence_refs": [
+            "ej3",
+            "es3",
+            "ej4",
+            "es4",
+            "es2"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "synthesis",
+      "title": "五、综合认识",
+      "blocks": [
+        {
+          "block_id": "synthesis-b0",
+          "markdown": "这组材料支持一个有限的问题演进：从必要组分与可编程切割，到按步骤分解目标识别的能量与动力学门槛。研究地图因此有一条有方向的问题延续线，以及一条无方向的周转未决关系；方向来自文内问题依赖和引用，不来自年份或共同作者。合作网络是背景，机制证据才是关系的依据。尚不足以仅凭两篇重建某课题组的完整研究纲领。",
+          "claim_refs": [
+            "i1",
+            "i2",
+            "i3"
+          ],
+          "node_refs": [],
+          "relation_refs": [
+            "r-question",
+            "r-turnover"
+          ],
+          "paper_refs": [
+            "jinek2012",
+            "sternberg2014"
+          ],
+          "evidence_refs": [
+            "ej1",
+            "ej3",
+            "es1",
+            "es3",
+            "es5",
+            "es6",
+            "ej4",
+            "es4"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "transfer",
+      "title": "六、迁移判断与开放问题",
+      "blocks": [
+        {
+          "block_id": "transfer-b0",
+          "markdown": "可迁移判断一：某因素“必需”时，先区分它限制的步骤，再选择能将结合与催化拆开的读出（n-stage）。判断二：序列位置效应要与总互补量竞争解释对照，用不同预测组织实验（n-unwind）。判断三：跨文矛盾先核查条件与计量，无法对齐时保留未决关系（n-turnover）。这些经验适用于能分离读出的机制研究；体外条件、失活突变及间接测量可能限制外推。新实验均为建议，没有执行，也没有把本次模型自审称为人工评审。",
+          "claim_refs": [
+            "i1",
+            "i2",
+            "i3",
+            "h1"
+          ],
+          "node_refs": [
+            "n-stage",
+            "n-unwind",
+            "n-turnover"
+          ],
+          "relation_refs": [],
+          "paper_refs": [
+            "jinek2012",
+            "sternberg2014"
+          ],
+          "evidence_refs": [
+            "ej1",
+            "ej3",
+            "es1",
+            "es3",
+            "es5",
+            "es6",
+            "ej4",
+            "es4",
+            "es2"
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Jinek补充材料以及Sternberg Extended Data/视频未读；周转分歧未完成条件对齐。",
+    "仅目视Jinek图4与Sternberg图3、4；未复算原始图像、统计或动力学模型。",
+    "两篇实验研究的小规模模型留出试用，无人工评审，不证明跨学科普遍有效。"
+  ],
+  "provenance": {
+    "model": null,
+    "generated_at": "2026-10-26T14:48:05.207Z",
+    "host": "Codex independent held-out trial",
+    "material_policy": "provided_only",
+    "tools": [
+      "web.run (仅指定论文取读与同作全文定位)",
+      "exec_command",
+      "PowerShell Invoke-WebRequest",
+      "pdftotext",
+      "pdftoppm",
+      "Python BeautifulSoup",
+      "view_image",
+      "packaged CLI"
+    ],
+    "usage": {
+      "elapsed_seconds": null,
+      "model_calls": null,
+      "tokens": null,
+      "note": "请求策略为provided_only，但实际为指定Jinek全文执行一次外部精确标题搜索，构成协议偏差；旁出论文未纳入证据链。结束时刻、材料SHA256与工具局限见run-record.json；模型/调用/token/费用未知。"
+    }
+  },
+  "validation": {
+    "semantic_review": "self_reviewed",
+    "notes": [
+      "基于实际材料独立编写；未读取其他案例或试用。",
+      "结构有效不等于证据解释获得独立确认；作者解释、跨文推断与新建议分别标记。"
+    ]
+  },
+  "revision": null,
+  "manifest": {
+    "included": [
+      "原创六部分联合分析、证据卡、比较表、研究关系和决策节点及证据定位。"
+    ],
+    "external": [
+      "原论文全文、图片与补充材料不嵌入JSON；本地下载仅供本次取证。"
+    ]
+  }
+}

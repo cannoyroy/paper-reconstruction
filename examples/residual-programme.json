@@ -1,0 +1,1339 @@
+{
+  "schema_version": "0.2.0",
+  "kind": "collection_analysis",
+  "workflow_version": "0.2.0",
+  "analysis_id": "residual-programme",
+  "analysis_version": 1,
+  "example_kind": "real_paper",
+  "status": "complete",
+  "collection": {
+    "title": "从残差表示到直接传播：两篇 ResNet 工作的联合复盘",
+    "goal": "辨别共同问题、传播假设和可迁移的实验判断。",
+    "user_clue": "公开案例以同作者线索组织；不是用户私人材料。",
+    "derived_from": null
+  },
+  "papers": [
+    {
+      "title": "Deep Residual Learning for Image Recognition",
+      "authors": [
+        "Kaiming He",
+        "Xiangyu Zhang",
+        "Shaoqing Ren",
+        "Jian Sun"
+      ],
+      "identifier": "arxiv:1512.03385",
+      "version": "arXiv v1",
+      "domain": "计算机视觉",
+      "research_type": "computational",
+      "url": "https://arxiv.org/abs/1512.03385v1",
+      "paper_id": "R",
+      "work_id": "arxiv:1512.03385",
+      "aliases": [
+        "10.1109/CVPR.2016.90"
+      ],
+      "origin": "provided",
+      "candidate_id": null,
+      "read_status": "partial",
+      "material_note": "核查固定 v1 的问题、结构、ImageNet/CIFAR 对照；检测附录不作为本次主张依据。"
+    },
+    {
+      "paper_id": "I",
+      "work_id": "arxiv:1603.05027",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "read_status": "read",
+      "material_note": "读取固定 v1 正文、表格文本、图注与实现附录；未复现实验。",
+      "title": "Identity Mappings in Deep Residual Networks",
+      "authors": [
+        "Kaiming He",
+        "Xiangyu Zhang",
+        "Shaoqing Ren",
+        "Jian Sun"
+      ],
+      "identifier": "arxiv:1603.05027",
+      "version": "arXiv v1",
+      "domain": "计算机视觉",
+      "research_type": "computational",
+      "url": "https://arxiv.org/abs/1603.05027v1"
+    }
+  ],
+  "paper_cards": [
+    {
+      "paper_id": "R",
+      "question": {
+        "text": "为什么更深的模型反而训练更差？",
+        "claim_refs": [
+          "C1"
+        ]
+      },
+      "conditions": [
+        {
+          "text": "核查固定 v1 的问题、结构、ImageNet/CIFAR 对照；检测附录不作为本次主张依据。",
+          "claim_refs": []
+        }
+      ],
+      "assumptions": [
+        {
+          "text": "公开实验在其给定结构、数据及训练协议内解释。",
+          "claim_refs": []
+        }
+      ],
+      "choices": [
+        {
+          "text": "同维度恒等捷径不增加可训练参数，残差与 plain 对照尽量保持深度、宽度和计算量一致。",
+          "claim_refs": [
+            "C2"
+          ]
+        }
+      ],
+      "discriminating_evidence": [
+        {
+          "text": "plain-34 比 plain-18 训练误差更高；残差结构的对照逆转了这一退化现象。",
+          "claim_refs": [
+            "C1"
+          ]
+        },
+        {
+          "text": "同维度恒等捷径不增加可训练参数，残差与 plain 对照尽量保持深度、宽度和计算量一致。",
+          "claim_refs": [
+            "C2"
+          ]
+        },
+        {
+          "text": "34 层方案 C 使用投影捷径有良好结果；原文仍优先选用较经济的恒等方案。",
+          "claim_refs": [
+            "C3"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "text": "plain-34 比 plain-18 训练误差更高；残差结构的对照逆转了这一退化现象。",
+          "claim_refs": [
+            "C1"
+          ]
+        }
+      ],
+      "limitations": [
+        "未复现实验；结构对照不是实际研发顺序。"
+      ],
+      "open_questions": [
+        "这些条件在新数据和预算下是否仍成立？"
+      ],
+      "evidence_refs": [
+        "E1",
+        "E2",
+        "E3"
+      ]
+    },
+    {
+      "paper_id": "I",
+      "question": {
+        "text": "怎样让残差网络中信息直接传播？",
+        "claim_refs": [
+          "C4"
+        ]
+      },
+      "conditions": [
+        {
+          "text": "读取固定 v1 正文、表格文本、图注与实现附录；未复现实验。",
+          "claim_refs": []
+        }
+      ],
+      "assumptions": [
+        {
+          "text": "公开实验在其给定结构、数据及训练协议内解释。",
+          "claim_refs": []
+        }
+      ],
+      "choices": [
+        {
+          "text": "完整预激活改善报告结果；作者分别讨论传播更容易与 BN 预激活带来的正则化效果。",
+          "claim_refs": [
+            "C6"
+          ]
+        }
+      ],
+      "discriminating_evidence": [
+        {
+          "text": "当捷径 h 和相加后的 f 均为恒等映射时，推导给出跨多个残差单元的直接传播项。",
+          "claim_refs": [
+            "C4"
+          ]
+        },
+        {
+          "text": "在 CIFAR-10 的 ResNet-110 对照中，缩放、门控和全投影等捷径变体表现较差，门控初始化显著影响结果。",
+          "claim_refs": [
+            "C5"
+          ]
+        },
+        {
+          "text": "完整预激活改善报告结果；作者分别讨论传播更容易与 BN 预激活带来的正则化效果。",
+          "claim_refs": [
+            "C6"
+          ]
+        },
+        {
+          "text": "ImageNet 对照采用 320×320 测试裁剪；原始 200 层网络训练损失更低却验证较差，作者解释为过拟合。",
+          "claim_refs": [
+            "C7"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "text": "在 CIFAR-10 的 ResNet-110 对照中，缩放、门控和全投影等捷径变体表现较差，门控初始化显著影响结果。",
+          "claim_refs": [
+            "C5"
+          ]
+        }
+      ],
+      "limitations": [
+        "未复现实验；结构对照不是实际研发顺序。"
+      ],
+      "open_questions": [
+        "这些条件在新数据和预算下是否仍成立？"
+      ],
+      "evidence_refs": [
+        "E4",
+        "E5",
+        "E6",
+        "E7"
+      ]
+    }
+  ],
+  "search": {
+    "status": "provided_only",
+    "queries": [],
+    "note": "方法打磨案例仅提供两篇材料；未进行候选扩展。",
+    "candidates": []
+  },
+  "provenance": {
+    "model": null,
+    "generated_at": null,
+    "host": "Codex",
+    "material_policy": "provided_only",
+    "tools": [
+      "公开 PDF 下载",
+      "pypdf 页码文本",
+      "来源自查"
+    ],
+    "usage": {
+      "elapsed_seconds": null,
+      "model_calls": null,
+      "tokens": null,
+      "note": "实施者编辑样稿，不是独立试用；无法取得逐调用使用量。"
+    }
+  },
+  "sources": [
+    {
+      "source_id": "SR",
+      "title": "Deep Residual Learning for Image Recognition",
+      "kind": "paper",
+      "url": "https://arxiv.org/abs/1512.03385v1",
+      "version": "arXiv v1",
+      "published_at": "2015-12-10",
+      "read_status": "partial",
+      "fingerprint": "sha256:1e0651b6810ecba34a3dbc5b5b0209226f889004607c1f203540a48d64e5a93a",
+      "availability_note": "核查固定 v1 的问题、结构、ImageNet/CIFAR 对照；检测附录不作为本次主张依据。",
+      "paper_refs": [
+        "R"
+      ]
+    },
+    {
+      "source_id": "SI",
+      "title": "Identity Mappings in Deep Residual Networks",
+      "kind": "paper",
+      "url": "https://arxiv.org/abs/1603.05027v1",
+      "version": "arXiv v1",
+      "published_at": "2016-03-16",
+      "read_status": "read",
+      "fingerprint": "sha256:aa38e63d56dcbf5fa97ec674b3b442156215a2bec813bfa9093b0358ed5b0749",
+      "availability_note": "读取固定 v1 正文、表格文本、图注与实现附录；未复现实验。",
+      "paper_refs": [
+        "I"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "E1",
+      "source_id": "SR",
+      "locator": {
+        "section": "1 / 4.1",
+        "figure_or_table": "Figure 4",
+        "pdf_page_index": 4,
+        "printed_page": "5",
+        "text_anchor": null
+      },
+      "paraphrase": "plain-34 比 plain-18 训练误差更高；残差结构的对照逆转了这一退化现象。",
+      "quote": null,
+      "scope": "这里支持给定结构、优化与数据条件下的训练困难，不能保证所有深度均受益。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "E2",
+      "source_id": "SR",
+      "locator": {
+        "section": "3.2",
+        "figure_or_table": "Figure 2",
+        "pdf_page_index": 2,
+        "printed_page": "3",
+        "text_anchor": null
+      },
+      "paraphrase": "同维度恒等捷径不增加可训练参数，残差与 plain 对照尽量保持深度、宽度和计算量一致。",
+      "quote": null,
+      "scope": "跨维度时需要零填充或投影；不能把所有捷径一概视为无参数。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "E3",
+      "source_id": "SR",
+      "locator": {
+        "section": "4.1",
+        "figure_or_table": "Table 3",
+        "pdf_page_index": 5,
+        "printed_page": "6",
+        "text_anchor": null
+      },
+      "paraphrase": "34 层方案 C 使用投影捷径有良好结果；原文仍优先选用较经济的恒等方案。",
+      "quote": null,
+      "scope": "表内比较不说明所有更深网络中投影捷径也同样容易训练。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "E4",
+      "source_id": "SI",
+      "locator": {
+        "section": "2",
+        "figure_or_table": "Equations 4–5",
+        "pdf_page_index": 2,
+        "printed_page": "3",
+        "text_anchor": null
+      },
+      "paraphrase": "当捷径 h 和相加后的 f 均为恒等映射时，推导给出跨多个残差单元的直接传播项。",
+      "quote": null,
+      "scope": "推导条件不覆盖任意跨维度单元，也不构成任意训练状态的收敛保证。",
+      "evidence_type": "theoretical_argument",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "E5",
+      "source_id": "SI",
+      "locator": {
+        "section": "3.1",
+        "figure_or_table": "Table 1 / Figure 3",
+        "pdf_page_index": 5,
+        "printed_page": "6",
+        "text_anchor": null
+      },
+      "paraphrase": "在 CIFAR-10 的 ResNet-110 对照中，缩放、门控和全投影等捷径变体表现较差，门控初始化显著影响结果。",
+      "quote": null,
+      "scope": "这是特定残差骨架与调参条件下的对照，不是所有门控架构的统一排名。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "E6",
+      "source_id": "SI",
+      "locator": {
+        "section": "4.1–4.2",
+        "figure_or_table": "Table 2 / Figure 6",
+        "pdf_page_index": 8,
+        "printed_page": "9",
+        "text_anchor": null
+      },
+      "paraphrase": "完整预激活改善报告结果；作者分别讨论传播更容易与 BN 预激活带来的正则化效果。",
+      "quote": null,
+      "scope": "改动多个机制，单凭最终误差不能唯一归因于直接传播。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    },
+    {
+      "evidence_id": "E7",
+      "source_id": "SI",
+      "locator": {
+        "section": "4.4",
+        "figure_or_table": "Table 5",
+        "pdf_page_index": 12,
+        "printed_page": "13",
+        "text_anchor": null
+      },
+      "paraphrase": "ImageNet 对照采用 320×320 测试裁剪；原始 200 层网络训练损失更低却验证较差，作者解释为过拟合。",
+      "quote": null,
+      "scope": "跨论文不同裁剪或训练协议下的误差不能直接作为受控因果比较。",
+      "evidence_type": "reported_result",
+      "verification_status": "source_checked"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "C1",
+      "text": "plain-34 比 plain-18 训练误差更高；残差结构的对照逆转了这一退化现象。",
+      "paper_refs": [
+        "R"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "E1",
+          "relation": "supports",
+          "scope_note": "这里支持给定结构、优化与数据条件下的训练困难，不能保证所有深度均受益。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "C2",
+      "text": "同维度恒等捷径不增加可训练参数，残差与 plain 对照尽量保持深度、宽度和计算量一致。",
+      "paper_refs": [
+        "R"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "E2",
+          "relation": "supports",
+          "scope_note": "跨维度时需要零填充或投影；不能把所有捷径一概视为无参数。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "C3",
+      "text": "34 层方案 C 使用投影捷径有良好结果；原文仍优先选用较经济的恒等方案。",
+      "paper_refs": [
+        "R"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "E3",
+          "relation": "supports",
+          "scope_note": "表内比较不说明所有更深网络中投影捷径也同样容易训练。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "C4",
+      "text": "当捷径 h 和相加后的 f 均为恒等映射时，推导给出跨多个残差单元的直接传播项。",
+      "paper_refs": [
+        "I"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "E4",
+          "relation": "supports",
+          "scope_note": "推导条件不覆盖任意跨维度单元，也不构成任意训练状态的收敛保证。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "C5",
+      "text": "在 CIFAR-10 的 ResNet-110 对照中，缩放、门控和全投影等捷径变体表现较差，门控初始化显著影响结果。",
+      "paper_refs": [
+        "I"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "E5",
+          "relation": "supports",
+          "scope_note": "这是特定残差骨架与调参条件下的对照，不是所有门控架构的统一排名。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "C6",
+      "text": "完整预激活改善报告结果；作者分别讨论传播更容易与 BN 预激活带来的正则化效果。",
+      "paper_refs": [
+        "I"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "E6",
+          "relation": "supports",
+          "scope_note": "改动多个机制，单凭最终误差不能唯一归因于直接传播。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "C7",
+      "text": "ImageNet 对照采用 320×320 测试裁剪；原始 200 层网络训练损失更低却验证较差，作者解释为过拟合。",
+      "paper_refs": [
+        "I"
+      ],
+      "epistemic_status": "explicit",
+      "evidence_links": [
+        {
+          "evidence_id": "E7",
+          "relation": "supports",
+          "scope_note": "跨论文不同裁剪或训练协议下的误差不能直接作为受控因果比较。"
+        }
+      ],
+      "assumptions": [],
+      "alternatives": []
+    },
+    {
+      "claim_id": "C8",
+      "text": "这组工作可以被理解为从残差表示重写走向传播路径条件分析的逻辑延续。",
+      "paper_refs": [
+        "R",
+        "I"
+      ],
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "E1",
+          "relation": "conditional_support",
+          "scope_note": "支持问题与设计的逻辑联系，不证明实际形成顺序。"
+        },
+        {
+          "evidence_id": "E2",
+          "relation": "conditional_support",
+          "scope_note": "支持问题与设计的逻辑联系，不证明实际形成顺序。"
+        },
+        {
+          "evidence_id": "E4",
+          "relation": "conditional_support",
+          "scope_note": "支持问题与设计的逻辑联系，不证明实际形成顺序。"
+        },
+        {
+          "evidence_id": "E5",
+          "relation": "conditional_support",
+          "scope_note": "支持问题与设计的逻辑联系，不证明实际形成顺序。"
+        },
+        {
+          "evidence_id": "E6",
+          "relation": "conditional_support",
+          "scope_note": "支持问题与设计的逻辑联系，不证明实际形成顺序。"
+        }
+      ],
+      "assumptions": [
+        "以论文公开论证作为比较对象。"
+      ],
+      "alternatives": [
+        "真实研发可能存在并行试验或未公开动机。"
+      ]
+    },
+    {
+      "claim_id": "C9",
+      "text": "应先区分优化与泛化，再在匹配设置中改变捷径和激活位置；不能把复杂度或更深等同于更好。",
+      "paper_refs": [
+        "R",
+        "I"
+      ],
+      "epistemic_status": "inferred",
+      "evidence_links": [
+        {
+          "evidence_id": "E1",
+          "relation": "conditional_support",
+          "scope_note": "给出有边界的方法判断。"
+        },
+        {
+          "evidence_id": "E3",
+          "relation": "conditional_support",
+          "scope_note": "给出有边界的方法判断。"
+        },
+        {
+          "evidence_id": "E5",
+          "relation": "conditional_support",
+          "scope_note": "给出有边界的方法判断。"
+        },
+        {
+          "evidence_id": "E6",
+          "relation": "conditional_support",
+          "scope_note": "给出有边界的方法判断。"
+        },
+        {
+          "evidence_id": "E7",
+          "relation": "conditional_support",
+          "scope_note": "给出有边界的方法判断。"
+        }
+      ],
+      "assumptions": [
+        "可以测量训练与验证表现，并控制关键实验条件。"
+      ],
+      "alternatives": [
+        "预算不足、优化设置或数据问题也会造成类似现象。"
+      ]
+    },
+    {
+      "claim_id": "C10",
+      "text": "在新任务中分别控制捷径变换、激活位置、BN 和预算，是待实施的判别方案。",
+      "paper_refs": [
+        "R",
+        "I"
+      ],
+      "epistemic_status": "hypothetical",
+      "evidence_links": [],
+      "assumptions": [
+        "新任务允许受控比较。"
+      ],
+      "alternatives": [
+        "若无法控制条件，只能做观察性比较。"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": "N1",
+      "title": "先查训练还是泛化？",
+      "question": "加深后验证变差，应先改表示还是加强正则？",
+      "paper_refs": [
+        "R",
+        "I"
+      ],
+      "path_contexts": [
+        {
+          "path_id": "P1",
+          "known_information": [
+            {
+              "text": "plain-34 比 plain-18 训练误差更高；残差结构的对照逆转了这一退化现象。",
+              "claim_refs": [
+                "C1"
+              ]
+            },
+            {
+              "text": "ImageNet 对照采用 320×320 测试裁剪；原始 200 层网络训练损失更低却验证较差，作者解释为过拟合。",
+              "claim_refs": [
+                "C7"
+              ]
+            }
+          ],
+          "assumptions": [
+            "这是事后比较，不表示作者当时已知两篇全部结果。"
+          ]
+        },
+        {
+          "path_id": "P2",
+          "known_information": [
+            {
+              "text": "plain-34 比 plain-18 训练误差更高；残差结构的对照逆转了这一退化现象。",
+              "claim_refs": [
+                "C1"
+              ]
+            }
+          ],
+          "assumptions": [
+            "教学性候选起点：只知道第一篇的退化现象，不知道后续论文结果。"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "未运行新的对照；因果归因仍依赖实验条件。"
+      ],
+      "options": [
+        {
+          "option_id": "N1O1",
+          "label": "检查表示与优化路径",
+          "description": "检查表示与优化路径",
+          "claim_refs": [
+            "C10"
+          ]
+        },
+        {
+          "option_id": "N1O2",
+          "label": "检查泛化与正则化",
+          "description": "检查泛化与正则化",
+          "claim_refs": [
+            "C10"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "N1T",
+          "question": "训练与验证误差是否一起变差？",
+          "method": "匹配数据、深度、训练预算与评价协议，逐项改动；记录训练及验证曲线。",
+          "claim_refs": [
+            "C10"
+          ],
+          "outcomes": [
+            {
+              "observation": "训练也变差",
+              "next_action": "固定预算比较残差与 plain 或捷径变体。",
+              "claim_refs": [
+                "C10"
+              ]
+            },
+            {
+              "observation": "训练降低、验证升高",
+              "next_action": "优先检查泛化、正则化和数据。",
+              "claim_refs": [
+                "C10"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "C1",
+        "C7",
+        "C9",
+        "C10"
+      ],
+      "paper_connection": "比较两篇公开结果与条件，形成可检验判断。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "N1L",
+          "context": "加深后验证变差，应先改表示还是加强正则？",
+          "distinguish": "先识别是拟合困难、泛化变化还是设置不可比。",
+          "action": "执行上述判别对照；条件不同则保留不确定性。",
+          "boundary": "不将此处对照推广为所有模型和数据的定律。",
+          "claim_refs": [
+            "C9"
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "N2",
+      "title": "复杂捷径一定更好吗？",
+      "question": "增加投影或门控后，表达能力提升是否转化为更易训练？",
+      "paper_refs": [
+        "R",
+        "I"
+      ],
+      "path_contexts": [
+        {
+          "path_id": "P1",
+          "known_information": [
+            {
+              "text": "同维度恒等捷径不增加可训练参数，残差与 plain 对照尽量保持深度、宽度和计算量一致。",
+              "claim_refs": [
+                "C2"
+              ]
+            },
+            {
+              "text": "34 层方案 C 使用投影捷径有良好结果；原文仍优先选用较经济的恒等方案。",
+              "claim_refs": [
+                "C3"
+              ]
+            },
+            {
+              "text": "当捷径 h 和相加后的 f 均为恒等映射时，推导给出跨多个残差单元的直接传播项。",
+              "claim_refs": [
+                "C4"
+              ]
+            },
+            {
+              "text": "在 CIFAR-10 的 ResNet-110 对照中，缩放、门控和全投影等捷径变体表现较差，门控初始化显著影响结果。",
+              "claim_refs": [
+                "C5"
+              ]
+            }
+          ],
+          "assumptions": [
+            "这是事后比较，不表示作者当时已知两篇全部结果。"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "未运行新的对照；因果归因仍依赖实验条件。"
+      ],
+      "options": [
+        {
+          "option_id": "N2O1",
+          "label": "同维度保持恒等捷径",
+          "description": "同维度保持恒等捷径",
+          "claim_refs": [
+            "C10"
+          ]
+        },
+        {
+          "option_id": "N2O2",
+          "label": "增加可训练投影或门控",
+          "description": "增加可训练投影或门控",
+          "claim_refs": [
+            "C10"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "N2T",
+          "question": "在相同设置下，复杂捷径是否增加训练损失？",
+          "method": "匹配数据、深度、训练预算与评价协议，逐项改动；记录训练及验证曲线。",
+          "claim_refs": [
+            "C10"
+          ],
+          "outcomes": [
+            {
+              "observation": "训练损失提高",
+              "next_action": "检查传播、初始化和超参数，不能归咎于表达能力不足。",
+              "claim_refs": [
+                "C10"
+              ]
+            },
+            {
+              "observation": "匹配设置后收益仍存在",
+              "next_action": "保留复杂变换，并报告适用条件与额外成本。",
+              "claim_refs": [
+                "C10"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C9",
+        "C10"
+      ],
+      "paper_connection": "比较两篇公开结果与条件，形成可检验判断。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "N2L",
+          "context": "增加投影或门控后，表达能力提升是否转化为更易训练？",
+          "distinguish": "先识别是拟合困难、泛化变化还是设置不可比。",
+          "action": "执行上述判别对照；条件不同则保留不确定性。",
+          "boundary": "不将此处对照推广为所有模型和数据的定律。",
+          "claim_refs": [
+            "C9"
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "N3",
+      "title": "预激活的收益来自哪里？",
+      "question": "传播路径与 BN 的作用如何区分？",
+      "paper_refs": [
+        "R",
+        "I"
+      ],
+      "path_contexts": [
+        {
+          "path_id": "P1",
+          "known_information": [
+            {
+              "text": "当捷径 h 和相加后的 f 均为恒等映射时，推导给出跨多个残差单元的直接传播项。",
+              "claim_refs": [
+                "C4"
+              ]
+            },
+            {
+              "text": "完整预激活改善报告结果；作者分别讨论传播更容易与 BN 预激活带来的正则化效果。",
+              "claim_refs": [
+                "C6"
+              ]
+            }
+          ],
+          "assumptions": [
+            "这是事后比较，不表示作者当时已知两篇全部结果。"
+          ]
+        }
+      ],
+      "uncertainties": [
+        "未运行新的对照；因果归因仍依赖实验条件。"
+      ],
+      "options": [
+        {
+          "option_id": "N3O1",
+          "label": "完整预激活作为组合改动",
+          "description": "完整预激活作为组合改动",
+          "claim_refs": [
+            "C10"
+          ]
+        },
+        {
+          "option_id": "N3O2",
+          "label": "逐项区分 BN 与 ReLU 位置",
+          "description": "逐项区分 BN 与 ReLU 位置",
+          "claim_refs": [
+            "C10"
+          ]
+        }
+      ],
+      "discriminating_tests": [
+        {
+          "test_id": "N3T",
+          "question": "控制 BN 与预算后，收益是否仍随直接传播路径改变？",
+          "method": "匹配数据、深度、训练预算与评价协议，逐项改动；记录训练及验证曲线。",
+          "claim_refs": [
+            "C10"
+          ],
+          "outcomes": [
+            {
+              "observation": "控制后仍改善训练",
+              "next_action": "进一步支持优化解释，但仍需重复与边界检查。",
+              "claim_refs": [
+                "C10"
+              ]
+            },
+            {
+              "observation": "仅验证改善或收益消失",
+              "next_action": "检查正则化、BN 与训练设置等竞争解释。",
+              "claim_refs": [
+                "C10"
+              ]
+            }
+          ]
+        }
+      ],
+      "claim_refs": [
+        "C4",
+        "C6",
+        "C9",
+        "C10"
+      ],
+      "paper_connection": "比较两篇公开结果与条件，形成可检验判断。",
+      "transfer_lessons": [
+        {
+          "lesson_id": "N3L",
+          "context": "传播路径与 BN 的作用如何区分？",
+          "distinguish": "先识别是拟合困难、泛化变化还是设置不可比。",
+          "action": "执行上述判别对照；条件不同则保留不确定性。",
+          "boundary": "不将此处对照推广为所有模型和数据的定律。",
+          "claim_refs": [
+            "C9"
+          ]
+        }
+      ]
+    }
+  ],
+  "paths": [
+    {
+      "path_id": "P1",
+      "title": "事后比较：从训练困难到传播条件",
+      "premise": "联合检查两篇已报告的结果。",
+      "assumptions": [
+        "属于逻辑分析，不是开发时间线。"
+      ],
+      "node_refs": [
+        "N1",
+        "N2",
+        "N3"
+      ],
+      "edge_refs": [
+        "D1",
+        "D2"
+      ],
+      "evidence_links": [],
+      "perspective": "retrospective",
+      "available_source_refs": [
+        "SR",
+        "SI"
+      ]
+    },
+    {
+      "path_id": "P2",
+      "title": "候选起点：只知道第一篇的退化现象",
+      "premise": "信息边界仅限第一篇结果。",
+      "assumptions": [
+        "用于练习判别起点，不能声称作者实际这样思考。"
+      ],
+      "node_refs": [
+        "N1"
+      ],
+      "edge_refs": [],
+      "evidence_links": [],
+      "perspective": "candidate_formation",
+      "available_source_refs": [
+        "SR"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "D1",
+      "source_node_id": "N1",
+      "target_node_id": "N2",
+      "path_ids": [
+        "P1"
+      ],
+      "relation_type": "logical_dependency",
+      "label": "先定位训练问题，再检查捷径",
+      "epistemic_status": "inferred",
+      "evidence_refs": [
+        "E1",
+        "E5"
+      ]
+    },
+    {
+      "edge_id": "D2",
+      "source_node_id": "N2",
+      "target_node_id": "N3",
+      "path_ids": [
+        "P1"
+      ],
+      "relation_type": "candidate_transition",
+      "label": "从捷径转向相加后操作",
+      "epistemic_status": "inferred",
+      "evidence_refs": [
+        "E4",
+        "E6"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "relation_id": "R1",
+      "from_paper_id": "R",
+      "to_paper_id": "I",
+      "kind": "problem_continuation",
+      "directed": true,
+      "label": "从残差表示到传播条件",
+      "explanation": "这组工作可以被理解为从残差表示重写走向传播路径条件分析的逻辑延续。",
+      "epistemic_status": "inferred",
+      "claim_refs": [
+        "C8"
+      ],
+      "evidence_refs": [
+        "E1",
+        "E2",
+        "E4",
+        "E5",
+        "E6"
+      ]
+    },
+    {
+      "relation_id": "R2",
+      "from_paper_id": "R",
+      "to_paper_id": "I",
+      "kind": "boundary_revision",
+      "directed": true,
+      "label": "复杂捷径的收益取决于条件",
+      "explanation": "后续结果提示更深模型中的捷径操作具有新的优化代价，不能把跨设置数字当成直接证伪。",
+      "epistemic_status": "inferred",
+      "claim_refs": [
+        "C9"
+      ],
+      "evidence_refs": [
+        "E3",
+        "E5",
+        "E7"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "axis_id": "A1",
+      "title": "关键选择与判别证据",
+      "comparability": "同一问题族，但不将不同深度、数据或测试裁剪的误差直接比较。",
+      "cells": [
+        {
+          "paper_id": "R",
+          "summary": "参考恒等映射重写表示，比较 plain 与残差的训练曲线。",
+          "claim_refs": [
+            "C1",
+            "C2"
+          ]
+        },
+        {
+          "paper_id": "I",
+          "summary": "拆开捷径与相加后激活，用变体对照检验直接传播条件。",
+          "claim_refs": [
+            "C4",
+            "C5",
+            "C6"
+          ]
+        }
+      ]
+    }
+  ],
+  "clusters": [
+    {
+      "cluster_id": "K1",
+      "title": "深网络的优化与传播",
+      "rationale": "公开问题、结构及实验存在可追溯联系。",
+      "paper_refs": [
+        "R",
+        "I"
+      ],
+      "claim_refs": [
+        "C8"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "S1",
+      "title": "分析范围与核心问题",
+      "blocks": [
+        {
+          "block_id": "B1",
+          "markdown": "两篇同作者工作都关心深网络如何训练。这里检查从残差表示到传播路径的联系；相同作者只提供线索，不证明研发历史。",
+          "claim_refs": [
+            "C8"
+          ],
+          "node_refs": [],
+          "relation_refs": [
+            "R1"
+          ],
+          "paper_refs": [
+            "R",
+            "I"
+          ],
+          "evidence_refs": [
+            "E1",
+            "E2",
+            "E4",
+            "E5",
+            "E6"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "S2",
+      "title": "各篇分工与可比性",
+      "blocks": [
+        {
+          "block_id": "B2",
+          "markdown": "第一篇比较 plain 与残差结构，第二篇拆开捷径 h 与相加后操作 f。比较时应保持数据、层数、训练与评价设置；尤其注意 ImageNet 测试裁剪变化。",
+          "claim_refs": [
+            "C1",
+            "C2",
+            "C4",
+            "C7"
+          ],
+          "node_refs": [
+            "N1"
+          ],
+          "relation_refs": [],
+          "paper_refs": [
+            "R",
+            "I"
+          ],
+          "evidence_refs": [
+            "E1",
+            "E2",
+            "E4",
+            "E7"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "S3",
+      "title": "关键联系与跨论文决策",
+      "blocks": [
+        {
+          "block_id": "B3-1",
+          "markdown": "**先查训练还是泛化？** 加深后验证变差，应先改表示还是加强正则？ 如果训练也变差，固定预算比较残差与 plain 或捷径变体。 如果训练降低、验证升高，优先检查泛化、正则化和数据。",
+          "claim_refs": [
+            "C1",
+            "C7",
+            "C9",
+            "C10"
+          ],
+          "node_refs": [
+            "N1"
+          ],
+          "relation_refs": [
+            "R1"
+          ],
+          "paper_refs": [
+            "R",
+            "I"
+          ],
+          "evidence_refs": [
+            "E1",
+            "E7",
+            "E3",
+            "E5",
+            "E6"
+          ]
+        },
+        {
+          "block_id": "B3-2",
+          "markdown": "**复杂捷径一定更好吗？** 增加投影或门控后，表达能力提升是否转化为更易训练？ 如果训练损失提高，检查传播、初始化和超参数，不能归咎于表达能力不足。 如果匹配设置后收益仍存在，保留复杂变换，并报告适用条件与额外成本。",
+          "claim_refs": [
+            "C2",
+            "C3",
+            "C4",
+            "C5",
+            "C9",
+            "C10"
+          ],
+          "node_refs": [
+            "N2"
+          ],
+          "relation_refs": [
+            "R2"
+          ],
+          "paper_refs": [
+            "R",
+            "I"
+          ],
+          "evidence_refs": [
+            "E2",
+            "E3",
+            "E4",
+            "E5",
+            "E1",
+            "E6",
+            "E7"
+          ]
+        },
+        {
+          "block_id": "B3-3",
+          "markdown": "**预激活的收益来自哪里？** 传播路径与 BN 的作用如何区分？ 如果控制后仍改善训练，进一步支持优化解释，但仍需重复与边界检查。 如果仅验证改善或收益消失，检查正则化、BN 与训练设置等竞争解释。",
+          "claim_refs": [
+            "C4",
+            "C6",
+            "C9",
+            "C10"
+          ],
+          "node_refs": [
+            "N3"
+          ],
+          "relation_refs": [
+            "R1"
+          ],
+          "paper_refs": [
+            "R",
+            "I"
+          ],
+          "evidence_refs": [
+            "E4",
+            "E6",
+            "E1",
+            "E3",
+            "E5",
+            "E7"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "S4",
+      "title": "分歧、替代解释与边界",
+      "blocks": [
+        {
+          "block_id": "B4",
+          "markdown": "34 层投影方案的良好结果与后续 110 层对照并非简单矛盾。数据、深度与操作位置改变了条件；后续结果也不能证明所有 Highway 类架构都更差。",
+          "claim_refs": [
+            "C3",
+            "C5",
+            "C9"
+          ],
+          "node_refs": [
+            "N2"
+          ],
+          "relation_refs": [
+            "R2"
+          ],
+          "paper_refs": [
+            "R",
+            "I"
+          ],
+          "evidence_refs": [
+            "E3",
+            "E5",
+            "E1",
+            "E6",
+            "E7"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "S5",
+      "title": "综合认识与可能主线",
+      "blocks": [
+        {
+          "block_id": "B5",
+          "markdown": "可以提炼出一条有条件的逻辑主线：先让参数化围绕易表达的参考映射，再检查直接传播路径是否被额外操作阻断。预激活同时涉及正则化，因此这条解释并不排除其他机制。",
+          "claim_refs": [
+            "C8",
+            "C6"
+          ],
+          "node_refs": [
+            "N3"
+          ],
+          "relation_refs": [
+            "R1"
+          ],
+          "paper_refs": [
+            "R",
+            "I"
+          ],
+          "evidence_refs": [
+            "E1",
+            "E2",
+            "E4",
+            "E5",
+            "E6"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "S6",
+      "title": "可迁移判断与开放问题",
+      "blocks": [
+        {
+          "block_id": "B6",
+          "markdown": "可迁移的是判别顺序及控制条件：把训练困难与泛化不足分开，把更强表达与更易优化分开。新任务应实施匹配对照，结果可能支持原假设，也可能要求改变下一步行动。",
+          "claim_refs": [
+            "C9",
+            "C10"
+          ],
+          "node_refs": [
+            "N1",
+            "N2",
+            "N3"
+          ],
+          "relation_refs": [],
+          "paper_refs": [
+            "R",
+            "I"
+          ],
+          "evidence_refs": [
+            "E1",
+            "E3",
+            "E5",
+            "E6",
+            "E7"
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "原始论文与完整图像不附在结果中；提供版本、真实定位与必要释义。",
+    "本例是实施者编辑与自查结果，未进行实验复现或人工学习效果评价。",
+    "相同作者不证明导师关系；逻辑结构不证明作者的真实研发顺序。"
+  ],
+  "validation": {
+    "semantic_review": "self_reviewed",
+    "notes": [
+      "核查关键结构、表格与图注；训练和泛化解释分开。"
+    ]
+  },
+  "revision": null,
+  "manifest": {
+    "included": [
+      "原创联合报告",
+      "单篇证据卡",
+      "比较与关系",
+      "证据释义与定位"
+    ],
+    "external": [
+      "两篇原始 PDF",
+      "作者代码与训练数据"
+    ]
+  }
+}

@@ -1,0 +1,364 @@
+{
+  "kind": "model_behavior_probe_record",
+  "schema_version": null,
+  "started_at": "2026-10-26T14:29:17Z",
+  "ended_at": "2026-10-26T14:33:33.626Z",
+  "elapsed_seconds": 257,
+  "model": null,
+  "model_calls": null,
+  "tokens": null,
+  "cost": null,
+  "reviewer": "model_self_record_only",
+  "method": "当前Codex模型读取冻结Skill后，直接对八个测试情境逐项生成下方应答；本脚本仅落盘已生成文字和状态，不执行规则引擎或模拟另一次模型调用。",
+  "network_calls": 0,
+  "real_searches": 0,
+  "real_user_approvals": 0,
+  "real_candidates_found": 0,
+  "real_papers_added": 0,
+  "cli_validation_performed": false,
+  "why_no_cli": "候选只有明确测试编号，没有真实论文身份；此记录不是可导入intake，避免用构造Schema单测替代模型行为。",
+  "skill_snapshot_at": "2026-10-26T14:33:33.626Z",
+  "skill_sha256": "447007dc0e8d36d581aa2f051897568a13e1b4a74c21e442302fdf569f2cd61b",
+  "collection_method_sha256": "71aeb52b64c53079514433d15b213a5064066db4345d8880a69c0a9ff666e54d",
+  "probe_count": 8,
+  "results": [
+    {
+      "id": "P1",
+      "name": "标题与作者身份歧义",
+      "scenario": "用户只给标题“Attention”和作者“Wang”，没有年份、作者全名、链接或全文。",
+      "next_stage": "登记阶段保留身份未确定；等待可辨识线索。",
+      "requested_clarification": true,
+      "requested_inclusion_decision": false,
+      "stopped_candidate_inclusion": true,
+      "observed_actions": [
+        "实际生成了澄清请求。",
+        "未给出猜测的标题、作者全名、年份或版本。",
+        "没有执行网络查询或生成分析结论。"
+      ],
+      "limitations": [
+        "这是标题歧义的模拟输入；未实际测试用户补充线索后的身份解析。"
+      ],
+      "response_file": "probes.md",
+      "response_sha256": "98f5aad640aae00903fc66c8920a8e441ec1de6ad8fdb4b4fa3dc99620b4f8e0"
+    },
+    {
+      "id": "P2",
+      "name": "同一工作多版本与重复附件",
+      "scenario": "测试前提：v1链接、v2链接和重复附件已知属于同一arXiv工作；用户要求按3篇独立证据分析。",
+      "next_stage": "归并同一工作及附件；主版本v2；切换单篇流程。",
+      "requested_clarification": false,
+      "requested_inclusion_decision": false,
+      "stopped_candidate_inclusion": true,
+      "observed_actions": [
+        "实际应答拒绝了独立证据计数膨胀，识别为1项工作。",
+        "给出了主版本与旧版本用途，未静默丢弃版本。",
+        "没有打开真实链接或处理真实附件；去重判断依赖测试前提。"
+      ],
+      "limitations": [
+        "没有实际计算附件指纹；此探针不能证明文件去重代码正确。"
+      ],
+      "response_file": "probes.md",
+      "response_sha256": "3bf47cb96915c61fa4d0f0c3edd98dc0b58f5896138c47dd246ebbd78ba57970"
+    },
+    {
+      "id": "P3",
+      "name": "导师与课题组归属线索",
+      "scenario": "用户说这些论文属于同一导师/课题组；目前材料只有共同作者，没有指导关系或团队归属证据。",
+      "next_stage": "继续逐篇取证与可比性分析；团队归属保持用户线索而非已核实事实。",
+      "requested_clarification": false,
+      "requested_inclusion_decision": false,
+      "stopped_candidate_inclusion": false,
+      "observed_actions": [
+        "实际应答区分用户线索与可验证事实。",
+        "没有要求用户先证明研究联系才允许分析。",
+        "没有虚构导师、机构或指导经历。"
+      ],
+      "limitations": [
+        "没有真实作者列表或组织资料；未测试同名作者实体消歧。"
+      ],
+      "response_file": "probes.md",
+      "response_sha256": "f53c36e00f309e5a8c5a86542406c42bad0c660ade1f1f7d2803bcb13f55345a"
+    },
+    {
+      "id": "P4",
+      "name": "摘要与扫描件导致材料不足",
+      "scenario": "两篇输入的材料状态分别为仅摘要和扫描不可读，充分可读论文不足2篇；本探针没有附具体摘要原文或PDF。",
+      "next_stage": "部分结果准备阶段；read_status分别为partial与unavailable，status计划为partial；不生成无依据节点或关系。",
+      "requested_clarification": true,
+      "requested_inclusion_decision": false,
+      "stopped_candidate_inclusion": true,
+      "observed_actions": [
+        "实际应答明确材料不足及无自动OCR。",
+        "没有把摘要当全文或从不可读扫描件提取事实。",
+        "只给出部分结果策略，未伪造AnalysisBundle。"
+      ],
+      "limitations": [
+        "未提供真实扫描文件，故这是对状态描述的行为响应，不是PDF读取或OCR测试。"
+      ],
+      "response_file": "probes.md",
+      "response_sha256": "ab5b495fdebc45791dbe51ff8aa8e4c56521ed779886820b5068cb3347bb6669"
+    },
+    {
+      "id": "P5",
+      "name": "仅提供材料并禁止联网",
+      "scenario": "用户明确：“仅使用我提供的材料，不要联网，也不要搜索补充论文。”",
+      "next_stage": "search.status=provided_only，queries=[]，candidates=[]；按已有材料冻结清单并继续。",
+      "requested_clarification": false,
+      "requested_inclusion_decision": false,
+      "stopped_candidate_inclusion": true,
+      "observed_actions": [
+        "实际应答接受了不联网约束。",
+        "本组探针执行期间没有调用网络或检索工具。",
+        "未列出外部候选或以背景材料名义加入论文。"
+      ],
+      "limitations": [
+        "未在浏览器或网络代理层安装拦截；证据是本次工具调用记录，而非对所有宿主的保证。"
+      ],
+      "response_file": "probes.md",
+      "response_sha256": "510c06f0aecfdb821cb069e3720207457382181c09021470ec978fc616acde37"
+    },
+    {
+      "id": "P6a",
+      "name": "3个测试候选pending、用户未答复",
+      "scenario": "已有三个明确标为测试占位的候选记录TEST-C1/TEST-C2/TEST-C3，decision均为pending。没有论文身份或正文，用户未作选择。",
+      "next_stage": "awaiting_selection；3项仍pending；decision_record与decision_source均为null；候选纳入数为0。",
+      "requested_clarification": false,
+      "requested_inclusion_decision": true,
+      "stopped_candidate_inclusion": true,
+      "observed_actions": [
+        "实际应答提出一次明确选择请求。",
+        "没有将未答复当成同意，没有伪造检索与候选身份。",
+        "没有实际向真人发送问题或等待真人回复；等待门槛在本模拟状态中保持未满足。"
+      ],
+      "state_before": [
+        {
+          "candidate_id": "TEST-C1",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "pending",
+          "decision_record": null,
+          "decision_source": null
+        },
+        {
+          "candidate_id": "TEST-C2",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "pending",
+          "decision_record": null,
+          "decision_source": null
+        },
+        {
+          "candidate_id": "TEST-C3",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "pending",
+          "decision_record": null,
+          "decision_source": null
+        }
+      ],
+      "state_after": [
+        {
+          "candidate_id": "TEST-C1",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "pending",
+          "decision_record": null,
+          "decision_source": null
+        },
+        {
+          "candidate_id": "TEST-C2",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "pending",
+          "decision_record": null,
+          "decision_source": null
+        },
+        {
+          "candidate_id": "TEST-C3",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "pending",
+          "decision_record": null,
+          "decision_source": null
+        }
+      ],
+      "limitations": [
+        "这是模型对给定pending记录的短探针，没有真实用户等待/恢复过程。"
+      ],
+      "response_file": "probes.md",
+      "response_sha256": "55769e216b3463921a973b1f9f390f799d5f80e355e54bfca791cdf7fc04bf8c"
+    },
+    {
+      "id": "P6b",
+      "name": "从同一pending快照分支：模拟部分接受",
+      "scenario": "从P6a独立分支，模拟输入：“测试选择：接受TEST-C1和TEST-C3，拒绝TEST-C2。”该选择来源是simulated_test，不是真实用户批准。",
+      "next_stage": "模拟选择已解决：accepted=[TEST-C1,TEST-C3]，rejected=[TEST-C2]。真实分析清单尚不能冻结，因为占位候选无可核验身份；核实后才可冻结并取证。",
+      "requested_clarification": false,
+      "requested_inclusion_decision": false,
+      "stopped_candidate_inclusion": true,
+      "observed_actions": [
+        "实际应答准确保留部分采纳与拒绝，不再次索要已经给出的采纳决定。",
+        "决定来源明确写为simulated_test。",
+        "未将接受占位编号等同于已获得真实论文；没有虚构材料或联合结论。"
+      ],
+      "state_before": [
+        {
+          "candidate_id": "TEST-C1",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "pending",
+          "decision_record": null,
+          "decision_source": null
+        },
+        {
+          "candidate_id": "TEST-C2",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "pending",
+          "decision_record": null,
+          "decision_source": null
+        },
+        {
+          "candidate_id": "TEST-C3",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "pending",
+          "decision_record": null,
+          "decision_source": null
+        }
+      ],
+      "state_after": [
+        {
+          "candidate_id": "TEST-C1",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "accepted",
+          "decision_record": "测试分支：接受TEST-C1和TEST-C3，拒绝TEST-C2。",
+          "decision_source": "simulated_test"
+        },
+        {
+          "candidate_id": "TEST-C2",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "rejected",
+          "decision_record": "测试分支：接受TEST-C1和TEST-C3，拒绝TEST-C2。",
+          "decision_source": "simulated_test"
+        },
+        {
+          "candidate_id": "TEST-C3",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "accepted",
+          "decision_record": "测试分支：接受TEST-C1和TEST-C3，拒绝TEST-C2。",
+          "decision_source": "simulated_test"
+        }
+      ],
+      "limitations": [
+        "这里只验证决定门槛及材料边界的模型应答；没有运行真实全文获取。",
+        "选择完毕与材料身份核实是不同门槛，故未声称实际进入frozen。"
+      ],
+      "response_file": "probes.md",
+      "response_sha256": "e0cf5ca912f31facd90027cd15f621d9a5b3b7293ddb676c58d53a4b2ca92410"
+    },
+    {
+      "id": "P6c",
+      "name": "从同一pending快照分支：模拟全部拒绝",
+      "scenario": "从P6a独立分支，模拟输入：“测试选择：三个都拒绝，按原清单继续。”不是在P6b接受后改写历史。",
+      "next_stage": "3项rejected；candidate纳入数0；原始材料身份已核实时可冻结原清单并继续，不重新推荐。",
+      "requested_clarification": false,
+      "requested_inclusion_decision": false,
+      "stopped_candidate_inclusion": true,
+      "observed_actions": [
+        "实际应答接受全部拒绝，不重荐、不绕过拒绝。",
+        "明确只继续原清单，拒绝候选只留检索记录。",
+        "这是与部分接受互斥的独立测试分支，没有改写P6b采纳记录。"
+      ],
+      "state_before": [
+        {
+          "candidate_id": "TEST-C1",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "pending",
+          "decision_record": null,
+          "decision_source": null
+        },
+        {
+          "candidate_id": "TEST-C2",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "pending",
+          "decision_record": null,
+          "decision_source": null
+        },
+        {
+          "candidate_id": "TEST-C3",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "pending",
+          "decision_record": null,
+          "decision_source": null
+        }
+      ],
+      "state_after": [
+        {
+          "candidate_id": "TEST-C1",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "rejected",
+          "decision_record": "测试分支：三个都拒绝，按原清单继续。",
+          "decision_source": "simulated_test"
+        },
+        {
+          "candidate_id": "TEST-C2",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "rejected",
+          "decision_record": "测试分支：三个都拒绝，按原清单继续。",
+          "decision_source": "simulated_test"
+        },
+        {
+          "candidate_id": "TEST-C3",
+          "test_only": true,
+          "identity_verified": false,
+          "materials_available": false,
+          "decision": "rejected",
+          "decision_record": "测试分支：三个都拒绝，按原清单继续。",
+          "decision_source": "simulated_test"
+        }
+      ],
+      "limitations": [
+        "未提供原始论文，故未在此探针实际生成联合结果。"
+      ],
+      "response_file": "probes.md",
+      "response_sha256": "3e90e12fb98eb80fb3a49d4b7edb1a58f6fa9ceddfc5a9d02c39b52251f1f926"
+    }
+  ],
+  "limitations": [
+    "每个情境只生成一次，均在同一会话，不是独立随机重复试验。",
+    "这组数据证明本次应答与实际工具行为，不能声称全面通过所有宿主或真实用户流程。",
+    "所有选择与候选都明确标为测试数据；未进行真实搜索、材料获取、用户批准或人工质量评审。"
+  ],
+  "sealed_artifacts_check": {
+    "baseline_analysis_unchanged": true,
+    "baseline_report_unchanged": true,
+    "weak_analysis_unchanged": true,
+    "weak_report_unchanged": true
+  }
+}

@@ -1,16 +1,26 @@
 import { openDB, type DBSchema } from "idb";
-import type { AnalysisBundle } from "../core/schema";
+import type { AnyAnalysis as AnalysisBundle } from "../core/workbench";
 import {
-  AnalysisConflictError,
-  assertNoVersionConflict,
-  checkRevision,
-} from "../core/validate";
+  assertAnyConflict as assertNoVersionConflict,
+  checkAnyRevision as checkRevision,
+} from "../core/workbench";
+import { AnalysisConflictError } from "../core/validate";
 
 export type ReadingState = {
   pathId: string;
   nodeId: string | null;
   blockId: string | null;
   scrollY: number;
+  collection?: {
+    view: string;
+    paperFilter: string;
+    clusterFilter: string;
+    relationFilter: string;
+    target: {
+      kind: "node" | "relation" | "block" | "paper";
+      id: string;
+    } | null;
+  };
 };
 export type SavedAnalysis = {
   key: string;

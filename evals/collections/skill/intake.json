@@ -1,0 +1,56 @@
+{
+  "kind": "collection_intake",
+  "schema_version": "0.2.0",
+  "stage": "frozen",
+  "goal": "联合理解ResNet与Highway的结构选择、证据与适用边界。",
+  "user_clue": "用户觉得两者都通过跨层通路帮助训练，希望比较，不预设继承或同团队关系。",
+  "provided_papers": [
+    {
+      "paper_id": "resnet",
+      "work_id": "arxiv:1512.03385",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "title": "Deep Residual Learning for Image Recognition",
+      "authors": [
+        "Kaiming He",
+        "Xiangyu Zhang",
+        "Shaoqing Ren",
+        "Jian Sun"
+      ],
+      "identifier": "arXiv:1512.03385",
+      "version": "v1",
+      "domain": "深度学习与视觉识别",
+      "research_type": "computational",
+      "url": "https://arxiv.org/abs/1512.03385v1",
+      "read_status": "partial",
+      "material_note": "逐页文本全部读取，共12页，含附录；未查看PDF图像，不据曲线像素或热图自行量数。"
+    },
+    {
+      "paper_id": "highway",
+      "work_id": "arxiv:1505.00387",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "title": "Highway Networks",
+      "authors": [
+        "Rupesh Kumar Srivastava",
+        "Klaus Greff",
+        "Jürgen Schmidhuber"
+      ],
+      "identifier": "arXiv:1505.00387",
+      "version": "v1",
+      "domain": "深度学习与视觉识别",
+      "research_type": "computational",
+      "url": "https://arxiv.org/abs/1505.00387v1",
+      "read_status": "partial",
+      "material_note": "逐页文本全部读取，共6页；这是extended abstract，未查看PDF图像，也未补读其后续论文。"
+    }
+  ],
+  "search": {
+    "status": "provided_only",
+    "queries": [],
+    "note": "用户明确限定仅提供材料；没有执行外部检索，没有推荐或新增论文，不需要候选采纳决定。",
+    "candidates": []
+  }
+}

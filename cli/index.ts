@@ -1,21 +1,33 @@
 #!/usr/bin/env node
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
-import { parseBundle, checkRevision, discussionErrors } from "../core/validate";
 import {
-  createDiscussion,
-  discussionMarkdown,
-  exportMarkdown,
-} from "../core/export";
+  parseAnyBundle as parseBundle,
+  checkAnyRevision as checkRevision,
+  anyDiscussionErrors as discussionErrors,
+  isCollection,
+} from "../core/workbench";
+import { createCollectionDiscussion } from "../core/collection";
+import {
+  createAnyDiscussion as createDiscussion,
+  anyDiscussionMarkdown as discussionMarkdown,
+  exportAnyMarkdown as exportMarkdown,
+} from "../core/workbench";
 
 export async function main(args: string[]) {
   const [command, file, ...rest] = args;
   if (
     !file ||
-    !["validate", "markdown", "discussion", "revision"].includes(command)
+    ![
+      "validate",
+      "markdown",
+      "discussion",
+      "relation-discussion",
+      "revision",
+    ].includes(command)
   )
     throw new Error(
-      "用法：paper-reconstruction validate <analysis.json> | markdown <analysis.json> <report.md> | discussion <analysis.json> <path_id> <node_id> <question> <output-prefix> [participatory] | revision <previous.json> <next.json>",
+      "用法：paper-reconstruction validate <analysis.json> | markdown <analysis.json> <report.md> | discussion <analysis.json> <path_id> <node_id> <question> <output-prefix> [participatory] | relation-discussion <analysis.json> <relation_id> <question> <output-prefix> | revision <previous.json> <next.json>",
     );
   const raw = await readFile(resolve(file), "utf8");
   let decoded: unknown;
@@ -29,13 +41,15 @@ export async function main(args: string[]) {
     decoded &&
     typeof decoded === "object" &&
     "kind" in decoded &&
-    decoded.kind === "discussion_context"
+    [
+      "discussion_context",
+      "collection_discussion_context",
+      "collection_intake",
+    ].includes(String(decoded.kind))
   ) {
     const errors = discussionErrors(decoded);
     if (errors.length) throw new Error(errors.join("\n"));
-    console.log(
-      JSON.stringify({ valid: true, kind: "discussion_context" }, null, 2),
-    );
+    console.log(JSON.stringify({ valid: true, kind: decoded.kind }, null, 2));
     return;
   }
   const result = parseBundle(raw);
@@ -73,6 +87,18 @@ export async function main(args: string[]) {
       nodeId,
       question,
       mode === "participatory" ? "participatory" : "direct",
+    );
+    await save(`${prefix}.json`, JSON.stringify(d, null, 2) + "\n");
+    await save(`${prefix}.md`, discussionMarkdown(d));
+  }
+  if (command === "relation-discussion") {
+    const [relationId, question, prefix] = rest;
+    if (!isCollection(b) || !prefix)
+      throw Error("关系讨论需要多篇结果、关系 ID、问题与输出路径");
+    const d = createCollectionDiscussion(
+      b,
+      { kind: "relation", relation_id: relationId },
+      question,
     );
     await save(`${prefix}.json`, JSON.stringify(d, null, 2) + "\n");
     await save(`${prefix}.md`, discussionMarkdown(d));

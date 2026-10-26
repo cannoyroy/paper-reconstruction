@@ -1,0 +1,98 @@
+{
+  "trial": "skill",
+  "started_at": "2026-10-26T13:56:20Z",
+  "material_policy": "provided_only",
+  "inputs": [
+    {
+      "path": "work/v02-input/resnet.txt",
+      "bytes": 61743,
+      "sha256": "690614f5553d49de231dce0e4f95c108422af4c2f9f5aa845336f69907ac91ba"
+    },
+    {
+      "path": "work/v02-input/highway.txt",
+      "bytes": 23915,
+      "sha256": "d141478bc7b439ceeac9d3e406a3171c848a56ac7676060ed9efea3a0ddd5c87"
+    }
+  ],
+  "package_files": [
+    {
+      "path": "release/paper-reconstruction/agents/openai.yaml",
+      "bytes": 338,
+      "sha256": "50ff6611351898d9a27b2233677480181c53d03231517ea9c3b19b024fb89752"
+    },
+    {
+      "path": "release/paper-reconstruction/LICENSE",
+      "bytes": 1090,
+      "sha256": "000a396839e5438a61765e0f8711dc8a9068aa7c430602ad290de222d70aab15"
+    },
+    {
+      "path": "release/paper-reconstruction/references/collection-method.md",
+      "bytes": 5282,
+      "sha256": "71aeb52b64c53079514433d15b213a5064066db4345d8880a69c0a9ff666e54d"
+    },
+    {
+      "path": "release/paper-reconstruction/references/collection-output.md",
+      "bytes": 4490,
+      "sha256": "3ffc6f046407f7b29f8675c82fcc56600e7a60e2606093a401afda590fda9506"
+    },
+    {
+      "path": "release/paper-reconstruction/references/discussion.md",
+      "bytes": 1645,
+      "sha256": "849ef0706e971df7028aa6d40a47cd50865fe6c52901a5ceb4f83a194bc96a4b"
+    },
+    {
+      "path": "release/paper-reconstruction/references/method.md",
+      "bytes": 2463,
+      "sha256": "90d6007b1e3e6b36632641b25acde06db027d95a7d3a4de82f0012d30af13621"
+    },
+    {
+      "path": "release/paper-reconstruction/references/output.md",
+      "bytes": 2355,
+      "sha256": "71efdc19693bf813f7093ecb41486f57ef388fcf51e267eab8e04a9db1bcbc0e"
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/analysis.schema.json",
+      "bytes": 31565,
+      "sha256": "560e5036ef5b6d1dca445072018469e9211d4d587a395194a011450e529e7537"
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/collection-discussion.schema.json",
+      "bytes": 31204,
+      "sha256": "58c0a1d5634c896b6f1c25dc4d0edde56bbf66afb785a621a7d787882af69ef2"
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/collection-intake.schema.json",
+      "bytes": 9147,
+      "sha256": "c60f2bc17771d1f30703c0a73a93202c64489d654ed5e5899ab32dad6e9551b9"
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/collection.schema.json",
+      "bytes": 53441,
+      "sha256": "26863919c366632af2edcd46bcc81e659e80c6597b47793fb7519a6e7a69ad85"
+    },
+    {
+      "path": "release/paper-reconstruction/references/schemas/discussion.schema.json",
+      "bytes": 21313,
+      "sha256": "95f14b543d2e03570ae602c23ad6acae48189cb6d9484804d17f148baf2b77c1"
+    },
+    {
+      "path": "release/paper-reconstruction/scripts/paper-reconstruction.mjs",
+      "bytes": 441652,
+      "sha256": "587c305503202de223d042763eccf8fa935c139da835dd0372c0abd17f719019"
+    },
+    {
+      "path": "release/paper-reconstruction/SKILL.md",
+      "bytes": 5316,
+      "sha256": "447007dc0e8d36d581aa2f051897568a13e1b4a74c21e442302fdf569f2cd61b"
+    },
+    {
+      "path": "release/paper-reconstruction/THIRD_PARTY_NOTICES.md",
+      "bytes": 148917,
+      "sha256": "633e2738f1ac4ed08d021221ab8969c2d9f5f27253365c6ea4c7b673d6d309af"
+    }
+  ],
+  "model": null,
+  "model_calls": null,
+  "tokens": null,
+  "note": "Inherited model configuration; per-call model identifiers, tokens and price not exposed. Only specified page-marked texts are available as paper material."
+}

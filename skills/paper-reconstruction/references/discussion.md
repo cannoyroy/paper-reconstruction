@@ -1,5 +1,7 @@
 # 讨论与修订
 
+收到 collection_discussion_context 时读取 collection-output.md，按 target.kind 区分关系和节点。关系讨论只检查所选关系的证据、前提和竞争解释；节点讨论保留所选路径信息条件。当前论文集合已冻结，不自动再次检索推荐。若用户要求增删论文或换版本，建立派生分析；同一集合内修改才递增版本，并同时保存节点与关系映射。
+
 DiscussionContext 是自足的局部材料包，绑定 analysis_id、analysis_version、path.path_id 与 node.node_id。node.path_contexts 只保留所选路径；path 中其他节点编号只是引用，不附带它们的正文。
 
 先核对当前路径假设和材料范围，再回答 question。用户质疑支持关系时，指出证据能与不能推出什么，必要时取得原论文。参与模式才让用户先选择，不以练习步骤阻塞普通追问。

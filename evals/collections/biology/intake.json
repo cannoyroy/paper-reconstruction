@@ -1,0 +1,60 @@
+{
+  "kind": "collection_intake",
+  "schema_version": "0.2.0",
+  "stage": "frozen",
+  "goal": "在合作线索下独立核查两篇机制工作的问题联系与证据边界。",
+  "user_clue": "课题组与合作线索；不是经验证的同一导师或统一研究纲领。",
+  "provided_papers": [
+    {
+      "paper_id": "jinek2012",
+      "work_id": "doi:10.1126/science.1225829",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "title": "A programmable dual RNA-guided DNA endonuclease in adaptive bacterial immunity",
+      "authors": [
+        "Martin Jinek",
+        "Krzysztof Chylinski",
+        "Ines Fonfara",
+        "Michael Hauer",
+        "Jennifer A. Doudna",
+        "Emmanuelle Charpentier"
+      ],
+      "identifier": "doi:10.1126/science.1225829",
+      "version": "PMC作者稿，available 2018-12-07；取读2026-10-26",
+      "domain": "RNA引导核酸识别与酶机制",
+      "research_type": "experimental",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6286148/",
+      "read_status": "partial",
+      "material_note": "已读HTML主文P1–P13及主图图注，目视Figure 4。PDF请求返回验证页，未声称读取PDF；补充材料未读。"
+    },
+    {
+      "paper_id": "sternberg2014",
+      "work_id": "doi:10.1038/nature13011",
+      "aliases": [],
+      "origin": "provided",
+      "candidate_id": null,
+      "title": "DNA interrogation by the CRISPR RNA-guided endonuclease Cas9",
+      "authors": [
+        "Samuel H. Sternberg",
+        "Sy Redding",
+        "Martin Jinek",
+        "Eric C. Greene",
+        "Jennifer A. Doudna"
+      ],
+      "identifier": "doi:10.1038/nature13011",
+      "version": "eScholarship作者稿；PMC available 2014-09-06；取读2026-10-26",
+      "domain": "RNA引导核酸识别与酶机制",
+      "research_type": "experimental",
+      "url": "https://escholarship.org/content/qt9r55k6pk/qt9r55k6pk.pdf",
+      "read_status": "partial",
+      "material_note": "17页PDF（1页库封面+16页作者稿）；主文、Methods和主图图注已读，目视Figure 3/4；Extended Data与视频未读。"
+    }
+  ],
+  "search": {
+    "status": "provided_only",
+    "queries": [],
+    "candidates": [],
+    "note": "provided_only记录请求策略，实际存在协议偏差：为定位指定Jinek全文执行了一次外部精确标题搜索。本应只直接取读已给链接/作者稿。搜索未产生候选，没有打开、纳入或引用其他论文；旁出摘要片段未作为证据。"
+  }
+}
