@@ -1,3 +1,4 @@
+import { ui, uiLocator, uiError, flowAria } from "./locale";
 import React, {
   useCallback,
   useEffect,
@@ -71,7 +72,6 @@ import {
 } from "./storage";
 import "@xyflow/react/dist/style.css";
 import "./style.css";
-import { CollectionReader } from "./CollectionReader";
 import {
   isCollection,
   analysisTitle,
@@ -81,8 +81,19 @@ import {
 } from "../core/workbench";
 import type { CollectionAnalysisBundle } from "../core/collection-schema";
 import { UsageGuide, projectLinks } from "./UsageGuide";
+import { LocaleProvider, useLocale } from "./locale";
+import {
+  translateExample,
+  type ExampleTranslation,
+} from "./exampleTranslation";
 
 const sampleFiles = import.meta.glob("../examples/*.json", {
+  import: "default",
+});
+const CollectionReader = React.lazy(() =>
+  import("./CollectionReader").then((m) => ({ default: m.CollectionReader })),
+);
+const sampleTranslations = import.meta.glob("./translations/*.en.json", {
   import: "default",
 });
 const samples = [
@@ -123,6 +134,33 @@ const samples = [
     icon: Search,
   },
 ];
+const sampleEnglish = [
+  {
+    domain: "Multi-paper analysis",
+    title: "The ResNet research thread",
+    subtitle:
+      "From residual representations to direct propagation: which judgments changed?",
+    type: "Joint review · 2 papers",
+  },
+  {
+    domain: "Computer vision",
+    title: "ResNet",
+    subtitle: "Why can deeper networks become harder to train?",
+    type: "Computational experiment",
+  },
+  {
+    domain: "Molecular biology",
+    title: "CRISPR–Cas9",
+    subtitle: "How did a natural mechanism become a programmable tool?",
+    type: "Laboratory research",
+  },
+  {
+    domain: "Gravitational-wave astronomy",
+    title: "LIGO",
+    subtitle: "How can we tell that a signal came from the universe?",
+    type: "Observational research",
+  },
+];
 const emptyQuestion = "这条推断的证据够吗？还有哪些竞争解释？";
 function download(name: string, text: string, type = "application/json") {
   const url = URL.createObjectURL(new Blob([text], { type }));
@@ -160,17 +198,96 @@ function StatusBadge({ claim }: { claim: Claim }) {
   return (
     <span className={`status-badge ${claim.epistemic_status}`}>
       <span />
-      {epistemicLabels[claim.epistemic_status]}
+      {ui(epistemicLabels[claim.epistemic_status])}
     </span>
   );
 }
 
+function SavedTitle({ record }: { record: SavedAnalysis }) {
+  const { locale } = useLocale();
+  const [title, setTitle] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    setTitle(null);
+    if (locale !== "en" || record.origin !== "example") return;
+    const id = record.bundle.analysis_id,
+      loadOriginal = sampleFiles[`../examples/${id}.json`],
+      loadTranslation = sampleTranslations[`./translations/${id}.en.json`];
+    if (!loadOriginal || !loadTranslation) return;
+    void Promise.all([loadOriginal(), loadTranslation()])
+      .then(([canonical, translation]) => {
+        const view = translateExample(
+          record.bundle,
+          canonical as AnyAnalysis,
+          record.origin,
+          translation as ExampleTranslation,
+        );
+        if (!cancelled && view) setTitle(analysisTitle(view));
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [locale, record]);
+  return <>{title ?? analysisTitle(record.bundle)}</>;
+}
+
 function App() {
-  const [collection, setCollection] = useState<CollectionAnalysisBundle | null>(
-    null,
-  );
-  const [bundle, setBundle] = useState<AnalysisBundle | null>(null),
+  const { locale, setLocale } = useLocale();
+  const tr = (zh: string, en: string) => (locale === "zh" ? zh : en);
+  const [rawCollection, setCollection] =
+    useState<CollectionAnalysisBundle | null>(null);
+  const [rawBundle, setBundle] = useState<AnalysisBundle | null>(null),
     [saved, setSaved] = useState<SavedAnalysis[]>([]);
+  const [currentOrigin, setCurrentOrigin] =
+    useState<SavedAnalysis["origin"]>("imported");
+  const [translated, setTranslated] = useState<{
+    original: AnyAnalysis;
+    display: AnyAnalysis | null;
+  } | null>(null);
+  const original = rawCollection ?? rawBundle;
+  useEffect(() => {
+    let cancelled = false;
+    if (locale !== "en" || currentOrigin !== "example" || !original) {
+      setTranslated(null);
+      return;
+    }
+    const filename = original.analysis_id;
+    const loadOriginal = sampleFiles[`../examples/${filename}.json`],
+      loadTranslation =
+        sampleTranslations[`./translations/${filename}.en.json`];
+    if (!loadOriginal || !loadTranslation) {
+      setTranslated({ original, display: null });
+      return;
+    }
+    void Promise.all([loadOriginal(), loadTranslation()])
+      .then(([canonical, translation]) => {
+        if (!cancelled)
+          setTranslated({
+            original,
+            display: translateExample(
+              original,
+              canonical as AnyAnalysis,
+              currentOrigin,
+              translation as ExampleTranslation,
+            ),
+          });
+      })
+      .catch(() => {
+        if (!cancelled) setTranslated({ original, display: null });
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [locale, currentOrigin, original]);
+  const display =
+    locale === "en" &&
+    currentOrigin === "example" &&
+    translated?.original === original
+      ? (translated.display ?? original)
+      : original;
+  const collection = display && isCollection(display) ? display : null;
+  const bundle = display && !isCollection(display) ? display : null;
   const [pathId, setPathId] = useState(""),
     [nodeId, setNodeId] = useState<string | null>(null),
     [blockId, setBlockId] = useState<string | null>(null),
@@ -186,7 +303,7 @@ function App() {
     [help, setHelp] = useState(false),
     [exportOpen, setExportOpen] = useState(false),
     [toc, setToc] = useState(false);
-  const [question, setQuestion] = useState(emptyQuestion),
+  const [question, setQuestion] = useState(() => ui(emptyQuestion)),
     [participatory, setParticipatory] = useState(false),
     [discussion, setDiscussion] = useState<string | null>(null),
     [copied, setCopied] = useState(false);
@@ -194,8 +311,17 @@ function App() {
     restoration = useRef(false),
     stateRef = useRef({ pathId, nodeId, blockId });
   stateRef.current = { pathId, nodeId, blockId };
+  useEffect(() => {
+    setQuestion((q) =>
+      q === emptyQuestion ||
+      q ===
+        "Is the evidence for this inference sufficient? What alternative explanations exist?"
+        ? ui(emptyQuestion)
+        : q,
+    );
+  }, [locale]);
   const currentRef = useRef<AnyAnalysis | null>(null);
-  currentRef.current = collection ?? bundle;
+  currentRef.current = original;
   const path = bundle?.paths.find((p) => p.path_id === pathId),
     node = bundle?.nodes.find((n) => n.node_id === nodeId);
   const block = bundle?.sections
@@ -231,6 +357,7 @@ function App() {
           noteStorage();
         }
       }
+      setCurrentOrigin(origin);
       if (isCollection(b)) {
         setCollection(b);
         setBundle(null);
@@ -373,7 +500,7 @@ function App() {
     setBlockId(null);
     setClaimId(null);
     setPanel("node");
-    setQuestion(emptyQuestion);
+    setQuestion(ui(emptyQuestion));
     setToc(false);
     if (scroll && bundle) {
       const b = bundle.sections
@@ -419,7 +546,7 @@ function App() {
     try {
       if (!bundle || !node || !path) return;
       const d = createDiscussion(
-        bundle,
+        rawBundle!,
         path.path_id,
         node.node_id,
         question,
@@ -451,15 +578,15 @@ function App() {
               <strong>
                 {bundle?.nodes.find((n) => n.node_id === id)?.title}
               </strong>
-              <span>查看决策与证据 →</span>
+              <span>{ui("查看决策与证据 →")}</span>
             </>
           ),
         },
         position: { x: i % 2 === 0 ? 70 : 420, y: i * 160 },
         selected: id === nodeId,
-        ariaLabel: `研究节点 ${id} ${bundle?.nodes.find((n) => n.node_id === id)?.title}`,
+        ariaLabel: `${ui("研究节点")} ${id} ${bundle?.nodes.find((n) => n.node_id === id)?.title}`,
       })),
-    [bundle, path, nodeId],
+    [bundle, path, nodeId, locale],
   );
   const graphEdges: FlowEdge[] = useMemo(
     () =>
@@ -469,7 +596,7 @@ function App() {
           id: e.edge_id,
           source: e.source_node_id,
           target: e.target_node_id,
-          label: `${edgeLabels[e.relation_type]} · ${e.label}`,
+          label: `${ui(edgeLabels[e.relation_type])} · ${e.label}`,
           type: e.relation_type === "return" ? "smoothstep" : "default",
           style: {
             stroke: e.relation_type === "return" ? "#b68c55" : "#789087",
@@ -480,11 +607,8 @@ function App() {
           labelStyle: { fontSize: 11, fill: "#56655e" },
           labelBgStyle: { fill: "#f9faf7" },
         })),
-    [bundle, path],
+    [bundle, path, locale],
   );
-  const currentOrigin = saved.find(
-    (s) => s.key === (bundle && bundleKey(bundle)),
-  )?.origin;
   const newer = bundle
     ? saved
         .filter(
@@ -507,13 +631,14 @@ function App() {
             setCollection(null);
             setPanel(null);
           }}
-          aria-label="返回工作台首页"
+          aria-label={tr("返回工作台首页", "Return to workbench home")}
         >
           <span className="brand-mark">
             <GitBranch size={21} />
           </span>
           <span>
-            研究复盘<span className="brand-en">PAPER RECONSTRUCTION</span>
+            {tr("研究复盘", "Research Review")}
+            <span className="brand-en">PAPER RECONSTRUCTION</span>
           </span>
         </button>
         <nav>
@@ -524,7 +649,7 @@ function App() {
               setGuide(false);
             }}
           >
-            工作台
+            {tr("工作台", "Workbench")}
           </button>
           <button
             onClick={() => {
@@ -532,7 +657,7 @@ function App() {
               setHelp(false);
             }}
           >
-            使用指南
+            {tr("使用指南", "Usage guide")}
           </button>
           <button
             onClick={() => {
@@ -540,16 +665,25 @@ function App() {
               setGuide(false);
             }}
           >
-            方法与边界 <CircleHelp size={14} />
+            {tr("方法与边界", "Method and limits")} <CircleHelp size={14} />
           </button>
         </nav>
         <div className="header-actions">
+          <button
+            className="button subtle language-switch"
+            onClick={() => setLocale(locale === "en" ? "zh" : "en")}
+            aria-label={
+              locale === "en" ? "Switch language to Chinese" : "切换语言为英文"
+            }
+          >
+            English / 中文
+          </button>
           <a
             className="button subtle github-link"
             href={projectLinks.github}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="GitHub 仓库"
+            aria-label={tr("GitHub 仓库", "GitHub repository")}
           >
             <Github size={18} />
             <span>GitHub</span>
@@ -562,7 +696,8 @@ function App() {
             }}
           >
             <Library size={16} />
-            本地记录<span className="count">{saved.length}</span>
+            {tr("本地记录", "Local records")}
+            <span className="count">{saved.length}</span>
           </button>
           <button
             className="button primary"
@@ -570,7 +705,7 @@ function App() {
             disabled={busy}
           >
             <Upload size={15} />
-            导入分析 JSON
+            {tr("导入分析 JSON", "Import analysis JSON")}
           </button>
         </div>
       </header>
@@ -579,20 +714,23 @@ function App() {
         type="file"
         accept="application/json,.json"
         className="visually-hidden"
-        aria-label="导入分析 JSON"
+        aria-label={tr("导入分析 JSON", "Import analysis JSON")}
         onChange={(e) => {
           void importFile(e.target.files?.[0]);
         }}
       />
       {storageError && (
         <div className="system-message warning" role="status">
-          浏览器存储不可用，本次仍可阅读和导出；关闭页面前请导出结果保存。
+          {tr(
+            "浏览器存储不可用，本次仍可阅读和导出；关闭页面前请导出结果保存。",
+            "Browser storage is unavailable. You can still read and export; save your result before closing this page.",
+          )}
         </div>
       )}
       {error && (
         <div className="system-message error" role="alert">
-          <span>{error}</span>
-          <button aria-label="关闭错误" onClick={() => setError("")}>
+          <span>{uiError(error)}</span>
+          <button aria-label={ui("关闭错误")} onClick={() => setError("")}>
             <X size={16} />
           </button>
         </div>
@@ -600,41 +738,72 @@ function App() {
       {notice && (
         <div className="toast" role="status">
           <Check size={16} />
-          {notice}
+          {uiError(notice)}
         </div>
       )}
       {busy && (
         <div className="loading-bar" role="status">
-          正在读取与校验结果…
+          {tr("正在读取与校验结果…", "Reading and validating the result…")}
+        </div>
+      )}
+      {original && currentOrigin === "example" && locale === "en" && (
+        <div className="system-message" role="status">
+          {translated?.original !== original
+            ? "Preparing the English example translation…"
+            : translated.display
+              ? "English display translation. JSON exports and discussion packages retain the original Chinese analysis."
+              : "The English translation could not be verified. The original example is shown instead."}
         </div>
       )}
 
       {collection ? (
-        <CollectionReader
-          key={bundleKey(collection)}
-          bundle={collection}
-          onStorageError={noteStorage}
-        />
+        <React.Suspense
+          fallback={
+            <div role="status" className="loading-bar">
+              {tr("正在读取联合分析…", "Loading collection…")}
+            </div>
+          }
+        >
+          <CollectionReader
+            key={bundleKey(collection)}
+            bundle={collection}
+            sourceBundle={rawCollection!}
+            onStorageError={noteStorage}
+          />
+        </React.Suspense>
       ) : !bundle ? (
         <main className="home">
           <div className="home-topline">
             <span className="eyebrow">
               <span className="small-dot" /> A WORKSPACE FOR RESEARCH JUDGMENT
             </span>
-            <span className="version">研究复盘 · v0.2</span>
+            <span className="version">
+              {tr("研究复盘", "Research review")} · v0.2
+            </span>
           </div>
           <section className="home-hero">
             <div>
-              <p className="hero-kicker">从一篇论文，走进研究的选择。</p>
+              <p className="hero-kicker">
+                {tr(
+                  "从一篇论文，走进研究的选择。",
+                  "Discover the choices behind research.",
+                )}
+              </p>
               <h1>
-                结论之前，
+                {tr("结论之前，", "Before the conclusion,")}
                 <br />
-                研究如何一步步形成？
+                {tr("研究如何一步步形成？", "how did the research take shape?")}
               </h1>
               <p className="hero-description">
-                沿着证据，重建可能的研究起点、关键转折与替代方向。
+                {tr(
+                  "沿着证据，重建可能的研究起点、关键转折与替代方向。",
+                  "Follow the evidence to reconstruct possible starting points, decisions, and alternatives.",
+                )}
                 <br className="desktop-break" />
-                读懂每个选择的依据，也看见它仍然不确定的地方。
+                {tr(
+                  "读懂每个选择的依据，也看见它仍然不确定的地方。",
+                  "Understand the reasons behind each choice and where uncertainty remains.",
+                )}
               </p>
               <div className="hero-actions">
                 <a
@@ -644,7 +813,7 @@ function App() {
                   rel="noopener noreferrer"
                 >
                   <ArrowDownToLine size={17} />
-                  下载 Skill
+                  {tr("下载 Skill", "Download Skill")}
                 </a>
                 <button
                   className="text-button"
@@ -654,46 +823,72 @@ function App() {
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
                 >
-                  先看一个案例 <ArrowRight size={16} />
+                  {tr("先看一个案例", "Explore an example")}{" "}
+                  <ArrowRight size={16} />
                 </button>
               </div>
               <p className="local-note">
                 <ShieldCheck size={14} />
-                结果在你的浏览器内处理与保存
+                {tr(
+                  "结果在你的浏览器内处理与保存",
+                  "Results are processed and saved in your browser",
+                )}
               </p>
             </div>
             <div
               className="hero-diagram"
-              aria-label="研究路径示意：从问题到候选解释，经判别证据到下一步行动"
+              aria-label={tr(
+                "研究路径示意：从问题到候选解释，经判别证据到下一步行动",
+                "Research path illustration: a question, possible explanations, discriminating evidence and next steps",
+              )}
             >
-              <div className="diagram-label">一种研究路径 · 示意</div>
+              <div className="diagram-label">
+                {tr("一种研究路径 · 示意", "An illustrative research path")}
+              </div>
               <div className="diagram-start">
-                <span>01</span>一个值得解释的现象
+                <span>01</span>
+                {tr("一个值得解释的现象", "A phenomenon worth explaining")}
               </div>
               <div className="diagram-branches">
                 <div>
-                  解释 A<span>可能的信息缺口</span>
+                  {tr("解释 A", "Explanation A")}
+                  <span>
+                    {tr("可能的信息缺口", "A possible information gap")}
+                  </span>
                 </div>
                 <div>
-                  解释 B<span>也可能是测量方式</span>
+                  {tr("解释 B", "Explanation B")}
+                  <span>
+                    {tr("也可能是测量方式", "Or a measurement effect")}
+                  </span>
                 </div>
               </div>
               <div className="diagram-test">
                 <Search size={17} />
-                <span>什么证据，能区分它们？</span>
+                <span>
+                  {tr(
+                    "什么证据，能区分它们？",
+                    "What evidence distinguishes them?",
+                  )}
+                </span>
               </div>
               <div className="diagram-end">
                 <span className="small-dot" />
-                让观察改变下一步
+                {tr("让观察改变下一步", "Let observations guide the next step")}
               </div>
-              <div className="diagram-caption">候选路径 ≠ 已核实的研发历史</div>
+              <div className="diagram-caption">
+                {tr(
+                  "候选路径 ≠ 已核实的研发历史",
+                  "Candidate path ≠ verified research history",
+                )}
+              </div>
             </div>
           </section>
           <section className="usage-section" aria-labelledby="usage-title">
             <div className="section-head">
               <div>
                 <span className="eyebrow">GET STARTED</span>
-                <h2 id="usage-title">如何使用</h2>
+                <h2 id="usage-title">{tr("如何使用", "How to use")}</h2>
               </div>
             </div>
             <UsageGuide />
@@ -702,9 +897,14 @@ function App() {
             <div className="section-head">
               <div>
                 <span className="eyebrow">EXPLORE THE CASES</span>
-                <h2>从研究现场开始</h2>
+                <h2>{tr("从研究现场开始", "Explore the research")}</h2>
               </div>
-              <p>单篇读懂选择，多篇比较研究主线。</p>
+              <p>
+                {tr(
+                  "单篇读懂选择，多篇比较研究主线。",
+                  "Understand individual choices and compare multiple research paths.",
+                )}
+              </p>
             </div>
             <div className="sample-grid">
               {samples.map((s, i) => (
@@ -717,18 +917,25 @@ function App() {
                   disabled={busy}
                 >
                   <div className="sample-meta">
-                    <span>{s.domain}</span>
+                    <span>
+                      {locale === "en" ? sampleEnglish[i].domain : s.domain}
+                    </span>
                     <span>{s.year}</span>
                   </div>
                   <div className={`sample-art art-${i}`}>
                     <s.icon size={44} strokeWidth={1.15} />
                     <span>{String(i + 1).padStart(2, "0")}</span>
                   </div>
-                  <span className="sample-type">{s.type} · 真实论文示例</span>
-                  <h3>{s.title}</h3>
-                  <p>{s.subtitle}</p>
+                  <span className="sample-type">
+                    {locale === "en" ? sampleEnglish[i].type : s.type} ·{" "}
+                    {tr("真实论文示例", "Real-paper example")}
+                  </span>
+                  <h3>{locale === "en" ? sampleEnglish[i].title : s.title}</h3>
+                  <p>
+                    {locale === "en" ? sampleEnglish[i].subtitle : s.subtitle}
+                  </p>
                   <div className="sample-footer">
-                    <span>阅读研究复盘</span>
+                    <span>{tr("阅读研究复盘", "Read reconstruction")}</span>
                     <ArrowRight size={17} />
                   </div>
                 </button>
@@ -736,8 +943,15 @@ function App() {
             </div>
           </section>
           <footer className="home-footer">
-            <span>论文研究复盘工作台</span>
-            <span>证据有出处，推断有前提，判断有边界。</span>
+            <span>
+              {tr("论文研究复盘工作台", "Paper Reconstruction Workbench")}
+            </span>
+            <span>
+              {tr(
+                "证据有出处，推断有前提，判断有边界。",
+                "Evidence has sources, inferences have assumptions, and judgments have limits.",
+              )}
+            </span>
             <div className="footer-links">
               <a
                 href={projectLinks.github}
@@ -751,18 +965,21 @@ function App() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Skill 发布页
+                {tr("Skill 发布页", "Skill releases")}
               </a>
               <a
-                href={projectLinks.readme}
+                href={
+                  locale === "en" ? projectLinks.readmeEn : projectLinks.readme
+                }
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                完整 README
+                {tr("完整 README", "Full README")}
               </a>
             </div>
             <button onClick={() => setHelp(true)}>
-              阅读方法说明 <ArrowRight size={13} />
+              {tr("阅读方法说明", "Read about the method")}{" "}
+              <ArrowRight size={13} />
             </button>
           </footer>
         </main>
@@ -777,13 +994,13 @@ function App() {
                 }}
               >
                 <ArrowLeft size={13} />
-                工作台
+                {tr("工作台", "Workbench")}
               </button>
               <span>/</span>
               <span>{bundle.paper.domain}</span>
               <span>/</span>
               <span>
-                {bundle.status === "partial" ? "部分复盘" : "完整复盘"}
+                {bundle.status === "partial" ? ui("部分复盘") : ui("完整复盘")}
               </span>
             </div>
             <div className="paper-title-row">
@@ -792,21 +1009,29 @@ function App() {
                   <span>
                     {currentOrigin === "example" ||
                     bundle.example_kind === "real_paper"
-                      ? "真实论文示例"
+                      ? ui("真实论文示例")
                       : bundle.example_kind === "fictional"
-                        ? "虚构演示"
-                        : "用户分析"}
+                        ? ui("虚构演示")
+                        : ui("用户分析")}
                   </span>
                   <span>
-                    {bundle.status === "partial" ? "部分完成" : "六部分复盘"}
+                    {bundle.status === "partial"
+                      ? ui("部分完成")
+                      : ui("六部分复盘")}
                   </span>
-                  <span>分析 v{bundle.analysis_version}</span>
+                  <span>
+                    {ui("分析 v")}
+                    {bundle.analysis_version}
+                  </span>
                 </div>
                 <h1>{bundle.paper.title}</h1>
                 <p className="paper-subtitle">
                   {bundle.paper.authors.slice(0, 2).join(" · ")}
-                  {bundle.paper.authors.length > 2 ? " 等" : ""}
-                  <span>论文版本：{bundle.paper.version}</span>
+                  {bundle.paper.authors.length > 2 ? ui(" 等") : ""}
+                  <span>
+                    {ui("论文版本：")}
+                    {bundle.paper.version}
+                  </span>
                 </p>
               </div>
               <div className="export-wrap">
@@ -815,7 +1040,7 @@ function App() {
                   onClick={() => setExportOpen(!exportOpen)}
                 >
                   <ArrowDownToLine size={15} />
-                  导出
+                  {ui(" 导出 ")}
                   <ChevronDown size={13} />
                 </button>
                 {exportOpen && (
@@ -824,26 +1049,26 @@ function App() {
                       onClick={() => {
                         download(
                           `${bundle.analysis_id}-v${bundle.analysis_version}.json`,
-                          JSON.stringify(bundle, null, 2),
+                          JSON.stringify(rawBundle, null, 2),
                         );
                         setExportOpen(false);
                       }}
                     >
                       <FileJson size={15} />
-                      分析 JSON
+                      {ui(" 分析 JSON ")}
                     </button>
                     <button
                       onClick={() => {
                         download(
                           `${bundle.analysis_id}-v${bundle.analysis_version}.md`,
-                          exportMarkdown(bundle),
+                          exportMarkdown(rawBundle!),
                           "text/markdown",
                         );
                         setExportOpen(false);
                       }}
                     >
                       <FileText size={15} />
-                      Markdown 阅读版
+                      {ui(" Markdown 阅读版 ")}
                     </button>
                   </div>
                 )}
@@ -852,23 +1077,28 @@ function App() {
             <div className="reader-context">
               <span>
                 <BookOpen size={14} />
-                {
-                  bundle.sources.filter((s) => s.read_status !== "unavailable")
-                    .length
-                }{" "}
-                份已读取材料
+                {(() => {
+                  const count = bundle.sources.filter(
+                    (s) => s.read_status !== "unavailable",
+                  ).length;
+                  return locale === "en"
+                    ? `${count} source${count === 1 ? "" : "s"} read`
+                    : `${count} 份已读取材料`;
+                })()}
               </span>
               <span>
                 <GitBranch size={14} />
-                {bundle.paths.length} 条候选路径
+                {locale === "en"
+                  ? `${bundle.paths.length} candidate path${bundle.paths.length === 1 ? "" : "s"}`
+                  : `${bundle.paths.length} 条候选路径`}
               </span>
               <span>
                 <ShieldCheck size={14} />
                 {bundle.validation.semantic_review === "pending"
-                  ? "待语义审查"
+                  ? ui("待语义审查")
                   : bundle.validation.semantic_review === "self_reviewed"
-                    ? "执行者自查"
-                    : "独立审查"}
+                    ? ui("执行者自查")
+                    : ui("独立审查")}
               </span>
               <button
                 onClick={() =>
@@ -877,25 +1107,28 @@ function App() {
                     ?.scrollIntoView({ behavior: "smooth" })
                 }
               >
-                材料范围与限制 <ArrowRight size={12} />
+                {ui(" 材料范围与限制 ")}
+                <ArrowRight size={12} />
               </button>
             </div>
             {bundle.revision && (
               <div className="revision-note">
-                本版修订自 v{bundle.revision.previous_version}：
+                {ui(" 本版修订自 v")}
+                {bundle.revision.previous_version}：
                 {bundle.revision.change_reason}
               </div>
             )}
             {newer && (
               <div className="revision-note">
-                当前是旧版；已有 v{newer.bundle.analysis_version}
-                。旧讨论仍绑定本版。
+                {ui(" 当前是旧版；已有 v")}
+                {newer.bundle.analysis_version}
+                {ui(" 。旧讨论仍绑定本版。 ")}
                 <button
                   onClick={() => {
                     void openBundle(newer.bundle, newer.origin);
                   }}
                 >
-                  打开新版
+                  {ui(" 打开新版 ")}
                 </button>
               </div>
             )}
@@ -907,20 +1140,20 @@ function App() {
                 onClick={() => setView("report")}
               >
                 <FileText size={15} />
-                复盘正文
+                {ui(" 复盘正文 ")}
               </button>
               <button
                 className={view === "map" ? "active" : ""}
                 onClick={() => setView("map")}
               >
                 <GitBranch size={15} />
-                决策地图
+                {ui(" 决策地图 ")}
               </button>
             </div>
             <div className="path-control">
-              <span>候选路径</span>
+              <span>{ui("候选路径")}</span>
               <select
-                aria-label="候选路径"
+                aria-label={ui("候选路径")}
                 value={pathId}
                 onChange={(e) => switchPath(e.target.value)}
               >
@@ -936,14 +1169,20 @@ function App() {
               onClick={() => setToc(!toc)}
             >
               <List size={17} />
-              目录
+              {ui(" 目录 ")}
             </button>
           </div>
           <div className={`reader-layout ${panel ? "with-panel" : ""}`}>
-            <aside className={`toc ${toc ? "open" : ""}`} aria-label="报告目录">
+            <aside
+              className={`toc ${toc ? "open" : ""}`}
+              aria-label={ui("报告目录")}
+            >
               <div className="toc-title">
-                本篇复盘
-                <button aria-label="关闭目录" onClick={() => setToc(false)}>
+                {ui(" 本篇复盘 ")}
+                <button
+                  aria-label={ui("关闭目录")}
+                  onClick={() => setToc(false)}
+                >
                   <X size={16} />
                 </button>
               </div>
@@ -970,7 +1209,7 @@ function App() {
                 </button>
               ))}
               <div className="toc-divider" />
-              <p className="toc-title">研究节点</p>
+              <p className="toc-title">{ui("研究节点")}</p>
               {path?.node_refs.map((id) => (
                 <button
                   key={id}
@@ -984,9 +1223,9 @@ function App() {
               <div className="toc-note">
                 <ShieldCheck size={17} />
                 <p>
-                  地图呈现逻辑与候选转折。
+                  {ui(" 地图呈现逻辑与候选转折。 ")}
                   <br />
-                  虚线不代表真实时间顺序。
+                  {ui(" 虚线不代表真实时间顺序。 ")}
                 </p>
               </div>
             </aside>
@@ -1002,11 +1241,12 @@ function App() {
               {view === "map" ? (
                 <section className="map-section">
                   <div className="map-heading">
-                    <h2>把研究选择展开来看</h2>
-                    <p>点击节点联动正文与详情；关系类型写在连线上。</p>
+                    <h2>{ui("把研究选择展开来看")}</h2>
+                    <p>{ui("点击节点联动正文与详情；关系类型写在连线上。")}</p>
                   </div>
                   <div className="decision-map" data-testid="decision-map">
                     <ReactFlow
+                      ariaLabelConfig={flowAria(locale)}
                       key={`${bundleKey(bundle)}:${pathId}`}
                       nodes={graphNodes}
                       edges={graphEdges}
@@ -1025,9 +1265,9 @@ function App() {
                   </div>
                   <div className="map-legend">
                     <span className="legend-dash" />
-                    虚线：推断或假设关系
+                    {ui(" 虚线：推断或假设关系 ")}
                     <span className="legend-solid" />
-                    实线：来源明示的关系
+                    {ui(" 实线：来源明示的关系 ")}
                   </div>
                   <div className="map-node-list">
                     {path?.node_refs.map((id) => (
@@ -1044,20 +1284,22 @@ function App() {
                   <div className="report-intro">
                     <span className="eyebrow">RECONSTRUCT, WITH EVIDENCE</span>
                     <p>
-                      这是一份有条件的研究复盘。原文明示、有依据的推断与学习用假设分别标记；点击段落下方的主张，查看具体支持范围。
+                      {ui(
+                        " 这是一份有条件的研究复盘。原文明示、有依据的推断与学习用假设分别标记；点击段落下方的主张，查看具体支持范围。 ",
+                      )}
                     </p>
                     <div className="status-legend">
                       <span className="status-badge explicit">
                         <span />
-                        原文明示
+                        {ui(" 原文明示 ")}
                       </span>
                       <span className="status-badge inferred">
                         <span />
-                        有依据推断
+                        {ui(" 有依据推断 ")}
                       </span>
                       <span className="status-badge hypothetical">
                         <span />
-                        探索性假设
+                        {ui(" 探索性假设 ")}
                       </span>
                     </div>
                   </div>
@@ -1085,7 +1327,11 @@ function App() {
                                 onClick={() => inspectBlock(b.block_id)}
                               >
                                 <LinkIcon size={12} />
-                                <span>{b.claim_refs.length} 项主张与依据</span>
+                                <span>
+                                  {locale === "en"
+                                    ? `${b.claim_refs.length} claim${b.claim_refs.length === 1 ? "" : "s"} and evidence`
+                                    : `${b.claim_refs.length} 项主张与依据`}
+                                </span>
                                 <ArrowRight size={12} />
                               </button>
                             )}
@@ -1111,7 +1357,7 @@ function App() {
               )}
               <section className="limitations" id="limitations">
                 <div className="eyebrow">SOURCES & LIMITATIONS</div>
-                <h2>来源与未决之处</h2>
+                <h2>{ui("来源与未决之处")}</h2>
                 <ul>
                   {bundle.limitations.map((l, i) => (
                     <li key={i}>{l}</li>
@@ -1126,16 +1372,16 @@ function App() {
                         <small>
                           {s.version} ·{" "}
                           {s.read_status === "read"
-                            ? "已读取"
+                            ? ui("已读取")
                             : s.read_status === "partial"
-                              ? "部分读取"
-                              : "无法获取"}
+                              ? ui("部分读取")
+                              : ui("无法获取")}
                         </small>
                         <p>{s.availability_note}</p>
                       </div>
                       {safeUrl(s.url) && (
                         <a
-                          aria-label={`打开来源 ${s.source_id}`}
+                          aria-label={`${ui("打开来源")} ${s.source_id}`}
                           href={safeUrl(s.url)}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -1147,28 +1393,32 @@ function App() {
                   ))}
                 </div>
                 <details className="execution-details">
-                  <summary>执行与格式记录</summary>
+                  <summary>{ui("执行与格式记录")}</summary>
                   <p>
-                    分析 {bundle.analysis_id} v{bundle.analysis_version} · 格式{" "}
-                    {bundle.schema_version} · 流程 {bundle.workflow_version}
+                    {ui(" 分析 ")}
+                    {bundle.analysis_id} v{bundle.analysis_version}{" "}
+                    {ui(" · 格式")} {bundle.schema_version} {ui(" · 流程 ")}
+                    {bundle.workflow_version}
                   </p>
                   <p>
-                    {bundle.provenance.model ?? "模型未知"} ·{" "}
-                    {bundle.provenance.generated_at ?? "生成时间未知"}
+                    {bundle.provenance.model ?? ui("模型未知")} ·{" "}
+                    {bundle.provenance.generated_at ?? ui("生成时间未知")}
                   </p>
                   <p>{bundle.provenance.usage.note}</p>
                   <p>
-                    附带：{bundle.manifest.included.join("；")}。外部：
+                    {ui(" 附带：")}
+                    {bundle.manifest.included.join("；")}
+                    {ui("。外部： ")}
                     {bundle.manifest.external.join("；")}。
                   </p>
                 </details>
               </section>
               <footer className="report-footer">
-                <span>每个结论，都留一条回到证据的路。</span>
+                <span>{ui("每个结论，都留一条回到证据的路。")}</span>
                 <button
                   onClick={() => setView(view === "report" ? "map" : "report")}
                 >
-                  {view === "report" ? "查看决策地图" : "返回复盘正文"}
+                  {view === "report" ? ui("查看决策地图") : ui("返回复盘正文")}
                   <ArrowRight size={15} />
                 </button>
               </footer>
@@ -1177,29 +1427,31 @@ function App() {
               <>
                 <button
                   className="panel-backdrop"
-                  aria-label="关闭详情"
+                  aria-label={ui("关闭详情")}
                   onClick={() => setPanel(null)}
                 />
                 <aside
                   className="detail-panel"
-                  aria-label={panel === "node" ? "节点详情" : "证据详情"}
+                  aria-label={
+                    panel === "node" ? ui("节点详情") : ui("证据详情")
+                  }
                 >
                   <div className="panel-top">
                     <span>
                       {panel === "node" ? (
                         <>
                           <GitBranch size={15} />
-                          研究节点
+                          {ui(" 研究节点 ")}
                         </>
                       ) : (
                         <>
                           <LinkIcon size={15} />
-                          主张与证据
+                          {ui(" 主张与证据 ")}
                         </>
                       )}
                     </span>
                     <button
-                      aria-label="关闭详情面板"
+                      aria-label={ui("关闭详情面板")}
                       onClick={() => setPanel(null)}
                     >
                       <PanelRightClose size={17} />
@@ -1215,7 +1467,7 @@ function App() {
                         <p>{node.question}</p>
                       </div>
                       <div className="panel-tabs">
-                        <button className="active">决策条件</button>
+                        <button className="active">{ui("决策条件")}</button>
                         <button
                           onClick={() => {
                             setBlockId(null);
@@ -1223,11 +1475,12 @@ function App() {
                             setPanel("evidence");
                           }}
                         >
-                          相关证据 <ArrowRight size={12} />
+                          {ui(" 相关证据 ")}
+                          <ArrowRight size={12} />
                         </button>
                       </div>
                       <div className="panel-content">
-                        <h3>这条路径中，可能已知</h3>
+                        <h3>{ui("这条路径中，可能已知")}</h3>
                         {node.path_contexts
                           .filter((c) => c.path_id === pathId)
                           .map((c) => (
@@ -1242,13 +1495,13 @@ function App() {
                               </p>
                             </div>
                           ))}
-                        <h3>仍然未知</h3>
+                        <h3>{ui("仍然未知")}</h3>
                         <ul>
                           {node.uncertainties.map((u, i) => (
                             <li key={i}>{u}</li>
                           ))}
                         </ul>
-                        <h3>有哪些可选行动</h3>
+                        <h3>{ui("有哪些可选行动")}</h3>
                         <div className="options">
                           {node.options.map((o, i) => (
                             <div key={o.option_id}>
@@ -1261,16 +1514,18 @@ function App() {
                           ))}
                         </div>
                         <p className="muted-small">
-                          选项与检验的主张性质请查看“相关证据”；未报告的行动不能视为作者经历。
+                          {ui(
+                            " 选项与检验的主张性质请查看“相关证据”；未报告的行动不能视为作者经历。 ",
+                          )}
                         </p>
-                        <h3>什么观察，会改变判断</h3>
+                        <h3>{ui("什么观察，会改变判断")}</h3>
                         {node.discriminating_tests.map((t) => (
                           <div className="test-card" key={t.test_id}>
                             <strong>{t.question}</strong>
                             <p>{t.method}</p>
                             {t.outcomes.map((o, i) => (
                               <div className="outcome" key={i}>
-                                <span>如果</span>
+                                <span>{ui("如果")}</span>
                                 <strong>{o.observation}</strong>
                                 <p>
                                   <ArrowRight size={12} />
@@ -1280,25 +1535,25 @@ function App() {
                             ))}
                           </div>
                         ))}
-                        <h3>与最终论文的联系</h3>
+                        <h3>{ui("与最终论文的联系")}</h3>
                         <p>{node.paper_connection}</p>
-                        <h3>带走一个判断</h3>
+                        <h3>{ui("带走一个判断")}</h3>
                         {node.transfer_lessons.map((l) => (
                           <div className="lesson" key={l.lesson_id}>
                             <p>
-                              <b>适用情境</b>
+                              <b>{ui("适用情境")}</b>
                               {l.context}
                             </p>
                             <p>
-                              <b>先区分</b>
+                              <b>{ui("先区分")}</b>
                               {l.distinguish}
                             </p>
                             <p>
-                              <b>下一步</b>
+                              <b>{ui("下一步")}</b>
                               {l.action}
                             </p>
                             <p>
-                              <b>边界</b>
+                              <b>{ui("边界")}</b>
                               {l.boundary}
                             </p>
                           </div>
@@ -1306,9 +1561,11 @@ function App() {
                         <div className="discuss-form">
                           <h3>
                             <MessageSquare size={15} />
-                            继续讨论这个节点
+                            {ui(" 继续讨论这个节点 ")}
                           </h3>
-                          <label htmlFor="question">带回 Codex 的问题</label>
+                          <label htmlFor="question">
+                            {ui("带回 Codex 的问题")}
+                          </label>
                           <textarea
                             id="question"
                             value={question}
@@ -1323,23 +1580,27 @@ function App() {
                                 setParticipatory(e.target.checked)
                               }
                             />
-                            我想先自己判断下一步
+                            {ui(" 我想先自己判断下一步 ")}
                           </label>
                           <button
                             className="button primary full"
                             onClick={makeDiscussion}
                           >
                             <Copy size={14} />
-                            准备节点与提问上下文
+                            {ui(" 准备节点与提问上下文 ")}
                           </button>
-                          <small>复制后回到 Codex 提问；这里不调用模型。</small>
+                          <small>
+                            {ui("复制后回到 Codex 提问；这里不调用模型。")}
+                          </small>
                         </div>
                       </div>
                     </>
                   ) : (
                     <div className="panel-content evidence-content">
                       <p className="muted-small">
-                        每项主张独立核查。存在引用，不代表引用支持所有解释。
+                        {ui(
+                          " 每项主张独立核查。存在引用，不代表引用支持所有解释。 ",
+                        )}
                       </p>
                       <div className="claim-picker">
                         {selectedClaims.map((c) => (
@@ -1377,12 +1638,14 @@ function App() {
                             })
                           ) : (
                             <p className="no-evidence">
-                              这项内容是供讨论的条件化假设，没有来源证明它发生过。
+                              {ui(
+                                " 这项内容是供讨论的条件化假设，没有来源证明它发生过。 ",
+                              )}
                             </p>
                           )}
                           {claim.assumptions.length > 0 && (
                             <>
-                              <h3>必要前提</h3>
+                              <h3>{ui("必要前提")}</h3>
                               <ul>
                                 {claim.assumptions.map((a, i) => (
                                   <li key={i}>{a}</li>
@@ -1392,7 +1655,7 @@ function App() {
                           )}
                           {claim.alternatives.length > 0 && (
                             <>
-                              <h3>竞争解释</h3>
+                              <h3>{ui("竞争解释")}</h3>
                               <ul>
                                 {claim.alternatives.map((a, i) => (
                                   <li key={i}>{a}</li>
@@ -1405,7 +1668,8 @@ function App() {
                               className="button outline full"
                               onClick={() => setPanel("node")}
                             >
-                              返回 {node.node_id} 继续讨论
+                              {ui(" 返回 ")}
+                              {node.node_id} {ui(" 继续讨论 ")}
                               <ArrowRight size={14} />
                             </button>
                           )}
@@ -1420,39 +1684,59 @@ function App() {
         </>
       )}
       {guide && (
-        <Modal title="使用指南" onClose={() => setGuide(false)} wide>
+        <Modal
+          title={tr("使用指南", "Usage guide")}
+          onClose={() => setGuide(false)}
+          wide
+        >
           <UsageGuide />
         </Modal>
       )}
       {help && (
-        <Modal title="这份复盘，怎样阅读？" onClose={() => setHelp(false)}>
+        <Modal
+          title={ui("这份复盘，怎样阅读？")}
+          onClose={() => setHelp(false)}
+        >
           <p>
-            从论文结论重建候选的研究选择，是为了学习下一步如何判断。没有公开记录的过程，始终保留为推断或学习用假设。
+            {ui(
+              " 从论文结论重建候选的研究选择，是为了学习下一步如何判断。没有公开记录的过程，始终保留为推断或学习用假设。 ",
+            )}
           </p>
-          <h3>先读完整解释，再核查关键判断</h3>
+          <h3>{ui("先读完整解释，再核查关键判断")}</h3>
           <p>
-            正文提供连贯复盘；决策地图负责定位。点击“主张与依据”查看事实、前提、竞争解释和支持范围。逻辑顺序不等于研发日程。
+            {ui(
+              " 正文提供连贯复盘；决策地图负责定位。点击“主张与依据”查看事实、前提、竞争解释和支持范围。逻辑顺序不等于研发日程。 ",
+            )}
           </p>
-          <h3>把问题带回 Codex</h3>
+          <h3>{ui("把问题带回 Codex")}</h3>
           <p>
-            在节点详情中填写问题，复制或下载上下文。使用 paper-reconstruction
-            Skill 继续讨论；采纳修订后导入新版本，旧版继续保留。
+            {ui(
+              " 在节点详情中填写问题，复制或下载上下文。使用 paper-reconstruction Skill 继续讨论；采纳修订后导入新版本，旧版继续保留。 ",
+            )}
           </p>
-          <h3>你的数据保存在这里</h3>
+          <h3>{ui("你的数据保存在这里")}</h3>
           <p>
-            阅读器在浏览器内处理文件，不上传分析，不调用模型。浏览器数据清理会删除本地记录，请用
-            JSON 导出长期保存；在线站点的托管访问记录由 GitHub 管理。
+            {ui(
+              " 阅读器在浏览器内处理文件，不上传分析，不调用模型。浏览器数据清理会删除本地记录，请用 JSON 导出长期保存；在线站点的托管访问记录由 GitHub 管理。 ",
+            )}
           </p>
-          <h3>当前验证范围</h3>
+          <h3>{ui("当前验证范围")}</h3>
           <p>
-            三个跨学科案例用于验证流程；未验证所有学科，也未测得作者真实经历的还原准确率。来源明说不等于独立复现，执行者自查不等于人类审查。
+            {ui(
+              " 三个跨学科案例用于验证流程；未验证所有学科，也未测得作者真实经历的还原准确率。来源明说不等于独立复现，执行者自查不等于人类审查。 ",
+            )}
           </p>
         </Modal>
       )}
       {library && (
-        <Modal title="保存在此浏览器的记录" onClose={() => setLibrary(false)}>
+        <Modal
+          title={ui("保存在此浏览器的记录")}
+          onClose={() => setLibrary(false)}
+        >
           <p className="muted-small">
-            示例与导入结果按分析版本保存。删除只影响此浏览器；导出文件仍由你保留。
+            {ui(
+              " 示例与导入结果按分析版本保存。删除只影响此浏览器；导出文件仍由你保留。 ",
+            )}
           </p>
           {saved.length ? (
             saved.map((s) => (
@@ -1465,14 +1749,16 @@ function App() {
                   }}
                 >
                   <span>
-                    {s.origin === "example" ? "示例" : "导入"} · v
+                    {s.origin === "example" ? ui("示例") : ui("导入")} · v
                     {s.bundle.analysis_version}
                   </span>
-                  <strong>{analysisTitle(s.bundle)}</strong>
+                  <strong>
+                    <SavedTitle record={s} />
+                  </strong>
                   <small>{s.bundle.analysis_id}</small>
                 </button>
                 <button
-                  aria-label={`删除 ${s.key}`}
+                  aria-label={`${ui("删除")} ${s.key}`}
                   onClick={async () => {
                     try {
                       await deleteSaved(s.key);
@@ -1497,12 +1783,12 @@ function App() {
           ) : (
             <div className="empty-state">
               <Library size={30} />
-              <p>还没有保存的复盘。</p>
+              <p>{ui("还没有保存的复盘。")}</p>
               <button
                 className="button outline"
                 onClick={() => input.current?.click()}
               >
-                导入分析 JSON
+                {tr("导入分析 JSON", "Import analysis JSON")}
               </button>
             </div>
           )}
@@ -1510,13 +1796,16 @@ function App() {
       )}
       {discussion && bundle && node && (
         <Modal
-          title="把这个节点带回 Codex"
+          title={ui("把这个节点带回 Codex")}
           wide
           onClose={() => setDiscussion(null)}
         >
           <p>
-            包含 {pathId} 的条件、{node.node_id} 的主张与证据，绑定分析 v
-            {bundle.analysis_version}。不包含完整论文。
+            {ui(" 包含 ")}
+            {pathId} {ui(" 的条件、")}
+            {node.node_id} {ui(" 的主张与证据，绑定分析 v ")}
+            {bundle.analysis_version}
+            {ui("。不包含完整论文。 ")}
           </p>
           <div className="discussion-actions">
             <button
@@ -1526,7 +1815,7 @@ function App() {
               }}
             >
               {copied ? <Check size={15} /> : <Copy size={15} />}
-              {copied ? "已复制" : "复制全部上下文"}
+              {copied ? ui("已复制") : ui("复制全部上下文")}
             </button>
             <button
               className="button outline"
@@ -1535,7 +1824,7 @@ function App() {
                   `${bundle.analysis_id}-v${bundle.analysis_version}-${pathId}-${node.node_id}.json`,
                   JSON.stringify(
                     createDiscussion(
-                      bundle,
+                      rawBundle!,
                       pathId,
                       node.node_id,
                       question,
@@ -1548,7 +1837,7 @@ function App() {
               }
             >
               <ArrowDownToLine size={15} />
-              下载讨论包
+              {ui(" 下载讨论包 ")}
             </button>
             <button
               className="button subtle"
@@ -1560,11 +1849,11 @@ function App() {
                 )
               }
             >
-              下载可粘贴文本
+              {ui(" 下载可粘贴文本 ")}
             </button>
           </div>
           <label htmlFor="discussion-context" className="muted-small">
-            自动复制不可用时，可手动选择并复制以下全文。
+            {ui(" 自动复制不可用时，可手动选择并复制以下全文。 ")}
           </label>
           <textarea
             id="discussion-context"
@@ -1597,42 +1886,46 @@ function EvidenceCard({
         <span>
           {e.evidence_id} · {source.source_id}
         </span>
-        <b>{relationLabels[relation]}</b>
+        <b>{ui(relationLabels[relation])}</b>
       </div>
       <h4>{source.title}</h4>
-      <p className="locator">{locatorText(e)}</p>
+      <p className="locator">{uiLocator(e)}</p>
       <div className="evidence-checks">
         <span>
-          来源：
-          {source.read_status === "unavailable" ? "无法获取" : "已读取相应范围"}
+          {ui(" 来源： ")}
+          {source.read_status === "unavailable"
+            ? ui("无法获取")
+            : ui("已读取相应范围")}
         </span>
         <span>
-          定位：
-          {e.verification_status === "source_checked" ? "已核查" : "未核实"}
+          {ui(" 定位： ")}
+          {e.verification_status === "source_checked"
+            ? ui("已核查")
+            : ui("未核实")}
         </span>
       </div>
       {e.quote && <blockquote>{e.quote}</blockquote>}
       <p>
-        <span className="field-label">证据释义</span>
+        <span className="field-label">{ui("证据释义")}</span>
         {e.paraphrase}
       </p>
       <p>
-        <span className="field-label">证据范围</span>
+        <span className="field-label">{ui("证据范围")}</span>
         {e.scope}
       </p>
       <p>
-        <span className="field-label">当前关系</span>
+        <span className="field-label">{ui("当前关系")}</span>
         {scope}
       </p>
       <small>
-        类型：
+        {ui(" 类型： ")}
         {
           {
-            reported_result: "作者报告结果",
-            author_interpretation: "作者解释",
-            historical_account: "公开历史回顾",
-            independent_check: "独立核查",
-            theoretical_argument: "理论论证",
+            reported_result: ui("作者报告结果"),
+            author_interpretation: ui("作者解释"),
+            historical_account: ui("公开历史回顾"),
+            independent_check: ui("独立核查"),
+            theoretical_argument: ui("理论论证"),
           }[e.evidence_type]
         }
       </small>
@@ -1643,7 +1936,7 @@ function EvidenceCard({
           target="_blank"
           rel="noopener noreferrer"
         >
-          打开原始来源
+          {ui(" 打开原始来源 ")}
           <ArrowRight size={13} />
         </a>
       )}
@@ -1706,7 +1999,7 @@ function Modal({
       >
         <div className="modal-heading">
           <h2>{title}</h2>
-          <button aria-label="关闭对话框" onClick={onClose}>
+          <button aria-label={ui("关闭对话框")} onClick={onClose}>
             <X size={20} />
           </button>
         </div>
@@ -1715,4 +2008,8 @@ function Modal({
     </div>
   );
 }
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <LocaleProvider>
+    <App />
+  </LocaleProvider>,
+);

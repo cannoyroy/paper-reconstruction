@@ -1,28 +1,147 @@
 import { useState } from "react";
 import { ArrowDownToLine, Copy } from "lucide-react";
+import { useLocale } from "./locale";
 
 export const projectLinks = {
   github: "https://github.com/cannoyroy/paper-reconstruction",
   release: "https://github.com/cannoyroy/paper-reconstruction/releases/latest",
   readme:
     "https://github.com/cannoyroy/paper-reconstruction/blob/main/README.md",
+  readmeEn:
+    "https://github.com/cannoyroy/paper-reconstruction/blob/main/README.en.md",
 };
 export const examplePrompt = `请使用 $paper-reconstruction 分析这篇论文：
 https://arxiv.org/abs/1512.03385v1
 生成完整研究复盘、analysis.json 和 report.md。`;
 
 export function UsageGuide() {
+  const { locale } = useLocale();
+  const prompt =
+    locale === "en"
+      ? `Use $paper-reconstruction to analyze this paper:
+https://arxiv.org/abs/1512.03385v1
+Produce a complete research reconstruction, analysis.json, and report.md in English.`
+      : examplePrompt;
   const [copyState, setCopyState] = useState<"idle" | "copied" | "manual">(
     "idle",
   );
   async function copyPrompt() {
     try {
-      await navigator.clipboard.writeText(examplePrompt);
+      await navigator.clipboard.writeText(prompt);
       setCopyState("copied");
     } catch {
       setCopyState("manual");
     }
   }
+  if (locale === "en")
+    return (
+      <div className="usage-guide">
+        <p className="usage-summary">
+          Give papers to Codex → generate analysis.json → import and read it
+          here
+        </p>
+        <ol className="usage-steps">
+          <li>
+            <span className="step-number">01</span>
+            <h3>Install the Codex Skill</h3>
+            <p>
+              Download the Skill ZIP from the release assets. Extract it and
+              place the <code>paper-reconstruction</code> folder in your
+              project's <code>.agents/skills/</code> directory.
+            </p>
+            <p>Codex and Node.js 22 are required for the helper scripts.</p>
+            <a
+              className="button outline"
+              href={projectLinks.release}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ArrowDownToLine size={15} />
+              Download Skill
+            </a>
+          </li>
+          <li>
+            <span className="step-number">02</span>
+            <h3>Give papers to Codex</h3>
+            <p>
+              Provide PDF attachments or paths, paper links, pasted text, TXT or
+              Markdown files, or a title whose identity and version can be
+              confirmed. Ask the Skill to generate <code>analysis.json</code>.
+            </p>
+            <p>
+              For multiple papers, it may recommend up to three additional works
+              and waits for your explicit choice. Request “provided materials
+              only” to skip the search.
+            </p>
+            <button
+              className="button outline"
+              onClick={() => void copyPrompt()}
+            >
+              <Copy size={14} />
+              Copy example prompt
+            </button>
+            <pre
+              className="usage-prompt"
+              tabIndex={0}
+              aria-label="Skill example prompt"
+            >
+              {prompt}
+            </pre>
+            <p className="copy-status" role="status">
+              {copyState === "copied"
+                ? "Example prompt copied."
+                : copyState === "manual"
+                  ? "Automatic copy failed. Select the prompt above to copy it manually."
+                  : "Replace the example link with your own paper."}
+            </p>
+          </li>
+          <li>
+            <span className="step-number">03</span>
+            <h3>Import and inspect the evidence</h3>
+            <p>
+              Choose “Import analysis JSON” above and select the file generated
+              by Codex. Read the report, switch paths, and inspect claims and
+              evidence.
+            </p>
+            <p>
+              Give PDFs, links and titles to Codex; this page receives analysis
+              JSON.
+            </p>
+            <p>
+              Multi-paper results also include evidence cards, comparisons, a
+              paper relationship graph and a decision map. Filters locate
+              material without changing the report.
+            </p>
+          </li>
+          <li>
+            <span className="step-number">04</span>
+            <h3>Continue the discussion in Codex</h3>
+            <p>
+              Enter a question in a node or relationship, then copy or download
+              its context. Once you accept revisions, import the new version;
+              the earlier version is retained.
+            </p>
+            <p>
+              Adding or removing papers, or changing a paper version, creates a
+              new analysis identity.
+            </p>
+          </li>
+        </ol>
+        <p className="usage-boundaries">
+          Automatic OCR for scanned PDFs is not integrated. Missing full text,
+          figures or appendices are recorded. Reading capabilities depend on the
+          current Codex tools, and not every input format has been individually
+          tested.
+        </p>
+        <a
+          href={projectLinks.readmeEn}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Read the full README and instructions →
+        </a>
+      </div>
+    );
   return (
     <div className="usage-guide">
       <p className="usage-summary">

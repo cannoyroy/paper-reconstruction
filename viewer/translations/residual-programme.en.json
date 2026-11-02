@@ -1,0 +1,766 @@
+{
+  "/collection/title": {
+    "source": "从残差表示到直接传播：两篇 ResNet 工作的联合复盘",
+    "english": "From residual representation to direct propagation: a joint review of two ResNet works"
+  },
+  "/collection/goal": {
+    "source": "辨别共同问题、传播假设和可迁移的实验判断。",
+    "english": "Distinguish the common problem, propagation assumptions and transferable experimental judgments."
+  },
+  "/collection/user_clue": {
+    "source": "公开案例以同作者线索组织；不是用户私人材料。",
+    "english": "This public case is organized around a shared-author clue; it is not private user material."
+  },
+  "/papers/0/domain": {
+    "source": "计算机视觉",
+    "english": "Computer vision"
+  },
+  "/papers/0/material_note": {
+    "source": "核查固定 v1 的问题、结构、ImageNet/CIFAR 对照；检测附录不作为本次主张依据。",
+    "english": "Check the question, structure and ImageNet/CIFAR controls in fixed v1; the detection appendix is not used as evidence for this analysis."
+  },
+  "/papers/1/material_note": {
+    "source": "读取固定 v1 正文、表格文本、图注与实现附录；未复现实验。",
+    "english": "Read fixed v1 main text, table text, figure captions and the implementation appendix; experiments were not reproduced."
+  },
+  "/papers/1/domain": {
+    "source": "计算机视觉",
+    "english": "Computer vision"
+  },
+  "/paper_cards/0/question/text": {
+    "source": "为什么更深的模型反而训练更差？",
+    "english": "Why do deeper models become harder to train?"
+  },
+  "/paper_cards/0/conditions/0/text": {
+    "source": "核查固定 v1 的问题、结构、ImageNet/CIFAR 对照；检测附录不作为本次主张依据。",
+    "english": "Check the question, structure and ImageNet/CIFAR controls in fixed v1; the detection appendix is not used as evidence for this analysis."
+  },
+  "/paper_cards/0/assumptions/0/text": {
+    "source": "公开实验在其给定结构、数据及训练协议内解释。",
+    "english": "Interpret the reported experiments within their specified structures, data and training protocols."
+  },
+  "/paper_cards/0/choices/0/text": {
+    "source": "同维度恒等捷径不增加可训练参数，残差与 plain 对照尽量保持深度、宽度和计算量一致。",
+    "english": "Same-dimension identity shortcuts add no trainable parameters; residual and plain controls are kept as close as possible in depth, width and computation."
+  },
+  "/paper_cards/0/discriminating_evidence/0/text": {
+    "source": "plain-34 比 plain-18 训练误差更高；残差结构的对照逆转了这一退化现象。",
+    "english": "plain-34 has higher training error than plain-18; the residual control reverses this degradation."
+  },
+  "/paper_cards/0/discriminating_evidence/1/text": {
+    "source": "同维度恒等捷径不增加可训练参数，残差与 plain 对照尽量保持深度、宽度和计算量一致。",
+    "english": "Same-dimension identity shortcuts add no trainable parameters; residual and plain controls are kept as close as possible in depth, width and computation."
+  },
+  "/paper_cards/0/discriminating_evidence/2/text": {
+    "source": "34 层方案 C 使用投影捷径有良好结果；原文仍优先选用较经济的恒等方案。",
+    "english": "The 34-layer option C uses projection shortcuts and performs well; the original paper nevertheless prefers a more economical identity option."
+  },
+  "/paper_cards/0/findings/0/text": {
+    "source": "plain-34 比 plain-18 训练误差更高；残差结构的对照逆转了这一退化现象。",
+    "english": "plain-34 has higher training error than plain-18; the residual control reverses this degradation."
+  },
+  "/paper_cards/0/limitations/0": {
+    "source": "未复现实验；结构对照不是实际研发顺序。",
+    "english": "Experiments were not reproduced; structural controls do not establish actual development order."
+  },
+  "/paper_cards/0/open_questions/0": {
+    "source": "这些条件在新数据和预算下是否仍成立？",
+    "english": "Do these conditions still hold for new data and budgets?"
+  },
+  "/paper_cards/1/question/text": {
+    "source": "怎样让残差网络中信息直接传播？",
+    "english": "How can information propagate directly through residual networks?"
+  },
+  "/paper_cards/1/conditions/0/text": {
+    "source": "读取固定 v1 正文、表格文本、图注与实现附录；未复现实验。",
+    "english": "Read fixed v1 main text, table text, figure captions and the implementation appendix; experiments were not reproduced."
+  },
+  "/paper_cards/1/assumptions/0/text": {
+    "source": "公开实验在其给定结构、数据及训练协议内解释。",
+    "english": "Interpret the reported experiments within their specified structures, data and training protocols."
+  },
+  "/paper_cards/1/choices/0/text": {
+    "source": "完整预激活改善报告结果；作者分别讨论传播更容易与 BN 预激活带来的正则化效果。",
+    "english": "Full pre-activation improves the reported results; the authors discuss easier propagation and regularization from BN pre-activation separately."
+  },
+  "/paper_cards/1/discriminating_evidence/0/text": {
+    "source": "当捷径 h 和相加后的 f 均为恒等映射时，推导给出跨多个残差单元的直接传播项。",
+    "english": "When both shortcut h and the post-addition function f are identity mappings, the derivation gives a direct propagation term across multiple residual units."
+  },
+  "/paper_cards/1/discriminating_evidence/1/text": {
+    "source": "在 CIFAR-10 的 ResNet-110 对照中，缩放、门控和全投影等捷径变体表现较差，门控初始化显著影响结果。",
+    "english": "In CIFAR-10 ResNet-110 controls, shortcut variants including scaling, gating and full projection perform worse, and gate initialization substantially affects the result."
+  },
+  "/paper_cards/1/discriminating_evidence/2/text": {
+    "source": "完整预激活改善报告结果；作者分别讨论传播更容易与 BN 预激活带来的正则化效果。",
+    "english": "Full pre-activation improves the reported results; the authors discuss easier propagation and regularization from BN pre-activation separately."
+  },
+  "/paper_cards/1/discriminating_evidence/3/text": {
+    "source": "ImageNet 对照采用 320×320 测试裁剪；原始 200 层网络训练损失更低却验证较差，作者解释为过拟合。",
+    "english": "The ImageNet comparison uses a 320×320 test crop; the original 200-layer network has lower training loss but worse validation performance, which the authors interpret as overfitting."
+  },
+  "/paper_cards/1/findings/0/text": {
+    "source": "在 CIFAR-10 的 ResNet-110 对照中，缩放、门控和全投影等捷径变体表现较差，门控初始化显著影响结果。",
+    "english": "In CIFAR-10 ResNet-110 controls, shortcut variants including scaling, gating and full projection perform worse, and gate initialization substantially affects the result."
+  },
+  "/paper_cards/1/limitations/0": {
+    "source": "未复现实验；结构对照不是实际研发顺序。",
+    "english": "Experiments were not reproduced; structural controls do not establish actual development order."
+  },
+  "/paper_cards/1/open_questions/0": {
+    "source": "这些条件在新数据和预算下是否仍成立？",
+    "english": "Do these conditions still hold for new data and budgets?"
+  },
+  "/search/note": {
+    "source": "方法打磨案例仅提供两篇材料；未进行候选扩展。",
+    "english": "This method-development case provides only two papers; no candidate expansion was performed."
+  },
+  "/provenance/tools/0": {
+    "source": "公开 PDF 下载",
+    "english": "Public PDF download"
+  },
+  "/provenance/tools/1": {
+    "source": "pypdf 页码文本",
+    "english": "pypdf page-extracted text"
+  },
+  "/provenance/tools/2": {
+    "source": "来源自查",
+    "english": "Source self-check"
+  },
+  "/provenance/usage/note": {
+    "source": "实施者编辑样稿，不是独立试用；无法取得逐调用使用量。",
+    "english": "A draft edited by the implementer, not an independent trial; per-call usage was unavailable."
+  },
+  "/sources/0/availability_note": {
+    "source": "核查固定 v1 的问题、结构、ImageNet/CIFAR 对照；检测附录不作为本次主张依据。",
+    "english": "Check the question, structure and ImageNet/CIFAR controls in fixed v1; the detection appendix is not used as evidence for this analysis."
+  },
+  "/sources/1/availability_note": {
+    "source": "读取固定 v1 正文、表格文本、图注与实现附录；未复现实验。",
+    "english": "Read fixed v1 main text, table text, figure captions and the implementation appendix; experiments were not reproduced."
+  },
+  "/evidence/0/paraphrase": {
+    "source": "plain-34 比 plain-18 训练误差更高；残差结构的对照逆转了这一退化现象。",
+    "english": "plain-34 has higher training error than plain-18; the residual control reverses this degradation."
+  },
+  "/evidence/0/scope": {
+    "source": "这里支持给定结构、优化与数据条件下的训练困难，不能保证所有深度均受益。",
+    "english": "Supports training difficulty under the given structure, optimization and data conditions; it does not guarantee benefits at all depths."
+  },
+  "/evidence/1/paraphrase": {
+    "source": "同维度恒等捷径不增加可训练参数，残差与 plain 对照尽量保持深度、宽度和计算量一致。",
+    "english": "Same-dimension identity shortcuts add no trainable parameters; residual and plain controls are kept as close as possible in depth, width and computation."
+  },
+  "/evidence/1/scope": {
+    "source": "跨维度时需要零填充或投影；不能把所有捷径一概视为无参数。",
+    "english": "Changing dimensions requires zero-padding or projection; not every shortcut can be treated as parameter-free."
+  },
+  "/evidence/2/paraphrase": {
+    "source": "34 层方案 C 使用投影捷径有良好结果；原文仍优先选用较经济的恒等方案。",
+    "english": "The 34-layer option C uses projection shortcuts and performs well; the original paper nevertheless prefers a more economical identity option."
+  },
+  "/evidence/2/scope": {
+    "source": "表内比较不说明所有更深网络中投影捷径也同样容易训练。",
+    "english": "The table does not show that projection shortcuts are equally easy to train in all deeper networks."
+  },
+  "/evidence/3/paraphrase": {
+    "source": "当捷径 h 和相加后的 f 均为恒等映射时，推导给出跨多个残差单元的直接传播项。",
+    "english": "When both shortcut h and the post-addition function f are identity mappings, the derivation gives a direct propagation term across multiple residual units."
+  },
+  "/evidence/3/scope": {
+    "source": "推导条件不覆盖任意跨维度单元，也不构成任意训练状态的收敛保证。",
+    "english": "The derivation's conditions do not cover arbitrary dimension-changing units or guarantee convergence in every training state."
+  },
+  "/evidence/4/paraphrase": {
+    "source": "在 CIFAR-10 的 ResNet-110 对照中，缩放、门控和全投影等捷径变体表现较差，门控初始化显著影响结果。",
+    "english": "In CIFAR-10 ResNet-110 controls, shortcut variants including scaling, gating and full projection perform worse, and gate initialization substantially affects the result."
+  },
+  "/evidence/4/scope": {
+    "source": "这是特定残差骨架与调参条件下的对照，不是所有门控架构的统一排名。",
+    "english": "A control under a specific residual backbone and tuning setup, not a universal ranking of all gated architectures."
+  },
+  "/evidence/5/paraphrase": {
+    "source": "完整预激活改善报告结果；作者分别讨论传播更容易与 BN 预激活带来的正则化效果。",
+    "english": "Full pre-activation improves the reported results; the authors discuss easier propagation and regularization from BN pre-activation separately."
+  },
+  "/evidence/5/scope": {
+    "source": "改动多个机制，单凭最终误差不能唯一归因于直接传播。",
+    "english": "Several mechanisms change; final error alone cannot uniquely attribute the result to direct propagation."
+  },
+  "/evidence/6/paraphrase": {
+    "source": "ImageNet 对照采用 320×320 测试裁剪；原始 200 层网络训练损失更低却验证较差，作者解释为过拟合。",
+    "english": "The ImageNet comparison uses a 320×320 test crop; the original 200-layer network has lower training loss but worse validation performance, which the authors interpret as overfitting."
+  },
+  "/evidence/6/scope": {
+    "source": "跨论文不同裁剪或训练协议下的误差不能直接作为受控因果比较。",
+    "english": "Errors across papers with different crops or training protocols cannot be treated directly as a controlled causal comparison."
+  },
+  "/claims/0/text": {
+    "source": "plain-34 比 plain-18 训练误差更高；残差结构的对照逆转了这一退化现象。",
+    "english": "plain-34 has higher training error than plain-18; the residual control reverses this degradation."
+  },
+  "/claims/0/evidence_links/0/scope_note": {
+    "source": "这里支持给定结构、优化与数据条件下的训练困难，不能保证所有深度均受益。",
+    "english": "Supports training difficulty under the given structure, optimization and data conditions; it does not guarantee benefits at all depths."
+  },
+  "/claims/1/text": {
+    "source": "同维度恒等捷径不增加可训练参数，残差与 plain 对照尽量保持深度、宽度和计算量一致。",
+    "english": "Same-dimension identity shortcuts add no trainable parameters; residual and plain controls are kept as close as possible in depth, width and computation."
+  },
+  "/claims/1/evidence_links/0/scope_note": {
+    "source": "跨维度时需要零填充或投影；不能把所有捷径一概视为无参数。",
+    "english": "Changing dimensions requires zero-padding or projection; not every shortcut can be treated as parameter-free."
+  },
+  "/claims/2/text": {
+    "source": "34 层方案 C 使用投影捷径有良好结果；原文仍优先选用较经济的恒等方案。",
+    "english": "The 34-layer option C uses projection shortcuts and performs well; the original paper nevertheless prefers a more economical identity option."
+  },
+  "/claims/2/evidence_links/0/scope_note": {
+    "source": "表内比较不说明所有更深网络中投影捷径也同样容易训练。",
+    "english": "The table does not show that projection shortcuts are equally easy to train in all deeper networks."
+  },
+  "/claims/3/text": {
+    "source": "当捷径 h 和相加后的 f 均为恒等映射时，推导给出跨多个残差单元的直接传播项。",
+    "english": "When both shortcut h and the post-addition function f are identity mappings, the derivation gives a direct propagation term across multiple residual units."
+  },
+  "/claims/3/evidence_links/0/scope_note": {
+    "source": "推导条件不覆盖任意跨维度单元，也不构成任意训练状态的收敛保证。",
+    "english": "The derivation's conditions do not cover arbitrary dimension-changing units or guarantee convergence in every training state."
+  },
+  "/claims/4/text": {
+    "source": "在 CIFAR-10 的 ResNet-110 对照中，缩放、门控和全投影等捷径变体表现较差，门控初始化显著影响结果。",
+    "english": "In CIFAR-10 ResNet-110 controls, shortcut variants including scaling, gating and full projection perform worse, and gate initialization substantially affects the result."
+  },
+  "/claims/4/evidence_links/0/scope_note": {
+    "source": "这是特定残差骨架与调参条件下的对照，不是所有门控架构的统一排名。",
+    "english": "A control under a specific residual backbone and tuning setup, not a universal ranking of all gated architectures."
+  },
+  "/claims/5/text": {
+    "source": "完整预激活改善报告结果；作者分别讨论传播更容易与 BN 预激活带来的正则化效果。",
+    "english": "Full pre-activation improves the reported results; the authors discuss easier propagation and regularization from BN pre-activation separately."
+  },
+  "/claims/5/evidence_links/0/scope_note": {
+    "source": "改动多个机制，单凭最终误差不能唯一归因于直接传播。",
+    "english": "Several mechanisms change; final error alone cannot uniquely attribute the result to direct propagation."
+  },
+  "/claims/6/text": {
+    "source": "ImageNet 对照采用 320×320 测试裁剪；原始 200 层网络训练损失更低却验证较差，作者解释为过拟合。",
+    "english": "The ImageNet comparison uses a 320×320 test crop; the original 200-layer network has lower training loss but worse validation performance, which the authors interpret as overfitting."
+  },
+  "/claims/6/evidence_links/0/scope_note": {
+    "source": "跨论文不同裁剪或训练协议下的误差不能直接作为受控因果比较。",
+    "english": "Errors across papers with different crops or training protocols cannot be treated directly as a controlled causal comparison."
+  },
+  "/claims/7/text": {
+    "source": "这组工作可以被理解为从残差表示重写走向传播路径条件分析的逻辑延续。",
+    "english": "These works can be understood as a logical continuation from rewriting residual representations to analyzing conditions for propagation paths."
+  },
+  "/claims/7/evidence_links/0/scope_note": {
+    "source": "支持问题与设计的逻辑联系，不证明实际形成顺序。",
+    "english": "Supports a logical connection between questions and designs, not their actual formation order."
+  },
+  "/claims/7/evidence_links/1/scope_note": {
+    "source": "支持问题与设计的逻辑联系，不证明实际形成顺序。",
+    "english": "Supports a logical connection between questions and designs, not their actual formation order."
+  },
+  "/claims/7/evidence_links/2/scope_note": {
+    "source": "支持问题与设计的逻辑联系，不证明实际形成顺序。",
+    "english": "Supports a logical connection between questions and designs, not their actual formation order."
+  },
+  "/claims/7/evidence_links/3/scope_note": {
+    "source": "支持问题与设计的逻辑联系，不证明实际形成顺序。",
+    "english": "Supports a logical connection between questions and designs, not their actual formation order."
+  },
+  "/claims/7/evidence_links/4/scope_note": {
+    "source": "支持问题与设计的逻辑联系，不证明实际形成顺序。",
+    "english": "Supports a logical connection between questions and designs, not their actual formation order."
+  },
+  "/claims/7/assumptions/0": {
+    "source": "以论文公开论证作为比较对象。",
+    "english": "Compare the papers' public arguments."
+  },
+  "/claims/7/alternatives/0": {
+    "source": "真实研发可能存在并行试验或未公开动机。",
+    "english": "Actual development may have involved parallel experiments or undisclosed motivations."
+  },
+  "/claims/8/text": {
+    "source": "应先区分优化与泛化，再在匹配设置中改变捷径和激活位置；不能把复杂度或更深等同于更好。",
+    "english": "First distinguish optimization from generalization, then vary shortcuts and activation positions in matched settings; neither complexity nor greater depth automatically means better results."
+  },
+  "/claims/8/evidence_links/0/scope_note": {
+    "source": "给出有边界的方法判断。",
+    "english": "A methodological judgment with stated boundaries."
+  },
+  "/claims/8/evidence_links/1/scope_note": {
+    "source": "给出有边界的方法判断。",
+    "english": "A methodological judgment with stated boundaries."
+  },
+  "/claims/8/evidence_links/2/scope_note": {
+    "source": "给出有边界的方法判断。",
+    "english": "A methodological judgment with stated boundaries."
+  },
+  "/claims/8/evidence_links/3/scope_note": {
+    "source": "给出有边界的方法判断。",
+    "english": "A methodological judgment with stated boundaries."
+  },
+  "/claims/8/evidence_links/4/scope_note": {
+    "source": "给出有边界的方法判断。",
+    "english": "A methodological judgment with stated boundaries."
+  },
+  "/claims/8/assumptions/0": {
+    "source": "可以测量训练与验证表现，并控制关键实验条件。",
+    "english": "Training and validation performance can be measured and key experimental conditions controlled."
+  },
+  "/claims/8/alternatives/0": {
+    "source": "预算不足、优化设置或数据问题也会造成类似现象。",
+    "english": "Insufficient budget, optimization settings or data problems can produce similar symptoms."
+  },
+  "/claims/9/text": {
+    "source": "在新任务中分别控制捷径变换、激活位置、BN 和预算，是待实施的判别方案。",
+    "english": "Separately controlling shortcut transformations, activation positions, BN and budget on a new task is a proposed discriminating experiment, not one already performed."
+  },
+  "/claims/9/assumptions/0": {
+    "source": "新任务允许受控比较。",
+    "english": "The new task permits controlled comparison."
+  },
+  "/claims/9/alternatives/0": {
+    "source": "若无法控制条件，只能做观察性比较。",
+    "english": "If conditions cannot be controlled, only an observational comparison is possible."
+  },
+  "/nodes/0/title": {
+    "source": "先查训练还是泛化？",
+    "english": "Check training or generalization first?"
+  },
+  "/nodes/0/question": {
+    "source": "加深后验证变差，应先改表示还是加强正则？",
+    "english": "When validation worsens with depth, should representation change or regularization increase first?"
+  },
+  "/nodes/0/path_contexts/0/known_information/0/text": {
+    "source": "plain-34 比 plain-18 训练误差更高；残差结构的对照逆转了这一退化现象。",
+    "english": "plain-34 has higher training error than plain-18; the residual control reverses this degradation."
+  },
+  "/nodes/0/path_contexts/0/known_information/1/text": {
+    "source": "ImageNet 对照采用 320×320 测试裁剪；原始 200 层网络训练损失更低却验证较差，作者解释为过拟合。",
+    "english": "The ImageNet comparison uses a 320×320 test crop; the original 200-layer network has lower training loss but worse validation performance, which the authors interpret as overfitting."
+  },
+  "/nodes/0/path_contexts/0/assumptions/0": {
+    "source": "这是事后比较，不表示作者当时已知两篇全部结果。",
+    "english": "This is a retrospective comparison; it does not imply the authors knew both papers' full results at the time."
+  },
+  "/nodes/0/path_contexts/1/known_information/0/text": {
+    "source": "plain-34 比 plain-18 训练误差更高；残差结构的对照逆转了这一退化现象。",
+    "english": "plain-34 has higher training error than plain-18; the residual control reverses this degradation."
+  },
+  "/nodes/0/path_contexts/1/assumptions/0": {
+    "source": "教学性候选起点：只知道第一篇的退化现象，不知道后续论文结果。",
+    "english": "A teaching candidate starting point: only the first paper's degradation is known, not the later paper's results."
+  },
+  "/nodes/0/uncertainties/0": {
+    "source": "未运行新的对照；因果归因仍依赖实验条件。",
+    "english": "No new control was run; causal attribution still depends on experimental conditions."
+  },
+  "/nodes/0/options/0/label": {
+    "source": "检查表示与优化路径",
+    "english": "Inspect representation and optimization paths"
+  },
+  "/nodes/0/options/0/description": {
+    "source": "检查表示与优化路径",
+    "english": "Inspect representation and optimization paths"
+  },
+  "/nodes/0/options/1/label": {
+    "source": "检查泛化与正则化",
+    "english": "Inspect generalization and regularization"
+  },
+  "/nodes/0/options/1/description": {
+    "source": "检查泛化与正则化",
+    "english": "Inspect generalization and regularization"
+  },
+  "/nodes/0/discriminating_tests/0/question": {
+    "source": "训练与验证误差是否一起变差？",
+    "english": "Do training and validation errors worsen together?"
+  },
+  "/nodes/0/discriminating_tests/0/method": {
+    "source": "匹配数据、深度、训练预算与评价协议，逐项改动；记录训练及验证曲线。",
+    "english": "Match data, depth, training budget and evaluation protocol; vary factors individually and record training and validation curves."
+  },
+  "/nodes/0/discriminating_tests/0/outcomes/0/observation": {
+    "source": "训练也变差",
+    "english": "Training also worsens"
+  },
+  "/nodes/0/discriminating_tests/0/outcomes/0/next_action": {
+    "source": "固定预算比较残差与 plain 或捷径变体。",
+    "english": "Compare residual and plain networks or shortcut variants under a fixed budget."
+  },
+  "/nodes/0/discriminating_tests/0/outcomes/1/observation": {
+    "source": "训练降低、验证升高",
+    "english": "Training error falls while validation error rises"
+  },
+  "/nodes/0/discriminating_tests/0/outcomes/1/next_action": {
+    "source": "优先检查泛化、正则化和数据。",
+    "english": "Investigate generalization, regularization and data first."
+  },
+  "/nodes/0/paper_connection": {
+    "source": "比较两篇公开结果与条件，形成可检验判断。",
+    "english": "Compare the two papers' public results and conditions to form a testable judgment."
+  },
+  "/nodes/0/transfer_lessons/0/context": {
+    "source": "加深后验证变差，应先改表示还是加强正则？",
+    "english": "When validation worsens with depth, should representation change or regularization increase first?"
+  },
+  "/nodes/0/transfer_lessons/0/distinguish": {
+    "source": "先识别是拟合困难、泛化变化还是设置不可比。",
+    "english": "First identify fitting difficulty, changed generalization or incomparable settings."
+  },
+  "/nodes/0/transfer_lessons/0/action": {
+    "source": "执行上述判别对照；条件不同则保留不确定性。",
+    "english": "Run the discriminating controls above; retain uncertainty when conditions differ."
+  },
+  "/nodes/0/transfer_lessons/0/boundary": {
+    "source": "不将此处对照推广为所有模型和数据的定律。",
+    "english": "Do not generalize this control into a law for all models and data."
+  },
+  "/nodes/1/title": {
+    "source": "复杂捷径一定更好吗？",
+    "english": "Are complex shortcuts always better?"
+  },
+  "/nodes/1/question": {
+    "source": "增加投影或门控后，表达能力提升是否转化为更易训练？",
+    "english": "Does greater expressive capacity from added projection or gating translate into easier training?"
+  },
+  "/nodes/1/path_contexts/0/known_information/0/text": {
+    "source": "同维度恒等捷径不增加可训练参数，残差与 plain 对照尽量保持深度、宽度和计算量一致。",
+    "english": "Same-dimension identity shortcuts add no trainable parameters; residual and plain controls are kept as close as possible in depth, width and computation."
+  },
+  "/nodes/1/path_contexts/0/known_information/1/text": {
+    "source": "34 层方案 C 使用投影捷径有良好结果；原文仍优先选用较经济的恒等方案。",
+    "english": "The 34-layer option C uses projection shortcuts and performs well; the original paper nevertheless prefers a more economical identity option."
+  },
+  "/nodes/1/path_contexts/0/known_information/2/text": {
+    "source": "当捷径 h 和相加后的 f 均为恒等映射时，推导给出跨多个残差单元的直接传播项。",
+    "english": "When both shortcut h and the post-addition function f are identity mappings, the derivation gives a direct propagation term across multiple residual units."
+  },
+  "/nodes/1/path_contexts/0/known_information/3/text": {
+    "source": "在 CIFAR-10 的 ResNet-110 对照中，缩放、门控和全投影等捷径变体表现较差，门控初始化显著影响结果。",
+    "english": "In CIFAR-10 ResNet-110 controls, shortcut variants including scaling, gating and full projection perform worse, and gate initialization substantially affects the result."
+  },
+  "/nodes/1/path_contexts/0/assumptions/0": {
+    "source": "这是事后比较，不表示作者当时已知两篇全部结果。",
+    "english": "This is a retrospective comparison; it does not imply the authors knew both papers' full results at the time."
+  },
+  "/nodes/1/uncertainties/0": {
+    "source": "未运行新的对照；因果归因仍依赖实验条件。",
+    "english": "No new control was run; causal attribution still depends on experimental conditions."
+  },
+  "/nodes/1/options/0/label": {
+    "source": "同维度保持恒等捷径",
+    "english": "Retain identity shortcuts at matching dimensions"
+  },
+  "/nodes/1/options/0/description": {
+    "source": "同维度保持恒等捷径",
+    "english": "Retain identity shortcuts at matching dimensions"
+  },
+  "/nodes/1/options/1/label": {
+    "source": "增加可训练投影或门控",
+    "english": "Add trainable projection or gating"
+  },
+  "/nodes/1/options/1/description": {
+    "source": "增加可训练投影或门控",
+    "english": "Add trainable projection or gating"
+  },
+  "/nodes/1/discriminating_tests/0/question": {
+    "source": "在相同设置下，复杂捷径是否增加训练损失？",
+    "english": "Does a complex shortcut increase training loss in the same setting?"
+  },
+  "/nodes/1/discriminating_tests/0/method": {
+    "source": "匹配数据、深度、训练预算与评价协议，逐项改动；记录训练及验证曲线。",
+    "english": "Match data, depth, training budget and evaluation protocol; vary factors individually and record training and validation curves."
+  },
+  "/nodes/1/discriminating_tests/0/outcomes/0/observation": {
+    "source": "训练损失提高",
+    "english": "Training loss increases"
+  },
+  "/nodes/1/discriminating_tests/0/outcomes/0/next_action": {
+    "source": "检查传播、初始化和超参数，不能归咎于表达能力不足。",
+    "english": "Inspect propagation, initialization and hyperparameters; do not blame insufficient expressiveness."
+  },
+  "/nodes/1/discriminating_tests/0/outcomes/1/observation": {
+    "source": "匹配设置后收益仍存在",
+    "english": "The benefit remains after matching conditions"
+  },
+  "/nodes/1/discriminating_tests/0/outcomes/1/next_action": {
+    "source": "保留复杂变换，并报告适用条件与额外成本。",
+    "english": "Retain the complex transformation and report applicability and additional cost."
+  },
+  "/nodes/1/paper_connection": {
+    "source": "比较两篇公开结果与条件，形成可检验判断。",
+    "english": "Compare the two papers' public results and conditions to form a testable judgment."
+  },
+  "/nodes/1/transfer_lessons/0/context": {
+    "source": "增加投影或门控后，表达能力提升是否转化为更易训练？",
+    "english": "Does greater expressive capacity from added projection or gating translate into easier training?"
+  },
+  "/nodes/1/transfer_lessons/0/distinguish": {
+    "source": "先识别是拟合困难、泛化变化还是设置不可比。",
+    "english": "First identify fitting difficulty, changed generalization or incomparable settings."
+  },
+  "/nodes/1/transfer_lessons/0/action": {
+    "source": "执行上述判别对照；条件不同则保留不确定性。",
+    "english": "Run the discriminating controls above; retain uncertainty when conditions differ."
+  },
+  "/nodes/1/transfer_lessons/0/boundary": {
+    "source": "不将此处对照推广为所有模型和数据的定律。",
+    "english": "Do not generalize this control into a law for all models and data."
+  },
+  "/nodes/2/title": {
+    "source": "预激活的收益来自哪里？",
+    "english": "Where does the benefit of pre-activation come from?"
+  },
+  "/nodes/2/question": {
+    "source": "传播路径与 BN 的作用如何区分？",
+    "english": "How can propagation-path and BN effects be separated?"
+  },
+  "/nodes/2/path_contexts/0/known_information/0/text": {
+    "source": "当捷径 h 和相加后的 f 均为恒等映射时，推导给出跨多个残差单元的直接传播项。",
+    "english": "When both shortcut h and the post-addition function f are identity mappings, the derivation gives a direct propagation term across multiple residual units."
+  },
+  "/nodes/2/path_contexts/0/known_information/1/text": {
+    "source": "完整预激活改善报告结果；作者分别讨论传播更容易与 BN 预激活带来的正则化效果。",
+    "english": "Full pre-activation improves the reported results; the authors discuss easier propagation and regularization from BN pre-activation separately."
+  },
+  "/nodes/2/path_contexts/0/assumptions/0": {
+    "source": "这是事后比较，不表示作者当时已知两篇全部结果。",
+    "english": "This is a retrospective comparison; it does not imply the authors knew both papers' full results at the time."
+  },
+  "/nodes/2/uncertainties/0": {
+    "source": "未运行新的对照；因果归因仍依赖实验条件。",
+    "english": "No new control was run; causal attribution still depends on experimental conditions."
+  },
+  "/nodes/2/options/0/label": {
+    "source": "完整预激活作为组合改动",
+    "english": "Full pre-activation as a combined change"
+  },
+  "/nodes/2/options/0/description": {
+    "source": "完整预激活作为组合改动",
+    "english": "Full pre-activation as a combined change"
+  },
+  "/nodes/2/options/1/label": {
+    "source": "逐项区分 BN 与 ReLU 位置",
+    "english": "Separate BN and ReLU positions one factor at a time"
+  },
+  "/nodes/2/options/1/description": {
+    "source": "逐项区分 BN 与 ReLU 位置",
+    "english": "Separate BN and ReLU positions one factor at a time"
+  },
+  "/nodes/2/discriminating_tests/0/question": {
+    "source": "控制 BN 与预算后，收益是否仍随直接传播路径改变？",
+    "english": "After controlling BN and budget, does the benefit still change with the direct propagation path?"
+  },
+  "/nodes/2/discriminating_tests/0/method": {
+    "source": "匹配数据、深度、训练预算与评价协议，逐项改动；记录训练及验证曲线。",
+    "english": "Match data, depth, training budget and evaluation protocol; vary factors individually and record training and validation curves."
+  },
+  "/nodes/2/discriminating_tests/0/outcomes/0/observation": {
+    "source": "控制后仍改善训练",
+    "english": "Training still improves after controls"
+  },
+  "/nodes/2/discriminating_tests/0/outcomes/0/next_action": {
+    "source": "进一步支持优化解释，但仍需重复与边界检查。",
+    "english": "This further supports an optimization explanation, but replication and boundary checks remain necessary."
+  },
+  "/nodes/2/discriminating_tests/0/outcomes/1/observation": {
+    "source": "仅验证改善或收益消失",
+    "english": "Only validation improves, or the benefit disappears"
+  },
+  "/nodes/2/discriminating_tests/0/outcomes/1/next_action": {
+    "source": "检查正则化、BN 与训练设置等竞争解释。",
+    "english": "Investigate competing explanations including regularization, BN and training settings."
+  },
+  "/nodes/2/paper_connection": {
+    "source": "比较两篇公开结果与条件，形成可检验判断。",
+    "english": "Compare the two papers' public results and conditions to form a testable judgment."
+  },
+  "/nodes/2/transfer_lessons/0/context": {
+    "source": "传播路径与 BN 的作用如何区分？",
+    "english": "How can propagation-path and BN effects be separated?"
+  },
+  "/nodes/2/transfer_lessons/0/distinguish": {
+    "source": "先识别是拟合困难、泛化变化还是设置不可比。",
+    "english": "First identify fitting difficulty, changed generalization or incomparable settings."
+  },
+  "/nodes/2/transfer_lessons/0/action": {
+    "source": "执行上述判别对照；条件不同则保留不确定性。",
+    "english": "Run the discriminating controls above; retain uncertainty when conditions differ."
+  },
+  "/nodes/2/transfer_lessons/0/boundary": {
+    "source": "不将此处对照推广为所有模型和数据的定律。",
+    "english": "Do not generalize this control into a law for all models and data."
+  },
+  "/paths/0/title": {
+    "source": "事后比较：从训练困难到传播条件",
+    "english": "Retrospective comparison: from training difficulty to propagation conditions"
+  },
+  "/paths/0/premise": {
+    "source": "联合检查两篇已报告的结果。",
+    "english": "Jointly inspect results already reported by both papers."
+  },
+  "/paths/0/assumptions/0": {
+    "source": "属于逻辑分析，不是开发时间线。",
+    "english": "A logical analysis, not a development timeline."
+  },
+  "/paths/1/title": {
+    "source": "候选起点：只知道第一篇的退化现象",
+    "english": "Candidate starting point: only the first paper's degradation is known"
+  },
+  "/paths/1/premise": {
+    "source": "信息边界仅限第一篇结果。",
+    "english": "The information boundary includes only the first paper's results."
+  },
+  "/paths/1/assumptions/0": {
+    "source": "用于练习判别起点，不能声称作者实际这样思考。",
+    "english": "An exercise in distinguishing starting points; it cannot claim the authors actually thought this way."
+  },
+  "/edges/0/label": {
+    "source": "先定位训练问题，再检查捷径",
+    "english": "Locate the training problem first, then inspect shortcuts"
+  },
+  "/edges/1/label": {
+    "source": "从捷径转向相加后操作",
+    "english": "Move from shortcuts to post-addition operations"
+  },
+  "/relations/0/label": {
+    "source": "从残差表示到传播条件",
+    "english": "From residual representation to propagation conditions"
+  },
+  "/relations/0/explanation": {
+    "source": "这组工作可以被理解为从残差表示重写走向传播路径条件分析的逻辑延续。",
+    "english": "These works can be understood as a logical continuation from rewriting residual representations to analyzing conditions for propagation paths."
+  },
+  "/relations/1/label": {
+    "source": "复杂捷径的收益取决于条件",
+    "english": "The benefit of complex shortcuts depends on conditions"
+  },
+  "/relations/1/explanation": {
+    "source": "后续结果提示更深模型中的捷径操作具有新的优化代价，不能把跨设置数字当成直接证伪。",
+    "english": "Later results suggest shortcut operations add optimization costs in deeper models; figures from different settings cannot be treated as direct refutation."
+  },
+  "/comparisons/0/title": {
+    "source": "关键选择与判别证据",
+    "english": "Key choices and discriminating evidence"
+  },
+  "/comparisons/0/comparability": {
+    "source": "同一问题族，但不将不同深度、数据或测试裁剪的误差直接比较。",
+    "english": "The same family of problems, but errors across different depths, data or test crops are not compared directly."
+  },
+  "/comparisons/0/cells/0/summary": {
+    "source": "参考恒等映射重写表示，比较 plain 与残差的训练曲线。",
+    "english": "Rewrite the representation around an identity mapping and compare training curves for plain and residual networks."
+  },
+  "/comparisons/0/cells/1/summary": {
+    "source": "拆开捷径与相加后激活，用变体对照检验直接传播条件。",
+    "english": "Separate the shortcut from post-addition activation and use variants to test direct-propagation conditions."
+  },
+  "/clusters/0/title": {
+    "source": "深网络的优化与传播",
+    "english": "Optimization and propagation in deep networks"
+  },
+  "/clusters/0/rationale": {
+    "source": "公开问题、结构及实验存在可追溯联系。",
+    "english": "The public questions, structures and experiments have traceable connections."
+  },
+  "/sections/0/title": {
+    "source": "分析范围与核心问题",
+    "english": "Scope and core question"
+  },
+  "/sections/0/blocks/0/markdown": {
+    "source": "两篇同作者工作都关心深网络如何训练。这里检查从残差表示到传播路径的联系；相同作者只提供线索，不证明研发历史。",
+    "english": "Both works by the same authors address how to train deep networks. This analysis examines the connection between residual representations and propagation paths; shared authors are only a clue and do not prove development history."
+  },
+  "/sections/1/title": {
+    "source": "各篇分工与可比性",
+    "english": "Roles and comparability of the papers"
+  },
+  "/sections/1/blocks/0/markdown": {
+    "source": "第一篇比较 plain 与残差结构，第二篇拆开捷径 h 与相加后操作 f。比较时应保持数据、层数、训练与评价设置；尤其注意 ImageNet 测试裁剪变化。",
+    "english": "The first paper compares plain and residual structures; the second separates shortcut h from post-addition operation f. Comparisons should match data, depth, training and evaluation settings, particularly changes in ImageNet test cropping."
+  },
+  "/sections/2/title": {
+    "source": "关键联系与跨论文决策",
+    "english": "Key relationships and cross-paper decisions"
+  },
+  "/sections/2/blocks/0/markdown": {
+    "source": "**先查训练还是泛化？** 加深后验证变差，应先改表示还是加强正则？ 如果训练也变差，固定预算比较残差与 plain 或捷径变体。 如果训练降低、验证升高，优先检查泛化、正则化和数据。",
+    "english": "**Check training or generalization first?** When validation worsens with depth, change representation or increase regularization? If training also worsens, compare residual and plain networks or shortcut variants at a fixed budget. If training improves while validation worsens, inspect generalization, regularization and data first."
+  },
+  "/sections/2/blocks/1/markdown": {
+    "source": "**复杂捷径一定更好吗？** 增加投影或门控后，表达能力提升是否转化为更易训练？ 如果训练损失提高，检查传播、初始化和超参数，不能归咎于表达能力不足。 如果匹配设置后收益仍存在，保留复杂变换，并报告适用条件与额外成本。",
+    "english": "**Are complex shortcuts always better?** Does added expressive capacity from projection or gating make training easier? If training loss rises, inspect propagation, initialization and hyperparameters; do not blame insufficient expressiveness. If benefits remain under matched conditions, retain the complex transformation and report conditions and additional cost."
+  },
+  "/sections/2/blocks/2/markdown": {
+    "source": "**预激活的收益来自哪里？** 传播路径与 BN 的作用如何区分？ 如果控制后仍改善训练，进一步支持优化解释，但仍需重复与边界检查。 如果仅验证改善或收益消失，检查正则化、BN 与训练设置等竞争解释。",
+    "english": "**Where does pre-activation help?** How can propagation-path and BN effects be separated? If controlled training still improves, this further supports an optimization explanation but requires replication and boundary checks. If only validation improves or benefits disappear, inspect competing explanations such as regularization, BN and training settings."
+  },
+  "/sections/3/title": {
+    "source": "分歧、替代解释与边界",
+    "english": "Disagreements, alternative explanations and limits"
+  },
+  "/sections/3/blocks/0/markdown": {
+    "source": "34 层投影方案的良好结果与后续 110 层对照并非简单矛盾。数据、深度与操作位置改变了条件；后续结果也不能证明所有 Highway 类架构都更差。",
+    "english": "The good result for a 34-layer projection option and the later 110-layer control are not simply contradictory. Data, depth and operation positions change the conditions; the later result also cannot prove that all Highway-like architectures are worse."
+  },
+  "/sections/4/title": {
+    "source": "综合认识与可能主线",
+    "english": "Synthesis and possible research thread"
+  },
+  "/sections/4/blocks/0/markdown": {
+    "source": "可以提炼出一条有条件的逻辑主线：先让参数化围绕易表达的参考映射，再检查直接传播路径是否被额外操作阻断。预激活同时涉及正则化，因此这条解释并不排除其他机制。",
+    "english": "A conditional logical thread can be drawn: first parameterize around an easily represented reference mapping, then inspect whether additional operations block direct propagation. Pre-activation also affects regularization, so this explanation does not exclude other mechanisms."
+  },
+  "/sections/5/title": {
+    "source": "可迁移判断与开放问题",
+    "english": "Transferable judgments and open questions"
+  },
+  "/sections/5/blocks/0/markdown": {
+    "source": "可迁移的是判别顺序及控制条件：把训练困难与泛化不足分开，把更强表达与更易优化分开。新任务应实施匹配对照，结果可能支持原假设，也可能要求改变下一步行动。",
+    "english": "The transferable ideas are the order of discrimination and control conditions: separate training difficulty from inadequate generalization, and stronger expressiveness from easier optimization. New tasks need matched controls; results may support the original hypothesis or require a different next action."
+  },
+  "/limitations/0": {
+    "source": "原始论文与完整图像不附在结果中；提供版本、真实定位与必要释义。",
+    "english": "Original papers and complete images are not included; versions, actual locations and necessary paraphrases are provided."
+  },
+  "/limitations/1": {
+    "source": "本例是实施者编辑与自查结果，未进行实验复现或人工学习效果评价。",
+    "english": "This case was edited and self-reviewed by the implementer; experiments and human learning outcomes were not evaluated."
+  },
+  "/limitations/2": {
+    "source": "相同作者不证明导师关系；逻辑结构不证明作者的真实研发顺序。",
+    "english": "Shared authors do not prove an advisor relationship; a logical structure does not establish the authors' actual development order."
+  },
+  "/validation/notes/0": {
+    "source": "核查关键结构、表格与图注；训练和泛化解释分开。",
+    "english": "Checked key structures, tables and figure captions; training and generalization explanations remain separate."
+  },
+  "/manifest/included/0": {
+    "source": "原创联合报告",
+    "english": "Original joint report"
+  },
+  "/manifest/included/1": {
+    "source": "单篇证据卡",
+    "english": "Individual paper evidence cards"
+  },
+  "/manifest/included/2": {
+    "source": "比较与关系",
+    "english": "Comparisons and relationships"
+  },
+  "/manifest/included/3": {
+    "source": "证据释义与定位",
+    "english": "Evidence paraphrases and locations"
+  },
+  "/manifest/external/0": {
+    "source": "两篇原始 PDF",
+    "english": "The two original PDFs"
+  },
+  "/manifest/external/1": {
+    "source": "作者代码与训练数据",
+    "english": "Author code and training data"
+  }
+}

@@ -81,7 +81,8 @@ export async function saveAnalysis(
         {
           key,
           bundle,
-          origin: existing?.origin ?? origin,
+          origin:
+            origin === "imported" ? "imported" : (existing?.origin ?? origin),
           savedAt: Date.now(),
         },
         key,

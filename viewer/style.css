@@ -232,7 +232,7 @@ button {
   padding: 0 5.3vw;
   background: #fafaf6;
   position: relative;
-  z-index: 30;
+  z-index: auto;
 }
 .brand {
   display: flex;
@@ -288,6 +288,10 @@ button {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+.language-switch {
+  position: relative;
+  z-index: 56;
 }
 .count {
   font-size: 10px;
@@ -2507,5 +2511,22 @@ textarea {
   }
   .footer-links {
     width: 100%;
+  }
+}
+@media (max-width: 380px) {
+  .header-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .home-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hero-actions {
+    flex-wrap: wrap;
+  }
+  .diagram-branches > div {
+    min-width: 0;
+    flex: 1;
+    padding-inline: 6px;
   }
 }

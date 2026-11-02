@@ -1,3 +1,11 @@
+import {
+  ui,
+  uiLocator,
+  uiError,
+  uiStatus,
+  flowAria,
+  useLocale,
+} from "./locale";
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -109,19 +117,22 @@ function download(name: string, text: string, type = "application/json") {
 }
 export function CollectionReader({
   bundle: b,
+  sourceBundle,
   onStorageError,
 }: {
   bundle: Bundle;
+  sourceBundle: Bundle;
   onStorageError: () => void;
 }) {
+  const { locale } = useLocale();
   const [view, setView] = useState<string>("report"),
     [paperFilter, setPaperFilter] = useState(""),
     [clusterFilter, setClusterFilter] = useState(""),
     [relationFilter, setRelationFilter] = useState("");
   const [pathId, setPathId] = useState(b.paths[0].path_id),
     [target, setTarget] = useState<Target | null>(null),
-    [question, setQuestion] = useState(
-      "这条跨论文推断的证据够吗？有哪些竞争解释？",
+    [question, setQuestion] = useState(() =>
+      ui("这条跨论文推断的证据够吗？有哪些竞争解释？"),
     ),
     [participatory, setParticipatory] = useState(false);
   const [discussion, setDiscussion] =
@@ -129,6 +140,15 @@ export function CollectionReader({
     [copyStatus, setCopyStatus] = useState(""),
     [localError, setLocalError] = useState("");
   const [restored, setRestored] = useState(false);
+  useEffect(() => {
+    setQuestion((q) =>
+      q === "这条跨论文推断的证据够吗？有哪些竞争解释？" ||
+      q ===
+        "Is the evidence for this cross-paper inference sufficient? What alternative explanations exist?"
+        ? ui("这条跨论文推断的证据够吗？有哪些竞争解释？")
+        : q,
+    );
+  }, [locale]);
   const restoration = useRef(false);
   const questionRef = useRef<HTMLTextAreaElement>(null);
   const key = bundleKey(b),
@@ -257,11 +277,11 @@ export function CollectionReader({
           id: p.paper_id,
           position: { x: (i % 3) * 500, y: Math.floor(i / 3) * 260 },
           data: {
-            label: `${p.paper_id} · ${p.title}\n${b.sources.find((s) => s.kind === "paper" && s.paper_refs.includes(p.paper_id))?.published_at?.match(/^\d{4}/)?.[0] ?? "年份未记录"} · ${p.version}\n${
+            label: `${p.paper_id} · ${p.title}\n${b.sources.find((s) => s.kind === "paper" && s.paper_refs.includes(p.paper_id))?.published_at?.match(/^\d{4}/)?.[0] ?? ui("年份未记录")} · ${p.version}\n${
               b.clusters
                 .filter((c) => c.paper_refs.includes(p.paper_id))
                 .map((c) => c.title)
-                .join(" / ") || "未归簇"
+                .join(" / ") || ui("未归簇")
             }`,
           },
           type: "paper",
@@ -307,7 +327,7 @@ export function CollectionReader({
             id: e.edge_id,
             source: e.source_node_id,
             target: e.target_node_id,
-            label: `${edgeLabels[e.relation_type]} · ${e.label}`,
+            label: `${ui(edgeLabels[e.relation_type])} · ${e.label}`,
             markerEnd: { type: MarkerType.ArrowClosed },
             style: {
               strokeDasharray:
@@ -389,7 +409,7 @@ export function CollectionReader({
         : { kind: "relation", relation_id: selectedRelation!.relation_id };
       setDiscussion(
         createCollectionDiscussion(
-          b,
+          sourceBundle,
           t,
           question,
           participatory ? "participatory" : "direct",
@@ -407,21 +427,30 @@ export function CollectionReader({
     >
       <div className="collection-heading">
         <p className="eyebrow">
-          多篇联合复盘 · {b.papers.length} 篇 · v{b.analysis_version} ·{" "}
-          {b.status === "complete" ? "完整结果" : "部分结果"}
+          {ui(" 多篇联合复盘 · ")}
+          {b.papers.length} {ui(" 篇 · v")}
+          {b.analysis_version} ·{" "}
+          {b.status === "complete" ? ui("完整结果") : ui("部分结果")}
         </p>
         <h1>{b.collection.title}</h1>
         <p>{b.collection.goal}</p>
-        <p className="muted-small">组织线索：{b.collection.user_clue}</p>
+        <p className="muted-small">
+          {ui("组织线索：")}
+          {b.collection.user_clue}
+        </p>
         {b.revision && (
           <p className="revision-note">
-            由 v{b.revision.previous_version} 修订：{b.revision.change_reason}
+            {ui(" 由 v")}
+            {b.revision.previous_version} {ui(" 修订：")}
+            {b.revision.change_reason}
           </p>
         )}
         {b.collection.derived_from && (
           <p>
-            派生自 {b.collection.derived_from.analysis_id} v
-            {b.collection.derived_from.analysis_version}，论文范围已重新登记。
+            {ui(" 派生自 ")}
+            {b.collection.derived_from.analysis_id} v
+            {b.collection.derived_from.analysis_version}
+            {ui("，论文范围已重新登记。 ")}
           </p>
         )}
         <div className="collection-actions">
@@ -430,48 +459,48 @@ export function CollectionReader({
             onClick={() =>
               download(
                 `${b.analysis_id}-v${b.analysis_version}.json`,
-                JSON.stringify(b, null, 2),
+                JSON.stringify(sourceBundle, null, 2),
               )
             }
           >
             <Download size={15} />
-            导出联合 JSON
+            {ui(" 导出联合 JSON ")}
           </button>
           <button
             className="button outline"
             onClick={() =>
               download(
                 `${b.analysis_id}-v${b.analysis_version}.md`,
-                exportCollectionMarkdown(b),
+                exportCollectionMarkdown(sourceBundle),
                 "text/markdown",
               )
             }
           >
             <BookOpen size={15} />
-            导出阅读版
+            {ui(" 导出阅读版 ")}
           </button>
         </div>
       </div>
-      <nav className="collection-tabs" aria-label="联合分析视图">
+      <nav className="collection-tabs" aria-label={ui("联合分析视图")}>
         {views.map(([id, label]) => (
           <button
             key={id}
             aria-pressed={view === id}
             onClick={() => setView(id)}
           >
-            {label}
+            {ui(label)}
           </button>
         ))}
       </nav>
       <div className="collection-filters">
         <label>
-          论文
+          {ui(" 论文 ")}
           <select
-            aria-label="筛选论文"
+            aria-label={ui("筛选论文")}
             value={paperFilter}
             onChange={(e) => setPaperFilter(e.target.value)}
           >
-            <option value="">全部论文</option>
+            <option value="">{ui("全部论文")}</option>
             {b.papers.map((p) => (
               <option key={p.paper_id} value={p.paper_id}>
                 {p.paper_id} · {p.title}
@@ -480,13 +509,13 @@ export function CollectionReader({
           </select>
         </label>
         <label>
-          研究簇
+          {ui(" 研究簇 ")}
           <select
-            aria-label="筛选研究簇"
+            aria-label={ui("筛选研究簇")}
             value={clusterFilter}
             onChange={(e) => setClusterFilter(e.target.value)}
           >
-            <option value="">全部研究簇</option>
+            <option value="">{ui("全部研究簇")}</option>
             {b.clusters.map((c) => (
               <option key={c.cluster_id} value={c.cluster_id}>
                 {c.title}
@@ -495,16 +524,16 @@ export function CollectionReader({
           </select>
         </label>
         <label>
-          关系
+          {ui(" 关系 ")}
           <select
-            aria-label="筛选关系类型"
+            aria-label={ui("筛选关系类型")}
             value={relationFilter}
             onChange={(e) => setRelationFilter(e.target.value)}
           >
-            <option value="">全部关系</option>
+            <option value="">{ui("全部关系")}</option>
             {Object.entries(relationshipLabels).map(([id, label]) => (
               <option key={id} value={id}>
-                {label}
+                {ui(label)}
               </option>
             ))}
           </select>
@@ -517,17 +546,17 @@ export function CollectionReader({
             setRelationFilter("");
           }}
         >
-          清除筛选
+          {ui(" 清除筛选 ")}
         </button>
       </div>
       <p className="collection-filter-note">
-        筛选用于定位与高亮；联合正文始终保留全部内容和原结论。
+        {ui(" 筛选用于定位与高亮；联合正文始终保留全部内容和原结论。 ")}
       </p>
       {(view === "report" || view === "decisions") && (
         <label className="collection-path">
-          候选路径
+          {ui(" 候选路径 ")}
           <select
-            aria-label="联合分析路径"
+            aria-label={ui("联合分析路径")}
             value={pathId}
             onChange={(e) => {
               setPathId(e.target.value);
@@ -542,7 +571,9 @@ export function CollectionReader({
             ))}
           </select>
           <span>
-            {path.perspective === "retrospective" ? "事后比较" : "候选形成路径"}
+            {path.perspective === "retrospective"
+              ? ui("事后比较")
+              : ui("候选形成路径")}
             ：{path.premise}
           </span>
         </label>
@@ -550,7 +581,7 @@ export function CollectionReader({
       <div className="collection-body">
         {view === "report" && (
           <>
-            <nav className="collection-toc" aria-label="联合报告目录">
+            <nav className="collection-toc" aria-label={ui("联合报告目录")}>
               {b.sections.map((s) => (
                 <a
                   key={s.section_id}
@@ -581,7 +612,8 @@ export function CollectionReader({
                           show({ kind: "block", id: block.block_id })
                         }
                       >
-                        主张与依据（{block.claim_refs.length}）
+                        {ui(" 主张与依据（")}
+                        {block.claim_refs.length}）
                       </button>
                       {block.node_refs
                         .filter((id) => path.node_refs.includes(id))
@@ -598,7 +630,8 @@ export function CollectionReader({
                           key={id}
                           onClick={() => show({ kind: "relation", id })}
                         >
-                          关系 {id}
+                          {ui(" 关系 ")}
+                          {id}
                         </button>
                       ))}
                     </div>
@@ -610,7 +643,7 @@ export function CollectionReader({
         )}
         {view === "cards" && (
           <section className="collection-section">
-            <h2>单篇证据卡</h2>
+            <h2>{ui("单篇证据卡")}</h2>
             {b.papers.map((p) => {
               const c = b.paper_cards.find((c) => c.paper_id === p.paper_id)!;
               return (
@@ -621,8 +654,10 @@ export function CollectionReader({
                   <summary>
                     {p.paper_id} · {p.title}{" "}
                     <small>
-                      {p.read_status === "read" ? "已读" : "材料不全"} ·{" "}
-                      {p.origin === "provided" ? "用户提供" : "确认补充"}
+                      {p.read_status === "read" ? ui("已读") : ui("材料不全")} ·{" "}
+                      {p.origin === "provided"
+                        ? ui("用户提供")
+                        : ui("确认补充")}
                     </small>
                   </summary>
                   <p>
@@ -631,12 +666,12 @@ export function CollectionReader({
                   <p>{p.material_note}</p>
                   {(
                     [
-                      ["核心问题", [c.question]],
-                      ["条件", c.conditions],
-                      ["假设", c.assumptions],
-                      ["选择", c.choices],
-                      ["判别证据", c.discriminating_evidence],
-                      ["结论", c.findings],
+                      [ui("核心问题"), [c.question]],
+                      [ui("条件"), c.conditions],
+                      [ui("假设"), c.assumptions],
+                      [ui("选择"), c.choices],
+                      [ui("判别证据"), c.discriminating_evidence],
+                      [ui("结论"), c.findings],
                     ] as const
                   ).map(([label, items]) => (
                     <div key={label}>
@@ -648,7 +683,7 @@ export function CollectionReader({
                       ))}
                     </div>
                   ))}
-                  <h3>局限与未决</h3>
+                  <h3>{ui("局限与未决")}</h3>
                   <ul>
                     {[...c.limitations, ...c.open_questions].map((t, i) => (
                       <li key={i}>{t}</li>
@@ -658,7 +693,8 @@ export function CollectionReader({
                     className="button outline"
                     onClick={() => show({ kind: "paper", id: p.paper_id })}
                   >
-                    核查 {p.paper_id} 的证据
+                    {ui(" 核查 ")}
+                    {p.paper_id} {ui(" 的证据 ")}
                   </button>
                 </details>
               );
@@ -667,9 +703,9 @@ export function CollectionReader({
         )}
         {view === "compare" && (
           <section className="collection-section">
-            <h2>比较与可比条件</h2>
+            <h2>{ui("比较与可比条件")}</h2>
             {b.comparisons.length === 0 ? (
-              <p>当前材料不足以建立可比维度。</p>
+              <p>{ui("当前材料不足以建立可比维度。")}</p>
             ) : (
               b.comparisons.map((a) => (
                 <div key={a.axis_id} className="collection-comparison">
@@ -678,14 +714,14 @@ export function CollectionReader({
                   <div
                     className="comparison-scroll"
                     tabIndex={0}
-                    aria-label={`${a.title}比较表`}
+                    aria-label={`${a.title} ${ui("比较表")}`}
                   >
                     <table>
                       <thead>
                         <tr>
-                          <th>论文</th>
-                          <th>观察与判断</th>
-                          <th>依据</th>
+                          <th>{ui("论文")}</th>
+                          <th>{ui("观察与判断")}</th>
+                          <th>{ui("依据")}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -713,7 +749,7 @@ export function CollectionReader({
                                   show({ kind: "paper", id: c.paper_id })
                                 }
                               >
-                                {c.claim_refs.join(", ") || "材料说明"}
+                                {c.claim_refs.join(", ") || ui("材料说明")}
                               </button>
                             </td>
                           </tr>
@@ -729,12 +765,19 @@ export function CollectionReader({
         {(view === "relations" || view === "decisions") && (
           <section className="collection-section">
             <h2>
-              {view === "relations" ? "论文之间的关系" : "跨论文的决策路径"}
+              {view === "relations"
+                ? ui("论文之间的关系")
+                : ui("跨论文的决策路径")}
             </h2>
-            <p>虚线表示推断或假设。年份不代表影响方向；孤立节点不强行连接。</p>
+            <p>
+              {ui(
+                "虚线表示推断或假设。年份不代表影响方向；孤立节点不强行连接。",
+              )}
+            </p>
             {graphNodes.length ? (
-              <div className="collection-map" aria-label="联合研究地图">
+              <div className="collection-map" aria-label={ui("联合研究地图")}>
                 <ReactFlow
+                  ariaLabelConfig={flowAria(locale)}
                   nodeTypes={nodeTypes}
                   key={`${view}-${pathId}`}
                   nodes={graphNodes}
@@ -756,17 +799,21 @@ export function CollectionReader({
                   <Background />
                   <Controls />
                   <FitMap
-                    signature={`${view}-${pathId}-${paperFilter}-${clusterFilter}-${relationFilter}`}
+                    signature={`${view}-${pathId}-${paperFilter}-${clusterFilter}-${relationFilter}-${locale}`}
                   />
                 </ReactFlow>
               </div>
             ) : (
-              <p>当前筛选下没有节点。</p>
+              <p>{ui("当前筛选下没有节点。")}</p>
             )}
             {view === "relations" ? (
               <div className="collection-relation-list">
                 {filteredRelations.length === 0 && (
-                  <p>当前范围没有可支持的论文关系；可阅读证据卡和分析边界。</p>
+                  <p>
+                    {ui(
+                      "当前范围没有可支持的论文关系；可阅读证据卡和分析边界。",
+                    )}
+                  </p>
                 )}
                 {filteredRelations.map((r) => (
                   <button
@@ -780,8 +827,8 @@ export function CollectionReader({
                       · {r.label}
                     </strong>
                     <span>
-                      {relationshipLabels[r.kind]} ·{" "}
-                      {epistemicLabels[r.epistemic_status]}
+                      {ui(relationshipLabels[r.kind])} ·{" "}
+                      {ui(epistemicLabels[r.epistemic_status])}
                     </span>
                   </button>
                 ))}
@@ -802,11 +849,13 @@ export function CollectionReader({
         )}
         <section className="collection-section">
           <details className="collection-search">
-            <summary>材料清单、检索与采纳记录</summary>
+            <summary>{ui("材料清单、检索与采纳记录")}</summary>
             <p>{b.search.note}</p>
             <p>
-              检索状态：{b.search.status}；查询：
-              {b.search.queries.join("；") || "未执行"}
+              {ui(" 检索状态：")}
+              {uiStatus("search", b.search.status)}
+              {ui("；查询： ")}
+              {b.search.queries.join("；") || ui("未执行")}
             </p>
             <ul>
               {b.papers.map((p) => (
@@ -818,18 +867,21 @@ export function CollectionReader({
             {b.search.candidates.map((c) => (
               <div key={c.candidate_id}>
                 <h3>
-                  {c.title} · {c.decision === "accepted" ? "已纳入" : "已拒绝"}
+                  {c.title} ·{" "}
+                  {c.decision === "accepted" ? ui("已纳入") : ui("已拒绝")}
                 </h3>
                 <p>
                   {c.gap} · {c.expected_change}
                 </p>
                 <p>
-                  {c.inspected_material}；全文：{c.full_text_status}
+                  {c.inspected_material}
+                  {ui("；全文：")}
+                  {uiStatus("fulltext", c.full_text_status)}
                 </p>
                 <p>
                   {c.decision_source === "simulated_test"
-                    ? "测试模拟选择："
-                    : "用户选择："}
+                    ? ui("测试模拟选择：")
+                    : ui("用户选择：")}
                   {c.decision_record}
                 </p>
                 {safeUrl(c.url) && (
@@ -838,29 +890,31 @@ export function CollectionReader({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    候选论文来源
+                    {ui(" 候选论文来源 ")}
                   </a>
                 )}
               </div>
             ))}
           </details>
-          <h2>材料与判断边界</h2>
+          <h2>{ui("材料与判断边界")}</h2>
           <ul>
             {b.limitations.map((l, i) => (
               <li key={i}>{l}</li>
             ))}
           </ul>
           <details>
-            <summary>执行与结构信息</summary>
+            <summary>{ui("执行与结构信息")}</summary>
             <p>
-              {b.analysis_id} v{b.analysis_version} · 格式 {b.schema_version} ·
-              流程 {b.workflow_version}
+              {b.analysis_id} v{b.analysis_version} {ui(" · 格式 ")}
+              {b.schema_version} {ui(" · 流程 ")}
+              {b.workflow_version}
             </p>
             <p>
-              {b.provenance.model ?? "模型未知"} · {b.provenance.usage.note}
+              {b.provenance.model ?? ui("模型未知")} · {b.provenance.usage.note}
             </p>
             <p>
-              语义核查：{b.validation.semantic_review}；
+              {ui(" 语义核查：")}
+              {uiStatus("semantic", b.validation.semantic_review)}；
               {b.validation.notes.join("；")}
             </p>
           </details>
@@ -870,19 +924,19 @@ export function CollectionReader({
         <>
           <button
             className="collection-backdrop"
-            aria-label="关闭联合详情"
+            aria-label={ui("关闭联合详情")}
             onClick={() => setTarget(null)}
           />
-          <aside className="collection-detail" aria-label="联合分析详情">
+          <aside className="collection-detail" aria-label={ui("联合分析详情")}>
             <header>
               <strong>
                 {selectedNode?.title ??
                   selectedRelation?.label ??
                   selectedPaper?.title ??
-                  "主张与依据"}
+                  ui("主张与依据")}
               </strong>
               <button
-                aria-label="关闭联合详情面板"
+                aria-label={ui("关闭联合详情面板")}
                 onClick={() => setTarget(null)}
               >
                 <X size={20} />
@@ -891,21 +945,22 @@ export function CollectionReader({
             <div className="collection-detail-body">
               {(selectedNode || selectedRelation || selectedBlock) && (
                 <button className="text-button" onClick={jumpToTarget}>
-                  定位相关正文 <ArrowRight size={14} />
+                  {ui(" 定位相关正文 ")}
+                  <ArrowRight size={14} />
                 </button>
               )}
               {selectedRelation && (
                 <>
                   <p>
-                    {relationshipLabels[selectedRelation.kind]} ·{" "}
-                    {epistemicLabels[selectedRelation.epistemic_status]}
+                    {ui(relationshipLabels[selectedRelation.kind])} ·{" "}
+                    {ui(epistemicLabels[selectedRelation.epistemic_status])}
                   </p>
                   <p>{selectedRelation.explanation}</p>
                 </>
               )}
               {selectedNode && (
                 <>
-                  <h3>当前路径已知条件</h3>
+                  <h3>{ui("当前路径已知条件")}</h3>
                   {selectedNode.path_contexts
                     .filter((c) => c.path_id === pathId)
                     .map((c) => (
@@ -918,61 +973,72 @@ export function CollectionReader({
                         <p>{c.assumptions.join("；")}</p>
                       </div>
                     ))}
-                  <h3>仍然未知</h3>
+                  <h3>{ui("仍然未知")}</h3>
                   <ul>
                     {selectedNode.uncertainties.map((u, i) => (
                       <li key={i}>{u}</li>
                     ))}
                   </ul>
-                  <h3>可选行动</h3>
+                  <h3>{ui("可选行动")}</h3>
                   {selectedNode.options.map((o) => (
                     <p key={o.option_id}>
                       <strong>{o.label}</strong>：{o.description}
                     </p>
                   ))}
-                  <h3>怎样改变判断</h3>
+                  <h3>{ui("怎样改变判断")}</h3>
                   {selectedNode.discriminating_tests.map((t) => (
                     <div className="test-card" key={t.test_id}>
                       <strong>{t.question}</strong>
                       <p>{t.method}</p>
                       {t.outcomes.map((o, i) => (
                         <p className="outcome" key={i}>
-                          如果 {o.observation} → {o.next_action}
+                          {ui(" 如果 ")}
+                          {o.observation} → {o.next_action}
                         </p>
                       ))}
                     </div>
                   ))}
-                  <h3>迁移条件</h3>
+                  <h3>{ui("迁移条件")}</h3>
                   {selectedNode.transfer_lessons.map((l) => (
                     <p key={l.lesson_id}>
                       {l.context} → {l.distinguish} → {l.action}
                       <br />
-                      边界：{l.boundary}
+                      {ui(" 边界：")}
+                      {l.boundary}
                     </p>
                   ))}
                 </>
               )}
-              <h3>主张与支持范围</h3>
+              <h3>{ui("主张与支持范围")}</h3>
               {selectedClaims.map((c) => (
                 <div className="collection-claim" key={c.claim_id}>
                   <span className={`status-badge ${c.epistemic_status}`}>
-                    {epistemicLabels[c.epistemic_status]}
+                    {ui(epistemicLabels[c.epistemic_status])}
                   </span>
                   <p>
                     {c.claim_id} · {c.text}
                   </p>
-                  <p>涉及论文：{c.paper_refs.join(" · ")}</p>
+                  <p>
+                    {ui("涉及论文：")}
+                    {c.paper_refs.join(" · ")}
+                  </p>
                   {c.evidence_links.map((l) => (
                     <p key={l.evidence_id}>
-                      {l.evidence_id} · {relationLabels[l.relation]}：
+                      {l.evidence_id} · {ui(relationLabels[l.relation])}：
                       {l.scope_note}
                     </p>
                   ))}
                   {c.assumptions.length > 0 && (
-                    <p>前提：{c.assumptions.join("；")}</p>
+                    <p>
+                      {ui("前提：")}
+                      {c.assumptions.join("；")}
+                    </p>
                   )}
                   {c.alternatives.length > 0 && (
-                    <p>竞争解释：{c.alternatives.join("；")}</p>
+                    <p>
+                      {ui("竞争解释：")}
+                      {c.alternatives.join("；")}
+                    </p>
                   )}
                 </div>
               ))}
@@ -988,17 +1054,22 @@ export function CollectionReader({
                       <p>
                         {s.title} · {s.version}
                       </p>
-                      <p className="locator">{locatorText(e)}</p>
+                      <p className="locator">{uiLocator(e)}</p>
                       <p>{e.paraphrase}</p>
-                      <p>支持范围：{e.scope}</p>
-                      <small>{e.verification_status}</small>
+                      <p>
+                        {ui("支持范围：")}
+                        {e.scope}
+                      </p>
+                      <small>
+                        {uiStatus("verification", e.verification_status)}
+                      </small>
                       {safeUrl(s.url) && (
                         <a
                           href={safeUrl(s.url)}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          打开原始来源
+                          {ui(" 打开原始来源 ")}
                         </a>
                       )}
                     </div>
@@ -1006,12 +1077,12 @@ export function CollectionReader({
                 })}
               {(selectedNode || selectedRelation) && (
                 <div className="collection-discuss">
-                  <h3>带回 Codex 讨论</h3>
+                  <h3>{ui("带回 Codex 讨论")}</h3>
                   <label>
-                    问题
+                    {ui(" 问题 ")}
                     <textarea
                       ref={questionRef}
-                      aria-label="联合分析讨论问题"
+                      aria-label={ui("联合分析讨论问题")}
                       value={question}
                       onChange={(e) => setQuestion(e.target.value)}
                       rows={3}
@@ -1023,16 +1094,16 @@ export function CollectionReader({
                       checked={participatory}
                       onChange={(e) => setParticipatory(e.target.checked)}
                     />
-                    参与式判断
+                    {ui(" 参与式判断 ")}
                   </label>
                   <button className="button primary" onClick={prepare}>
-                    准备联合讨论上下文
+                    {ui(" 准备联合讨论上下文 ")}
                   </button>
-                  {localError && <p role="alert">{localError}</p>}
+                  {localError && <p role="alert">{uiError(localError)}</p>}
                   {discussion && (
                     <>
                       <textarea
-                        aria-label="联合讨论上下文"
+                        aria-label={ui("联合讨论上下文")}
                         className="collection-discussion-text"
                         readOnly
                         value={collectionDiscussionMarkdown(discussion)}
@@ -1054,7 +1125,7 @@ export function CollectionReader({
                           }}
                         >
                           <Copy size={14} />
-                          复制联合上下文
+                          {ui(" 复制联合上下文 ")}
                         </button>
                         <button
                           className="button outline"
@@ -1065,10 +1136,10 @@ export function CollectionReader({
                             )
                           }
                         >
-                          下载联合讨论包
+                          {ui(" 下载联合讨论包 ")}
                         </button>
                       </div>
-                      <p role="status">{copyStatus}</p>
+                      <p role="status">{ui(copyStatus)}</p>
                     </>
                   )}
                 </div>

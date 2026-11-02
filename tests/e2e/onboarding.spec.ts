@@ -2,6 +2,12 @@ import { test, expect } from "@playwright/test";
 import { mkdirSync } from "node:fs";
 import { examplePrompt, projectLinks } from "../../viewer/UsageGuide";
 
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() =>
+    localStorage.setItem("paper-reconstruction-locale", "zh"),
+  );
+});
+
 test("offers downloads, source and a shared guide from home and reader", async ({
   page,
 }) => {

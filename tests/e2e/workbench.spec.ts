@@ -1,5 +1,11 @@
 import { test, expect, type Page } from "@playwright/test";
 import { mkdirSync, readFileSync } from "node:fs";
+
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() =>
+    localStorage.setItem("paper-reconstruction-locale", "zh"),
+  );
+});
 const original = JSON.parse(readFileSync("examples/resnet-2015.json", "utf8"));
 async function example(page: Page) {
   await page.goto("./");
@@ -9,15 +15,13 @@ async function example(page: Page) {
   );
 }
 async function upload(page: Page, value: unknown, name = "analysis.json") {
-  await page
-    .getByLabel("导入分析 JSON")
-    .setInputFiles({
-      name,
-      mimeType: "application/json",
-      buffer: Buffer.from(
-        typeof value === "string" ? value : JSON.stringify(value),
-      ),
-    });
+  await page.getByLabel("导入分析 JSON").setInputFiles({
+    name,
+    mimeType: "application/json",
+    buffer: Buffer.from(
+      typeof value === "string" ? value : JSON.stringify(value),
+    ),
+  });
 }
 test("reads a case, inspects an inference and takes a version-bound question back", async ({
   page,

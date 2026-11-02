@@ -12,7 +12,7 @@ Statements are individually labeled **explicit**, **inferred**, or **hypothetica
 
 Open the reader and choose the two-paper ResNet collection, or the single-paper ResNet, 2012 CRISPR-Cas9, and first LIGO detection cases. Inspect a paragraph's claims and evidence, compare paths, and prepare a node discussion context.
 
-The interface and default reports are Chinese. The Skill accepts a requested output language. Imported analyses stay in the browser; the reader has no model API or upload endpoint. Export JSON for durable storage. Hosting access logs are managed by GitHub Pages.
+The reader defaults to English; use **English / 中文** in the upper-right corner to switch languages. The choice is saved in this browser. Built-in examples have English display translations, while their exported JSON and discussion packages retain the original Chinese analysis. Imported analyses remain in their original language. The Skill defaults to Chinese reports but accepts a requested output language. Imported analyses stay in the browser; the reader has no model API or upload endpoint. Export JSON for durable storage. Hosting access logs are managed by GitHub Pages.
 
 ## Use the Codex Skill
 

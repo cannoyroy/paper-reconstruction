@@ -1,6 +1,12 @@
 import { test, expect, type Page } from "@playwright/test";
 import { mkdirSync, readFileSync } from "node:fs";
 import type { CollectionAnalysisBundle } from "../../core/collection-schema";
+
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() =>
+    localStorage.setItem("paper-reconstruction-locale", "zh"),
+  );
+});
 const original: CollectionAnalysisBundle = JSON.parse(
   readFileSync("examples/residual-programme.json", "utf8"),
 );
